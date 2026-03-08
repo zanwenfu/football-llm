@@ -1,0 +1,30 @@
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# ML / Fine-tuning
+torch>=2.4.0
+transformers>=4.46.0
+datasets>=3.1.0
+accelerate>=1.1.0
+peft>=0.13.0
+trl>=0.12.0
+bitsandbytes>=0.44.0
+
+# Optimization
+liger-kernel>=0.4.2
+
+# Evaluation
+lm-eval[api]>=0.4.5
+openai>=1.0.0
+
+# Serving
+vllm>=0.6.0
+
+# Utilities
+huggingface-hub>=0.25.0
+hf-transfer>=0.1.8
+tensorboard>=2.15.0
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+jsonlines>=4.0.0

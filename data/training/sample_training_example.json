@@ -1,0 +1,25 @@
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are an expert football match analyst specializing in FIFA World Cup predictions. Given detailed statistical profiles of two teams \u2014 including their players' recent league performance, historical World Cup records, and head-to-head records \u2014 you predict the match outcome with a score and provide reasoning grounded in the data.\n\n# Task\nAnalyze the provided team profiles and match context, then predict:\n1. Match result (home_win, draw, or away_win)\n2. Final score\n3. Key match events (goal scorers, cards)\n4. A reasoning paragraph citing specific statistical evidence\n\n# Guidelines\n- Base predictions on statistical evidence, not reputation alone\n- Consider both attacking and defensive metrics\n- Factor in tournament stage (group vs knockout mentality)\n- Account for head-to-head history when available\n- Note key player quality and form from recent seasons\n- Consider home/away dynamics in the World Cup context"
+    },
+    {
+      "role": "user",
+      "content": "**Match Context**\nTournament: FIFA World Cup 2014\nStage: Group Stage - 2\nVenue: Est\u00e1dio Governador Magalh\u00e3es Pinto, Belo Horizonte\n\n**Argentina (Home)**\nTeam Statistics (aggregated from starting XI's prior 3 league seasons):\n  Total Goals (starting XI, prior 3 seasons): 382.0\n  Avg Goals/90: 0.3\n  Yellow Cards: 213.0\n  Red Cards: 3.0\nStarting XI (11 players with data):\n  - S. Romero (Goalkeeper) \u2014 83 apps\n  - P. Zabaleta (Defender) \u2014 130 apps, 5 goals, 0.04 goals/90\n  - E. Garay (Defender) \u2014 118 apps, 10 goals, 0.08 goals/90\n  - F. Fern\u00e1ndez (Defender) \u2014 90 apps, 6 goals, 0.10 goals/90\n  - M. Rojo (Defender) \u2014 65 apps, 6 goals, 0.07 goals/90\n  - J. Mascherano (Defender) \u2014 143 apps\n  - F. Gago (Midfielder) \u2014 57 apps, 1 goals, 0.01 goals/90\n  - \u00c1. di Mar\u00eda (Midfielder) \u2014 142 apps, 28 goals, 0.28 goals/90\n  - L. Messi (Attacker) \u2014 157 apps, 176 goals, 1.20 goals/90\n  - S. Ag\u00fcero (Attacker) \u2014 133 apps, 81 goals, 0.81 goals/90\n  - G. Higua\u00edn (Attacker) \u2014 145 apps, 69 goals, 0.70 goals/90\n\n**Iran (Away)**\nTeam Statistics (aggregated from starting XI's prior 3 league seasons):\n  Total Goals (starting XI, prior 3 seasons): 72.0\n  Avg Goals/90: 0.1\n  Yellow Cards: 79.0\n  Red Cards: 4.0\nStarting XI (11 players with data):\n  - A. Haghighi (Goalkeeper) \u2014 28 apps\n  - J. Hosseini (Defender) \u2014 22 apps, 2 goals, 0.10 goals/90\n  - P. Montazeri (Defender) \u2014 92 apps, 5 goals, 0.06 goals/90\n  - A. Sadeghi (Defender) \u2014 17 apps\n  - J. Nekounam (Midfielder) \u2014 49 apps, 12 goals, 0.21 goals/90\n  - M. Shojaei (Midfielder) \u2014 48 apps, 6 goals, 0.15 goals/90\n  - A. Dejagah (Midfielder) \u2014 70 apps, 8 goals, 0.16 goals/90\n  - A. Teymourian (Midfielder) \u2014 29 apps, 1 goals, 0.17 goals/90\n  - E. Hajsafi (Defender) \u2014 107 apps, 13 goals, 0.14 goals/90\n  - M. Pooladi (Defender) \u2014 9 apps, 1 goals, 0.07 goals/90\n  - R. Ghoochannejhad (Attacker) \u2014 63 apps, 24 goals, 0.51 goals/90\n\nNo prior World Cup match data available for Argentina.\nNo prior World Cup match data available for Iran.\n\nNo prior World Cup meetings between Argentina and Iran.\n\nBased on the above profiles and context, predict the match result, score, key events, and provide your reasoning."
+    },
+    {
+      "role": "assistant",
+      "content": "**Prediction: Argentina win**\nScore: Argentina 1 - 0 Iran\n\n**Key Events:**\n  \u26bd 90' - L. Messi (Argentina)\n\n**Reasoning:**\nArgentina's starting XI showed stronger attacking output in recent seasons (avg 0.30 goals/90 vs Iran's 0.14). The result of 1-0 reflects Argentina's ability to convert their statistical advantages into goals."
+    }
+  ],
+  "metadata": {
+    "fixture_id": 208355,
+    "world_cup_year": 2014,
+    "home_team": "Argentina",
+    "away_team": "Iran",
+    "result": "home_win",
+    "score": "1-0",
+    "anonymized": false
+  }
+}

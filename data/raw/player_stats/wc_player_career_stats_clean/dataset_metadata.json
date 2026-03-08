@@ -1,0 +1,413 @@
+{
+  "generated_at": "2026-02-22T22:11:32.499505",
+  "source": "API-Football v3 \u2014 raw API responses with zero assumptions",
+  "scraper": "scrape_wc_player_stats.py",
+  "source_of_truth": "data/world_cup_history/world_cup_lineups.csv",
+  "rows": 112259,
+  "columns": 59,
+  "unique_players": 2352,
+  "season_range": "2004-2025",
+  "wc_teams": 53,
+  "missing_players": 26,
+  "data_integrity": {
+    "exact_duplicates": 0,
+    "key_duplicates": 0,
+    "rows_removed": 0,
+    "values_modified": 0,
+    "assumptions_made": 0
+  },
+  "operations_applied": [
+    "Dropped dribbles_past column (100% null from API, zero data lost)",
+    "Added height_cm/weight_kg parsed from API strings (originals preserved)",
+    "Sorted rows by player_id \u2192 season \u2192 league_name \u2192 team_name",
+    "Reordered columns into logical groups"
+  ],
+  "operations_NOT_applied": [
+    "Did NOT change cards_red -1 values (raw API value preserved)",
+    "Did NOT standardize player names (raw API values per season preserved)",
+    "Did NOT fill null league_id values (raw API nulls preserved)",
+    "Did NOT remove any rows",
+    "Did NOT modify height/weight strings (originals kept alongside parsed)"
+  ],
+  "known_api_quirks": {
+    "cards_red_negative": "2 rows have cards_red=-1 (API anomaly, preserved as-is)",
+    "null_league_id": "30078 rows (API does not assign IDs to some leagues)",
+    "null_team_id": "275 rows (youth/Olympic entries)",
+    "height_format_mixed": "API returns both \"187\" and \"184 cm\" formats",
+    "player_name_changes": "5 players have different names in different seasons (API behavior)",
+    "advanced_stats_null": "Shots, tackles, duels etc. 60-85% null (API coverage started ~2015)"
+  },
+  "team_files": {
+    "Algeria": {
+      "team": "Algeria",
+      "total_players": 39,
+      "players_with_data": 39,
+      "rows": 1551,
+      "file": "algeria_player_stats.csv"
+    },
+    "Argentina": {
+      "team": "Argentina",
+      "total_players": 70,
+      "players_with_data": 69,
+      "rows": 3385,
+      "file": "argentina_player_stats.csv"
+    },
+    "Australia": {
+      "team": "Australia",
+      "total_players": 74,
+      "players_with_data": 74,
+      "rows": 2865,
+      "file": "australia_player_stats.csv"
+    },
+    "Belgium": {
+      "team": "Belgium",
+      "total_players": 41,
+      "players_with_data": 41,
+      "rows": 2678,
+      "file": "belgium_player_stats.csv"
+    },
+    "Bosnia & Herzegovina": {
+      "team": "Bosnia & Herzegovina",
+      "total_players": 23,
+      "players_with_data": 23,
+      "rows": 1122,
+      "file": "bosnia__herzegovina_player_stats.csv"
+    },
+    "Brazil": {
+      "team": "Brazil",
+      "total_players": 74,
+      "players_with_data": 74,
+      "rows": 4255,
+      "file": "brazil_player_stats.csv"
+    },
+    "Cameroon": {
+      "team": "Cameroon",
+      "total_players": 56,
+      "players_with_data": 56,
+      "rows": 2391,
+      "file": "cameroon_player_stats.csv"
+    },
+    "Canada": {
+      "team": "Canada",
+      "total_players": 26,
+      "players_with_data": 26,
+      "rows": 1257,
+      "file": "canada_player_stats.csv"
+    },
+    "Chile": {
+      "team": "Chile",
+      "total_players": 35,
+      "players_with_data": 35,
+      "rows": 1664,
+      "file": "chile_player_stats.csv"
+    },
+    "Colombia": {
+      "team": "Colombia",
+      "total_players": 36,
+      "players_with_data": 36,
+      "rows": 1852,
+      "file": "colombia_player_stats.csv"
+    },
+    "Costa Rica": {
+      "team": "Costa Rica",
+      "total_players": 50,
+      "players_with_data": 50,
+      "rows": 2053,
+      "file": "costa_rica_player_stats.csv"
+    },
+    "Croatia": {
+      "team": "Croatia",
+      "total_players": 51,
+      "players_with_data": 50,
+      "rows": 2870,
+      "file": "croatia_player_stats.csv"
+    },
+    "Denmark": {
+      "team": "Denmark",
+      "total_players": 58,
+      "players_with_data": 58,
+      "rows": 3019,
+      "file": "denmark_player_stats.csv"
+    },
+    "Ecuador": {
+      "team": "Ecuador",
+      "total_players": 46,
+      "players_with_data": 45,
+      "rows": 1796,
+      "file": "ecuador_player_stats.csv"
+    },
+    "Egypt": {
+      "team": "Egypt",
+      "total_players": 23,
+      "players_with_data": 23,
+      "rows": 1260,
+      "file": "egypt_player_stats.csv"
+    },
+    "England": {
+      "team": "England",
+      "total_players": 71,
+      "players_with_data": 71,
+      "rows": 4341,
+      "file": "england_player_stats.csv"
+    },
+    "France": {
+      "team": "France",
+      "total_players": 73,
+      "players_with_data": 73,
+      "rows": 4228,
+      "file": "france_player_stats.csv"
+    },
+    "Germany": {
+      "team": "Germany",
+      "total_players": 62,
+      "players_with_data": 60,
+      "rows": 3438,
+      "file": "germany_player_stats.csv"
+    },
+    "Ghana": {
+      "team": "Ghana",
+      "total_players": 63,
+      "players_with_data": 61,
+      "rows": 2288,
+      "file": "ghana_player_stats.csv"
+    },
+    "Greece": {
+      "team": "Greece",
+      "total_players": 36,
+      "players_with_data": 36,
+      "rows": 1360,
+      "file": "greece_player_stats.csv"
+    },
+    "Honduras": {
+      "team": "Honduras",
+      "total_players": 36,
+      "players_with_data": 36,
+      "rows": 1037,
+      "file": "honduras_player_stats.csv"
+    },
+    "Iceland": {
+      "team": "Iceland",
+      "total_players": 23,
+      "players_with_data": 23,
+      "rows": 1273,
+      "file": "iceland_player_stats.csv"
+    },
+    "Iran": {
+      "team": "Iran",
+      "total_players": 48,
+      "players_with_data": 48,
+      "rows": 1751,
+      "file": "iran_player_stats.csv"
+    },
+    "Italy": {
+      "team": "Italy",
+      "total_players": 40,
+      "players_with_data": 40,
+      "rows": 1861,
+      "file": "italy_player_stats.csv"
+    },
+    "Ivory Coast": {
+      "team": "Ivory Coast",
+      "total_players": 36,
+      "players_with_data": 35,
+      "rows": 1292,
+      "file": "ivory_coast_player_stats.csv"
+    },
+    "Japan": {
+      "team": "Japan",
+      "total_players": 68,
+      "players_with_data": 68,
+      "rows": 3395,
+      "file": "japan_player_stats.csv"
+    },
+    "Mexico": {
+      "team": "Mexico",
+      "total_players": 61,
+      "players_with_data": 61,
+      "rows": 2870,
+      "file": "mexico_player_stats.csv"
+    },
+    "Morocco": {
+      "team": "Morocco",
+      "total_players": 41,
+      "players_with_data": 41,
+      "rows": 2057,
+      "file": "morocco_player_stats.csv"
+    },
+    "Netherlands": {
+      "team": "Netherlands",
+      "total_players": 62,
+      "players_with_data": 62,
+      "rows": 3416,
+      "file": "netherlands_player_stats.csv"
+    },
+    "New Zealand": {
+      "team": "New Zealand",
+      "total_players": 23,
+      "players_with_data": 22,
+      "rows": 515,
+      "file": "new_zealand_player_stats.csv"
+    },
+    "Nigeria": {
+      "team": "Nigeria",
+      "total_players": 59,
+      "players_with_data": 56,
+      "rows": 2080,
+      "file": "nigeria_player_stats.csv"
+    },
+    "North Korea": {
+      "team": "North Korea",
+      "total_players": 23,
+      "players_with_data": 23,
+      "rows": 155,
+      "file": "north_korea_player_stats.csv"
+    },
+    "Panama": {
+      "team": "Panama",
+      "total_players": 23,
+      "players_with_data": 23,
+      "rows": 962,
+      "file": "panama_player_stats.csv"
+    },
+    "Paraguay": {
+      "team": "Paraguay",
+      "total_players": 23,
+      "players_with_data": 21,
+      "rows": 663,
+      "file": "paraguay_player_stats.csv"
+    },
+    "Peru": {
+      "team": "Peru",
+      "total_players": 23,
+      "players_with_data": 23,
+      "rows": 1205,
+      "file": "peru_player_stats.csv"
+    },
+    "Poland": {
+      "team": "Poland",
+      "total_players": 39,
+      "players_with_data": 39,
+      "rows": 2282,
+      "file": "poland_player_stats.csv"
+    },
+    "Portugal": {
+      "team": "Portugal",
+      "total_players": 67,
+      "players_with_data": 67,
+      "rows": 3786,
+      "file": "portugal_player_stats.csv"
+    },
+    "Qatar": {
+      "team": "Qatar",
+      "total_players": 26,
+      "players_with_data": 26,
+      "rows": 1419,
+      "file": "qatar_player_stats.csv"
+    },
+    "Russia": {
+      "team": "Russia",
+      "total_players": 39,
+      "players_with_data": 38,
+      "rows": 1634,
+      "file": "russia_player_stats.csv"
+    },
+    "Saudi Arabia": {
+      "team": "Saudi Arabia",
+      "total_players": 40,
+      "players_with_data": 35,
+      "rows": 1477,
+      "file": "saudi_arabia_player_stats.csv"
+    },
+    "Senegal": {
+      "team": "Senegal",
+      "total_players": 43,
+      "players_with_data": 43,
+      "rows": 2209,
+      "file": "senegal_player_stats.csv"
+    },
+    "Serbia": {
+      "team": "Serbia",
+      "total_players": 56,
+      "players_with_data": 55,
+      "rows": 2878,
+      "file": "serbia_player_stats.csv"
+    },
+    "Slovakia": {
+      "team": "Slovakia",
+      "total_players": 23,
+      "players_with_data": 23,
+      "rows": 906,
+      "file": "slovakia_player_stats.csv"
+    },
+    "Slovenia": {
+      "team": "Slovenia",
+      "total_players": 23,
+      "players_with_data": 22,
+      "rows": 729,
+      "file": "slovenia_player_stats.csv"
+    },
+    "South Africa": {
+      "team": "South Africa",
+      "total_players": 23,
+      "players_with_data": 22,
+      "rows": 565,
+      "file": "south_africa_player_stats.csv"
+    },
+    "South Korea": {
+      "team": "South Korea",
+      "total_players": 74,
+      "players_with_data": 74,
+      "rows": 2943,
+      "file": "south_korea_player_stats.csv"
+    },
+    "Spain": {
+      "team": "Spain",
+      "total_players": 62,
+      "players_with_data": 62,
+      "rows": 3866,
+      "file": "spain_player_stats.csv"
+    },
+    "Sweden": {
+      "team": "Sweden",
+      "total_players": 23,
+      "players_with_data": 23,
+      "rows": 1436,
+      "file": "sweden_player_stats.csv"
+    },
+    "Switzerland": {
+      "team": "Switzerland",
+      "total_players": 59,
+      "players_with_data": 59,
+      "rows": 3037,
+      "file": "switzerland_player_stats.csv"
+    },
+    "Tunisia": {
+      "team": "Tunisia",
+      "total_players": 39,
+      "players_with_data": 38,
+      "rows": 1723,
+      "file": "tunisia_player_stats.csv"
+    },
+    "USA": {
+      "team": "USA",
+      "total_players": 65,
+      "players_with_data": 63,
+      "rows": 2773,
+      "file": "usa_player_stats.csv"
+    },
+    "Uruguay": {
+      "team": "Uruguay",
+      "total_players": 55,
+      "players_with_data": 55,
+      "rows": 2758,
+      "file": "uruguay_player_stats.csv"
+    },
+    "Wales": {
+      "team": "Wales",
+      "total_players": 26,
+      "players_with_data": 26,
+      "rows": 1633,
+      "file": "wales_player_stats.csv"
+    }
+  }
+}
