@@ -1,0 +1,78 @@
+# ============================================================================
+# Football-LLM: QLoRA fine-tuning recipe for Llama 3.1 8B Instruct
+# Optimized for Google Colab free-tier T4 GPU (16 GB VRAM)
+# ============================================================================
+# Usage:
+#   python src/training/run_sft.py --config src/training/recipes/llama-3-1-8b-instruct-qlora.yaml
+# ============================================================================
+
+# ---------------------------------------------------------------------------
+# Model arguments
+# ---------------------------------------------------------------------------
+model_name_or_path: meta-llama/Llama-3.1-8B-Instruct
+model_revision: main
+torch_dtype: float16          # T4 does not support bfloat16
+attn_implementation: sdpa     # T4 (Turing) does not support flash_attention_2
+bf16: false
+fp16: true
+tf32: false                   # Not supported on T4
+use_liger: false              # Liger kernels require Ampere+; disable for T4
+output_dir: runs/football-llm-qlora
+
+# ---------------------------------------------------------------------------
+# Dataset arguments
+# ---------------------------------------------------------------------------
+dataset_id_or_path: data/training/train.jsonl
+eval_dataset_path: data/training/eval.jsonl
+max_seq_length: 2048          # Longest sample ~1700 tokens; 2048 gives headroom
+packing: false                # Disabled for clean completions-only masking
+
+# ---------------------------------------------------------------------------
+# LoRA / QLoRA arguments
+# ---------------------------------------------------------------------------
+use_peft: true
+load_in_4bit: true
+lora_target_modules: "all-linear"
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+# No lora_modules_to_save — Instruct model already has trained embeddings
+# (unlike the base model which needs lm_head + embed_tokens for chat template)
+
+# ---------------------------------------------------------------------------
+# Training arguments
+# ---------------------------------------------------------------------------
+num_train_epochs: 3
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8      # Effective batch size = 2 * 8 = 16
+gradient_checkpointing: true
+gradient_checkpointing_kwargs:
+  use_reentrant: false
+learning_rate: 2.0e-4
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+weight_decay: 0.01
+max_grad_norm: 1.0
+
+# ---------------------------------------------------------------------------
+# Evaluation during training
+# ---------------------------------------------------------------------------
+eval_strategy: epoch
+
+# ---------------------------------------------------------------------------
+# Logging & checkpointing
+# ---------------------------------------------------------------------------
+logging_strategy: steps
+logging_steps: 5
+report_to:
+  - tensorboard
+save_strategy: epoch
+save_total_limit: 3
+seed: 42
+
+# ---------------------------------------------------------------------------
+# Hugging Face Hub
+# ---------------------------------------------------------------------------
+push_to_hub: true
+# hub_model_id: football-llm-qlora  # uncomment to override; defaults to output_dir name
+hub_strategy: every_save
