@@ -1,2 +1,50 @@
-.env
+# ---- Python ----
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# ---- Virtual environments ----
+venv/
+.venv/
+env/
+
+# ---- Secrets / configs ----
+.env
+*.secret
+
+# ---- Jupyter / Notebooks ----
+.ipynb_checkpoints/
+
+# ---- IDE / Editor ----
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ---- ML artifacts ----
+*.pt
+*.bin
+*.safetensors
+*.gguf
+*.ckpt
+wandb/
+runs/
+lightning_logs/
+outputs/
+checkpoints/
+*.log
+
+# ---- Hugging Face cache ----
+.cache/
+
+# ---- Results (optional, uncomment if you don't want to track) ----
+# results/
