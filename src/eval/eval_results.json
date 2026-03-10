@@ -1,0 +1,47 @@
+{
+  "eval_set": "2022 FIFA World Cup",
+  "train_set": "2010 + 2014 + 2018 World Cups",
+  "num_eval_samples": 128,
+  "metrics": {
+    "base_model": {
+      "total": 128,
+      "parsed": 128,
+      "parse_rate": 1.0,
+      "result_accuracy": 0.453,
+      "score_exact_match": 0.0,
+      "goal_mae": 2.133
+    },
+    "fine_tuned": {
+      "total": 128,
+      "parsed": 128,
+      "parse_rate": 1.0,
+      "result_accuracy": 0.5234375,
+      "score_exact_match": 0.296875,
+      "goal_mae": 1.28515625
+    },
+    "baseline_always_home": {
+      "total": 128,
+      "parsed": 128,
+      "parse_rate": 1.0,
+      "result_accuracy": 0.453125,
+      "score_exact_match": 0.109375,
+      "goal_mae": 1.109375
+    },
+    "baseline_random": {
+      "total": 128,
+      "parsed": 128,
+      "parse_rate": 1.0,
+      "result_accuracy": 0.359375,
+      "score_exact_match": 0.078125,
+      "goal_mae": 1.2734375
+    },
+    "baseline_always_draw": {
+      "total": 128,
+      "parsed": 128,
+      "parse_rate": 1.0,
+      "result_accuracy": 0.234375,
+      "score_exact_match": 0.078125,
+      "goal_mae": 0.96875
+    }
+  }
+}
