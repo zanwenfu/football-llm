@@ -86,7 +86,7 @@ The project demonstrates a complete ML pipeline — from raw data engineering th
 ┌─────────────────────────────────────────────────────────────────┐
 │                        SERVING                                  │
 │                                                                 │
-│  vLLM inference server (coming soon)                           │
+│  vLLM + FastAPI + Gradio  (serve_vllm.sh → api.py → demo_ui)  │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -121,11 +121,16 @@ football-llm/
 │   │   ├── merge_adapter_weights.py  # Merge LoRA → standalone model
 │   │   └── recipes/
 │   │       └── llama-3-1-8b-instruct-qlora.yaml
-│   ├── eval/                         # (eval logic in notebook)
-│   └── serving/                      # vLLM serving (coming soon)
+│   ├── eval/
+│   │   └── eval_results.json          # Saved evaluation metrics
+│   └── serving/
+│       ├── serve_vllm.sh              # Launch vLLM server
+│       ├── api.py                     # FastAPI prediction endpoint
+│       └── demo_ui.py                 # Gradio interactive UI
 ├── notebooks/
 │   ├── train_colab.ipynb             # End-to-end training on Colab T4
-│   └── eval_harness.ipynb            # Full evaluation + baselines
+│   ├── eval_harness.ipynb            # Full evaluation + baselines
+│   └── serve_demo.ipynb              # Serving demo on Colab T4
 ├── results/                          # Eval output artifacts
 ├── requirements.txt
 └── README.md
@@ -340,6 +345,116 @@ print(tokenizer.decode(outputs[0][inputs.shape[1]:], skip_special_tokens=True))
 
 Open [`notebooks/eval_harness.ipynb`](notebooks/eval_harness.ipynb) on Colab to reproduce all evaluation results, baselines, and the memorization test.
 
+### 5. Serve (Colab or Local)
+
+**Option A — Colab (recommended):** Open [`notebooks/serve_demo.ipynb`](notebooks/serve_demo.ipynb) on a T4 runtime. It launches vLLM, runs a test prediction, and starts a Gradio demo with a public URL.
+
+**Option B — Local GPU (≥16 GB VRAM):**
+
+Prerequisites: GPU with ≥16 GB VRAM (T4, A10, L4, A100), CUDA 12.x, Python 3.10+, and access to `meta-llama/Llama-3.1-8B-Instruct` on HuggingFace.
+
+```bash
+pip install -r requirements.txt
+huggingface-cli login  # required for gated Llama model
+```
+
+**Step 1 — Start vLLM server** (port 8000):
+
+```bash
+./src/serving/serve_vllm.sh
+# Wait until "Uvicorn running on http://0.0.0.0:8000"
+curl http://localhost:8000/v1/models   # verify
+```
+
+**Step 2 — Start FastAPI** (port 8001, new terminal):
+
+```bash
+uvicorn src.serving.api:app --host 0.0.0.0 --port 8001
+curl http://localhost:8001/health       # verify
+```
+
+Test a prediction:
+
+```bash
+curl -X POST http://localhost:8001/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "home_team": {
+      "name": "Argentina",
+      "goals": 450, "goals_per_90": 0.35, "assists": 180,
+      "avg_rating": 7.2, "top_scorer_goals": 200,
+      "yellows": 120, "reds": 2, "tackles_per_90": 0.6,
+      "duels_pct": 55, "pass_accuracy": 72,
+      "formation": "4-3-3", "coach": "Lionel Scaloni"
+    },
+    "away_team": {
+      "name": "France",
+      "goals": 420, "goals_per_90": 0.38, "assists": 170,
+      "avg_rating": 7.3, "top_scorer_goals": 190,
+      "yellows": 100, "reds": 1, "tackles_per_90": 0.55,
+      "duels_pct": 54, "pass_accuracy": 74,
+      "formation": "4-2-3-1", "coach": "Didier Deschamps"
+    },
+    "match": {
+      "tournament": "World Cup 2022",
+      "stage": "Final",
+      "venue": "Lusail Stadium"
+    }
+  }'
+```
+
+**Step 3 — Start Gradio UI** (port 7860, new terminal):
+
+```bash
+python src/serving/demo_ui.py
+```
+
+Open http://localhost:7860 to predict matches interactively.
+
+#### Serving Architecture
+
+| Component | File | Port | Role |
+|:----------|:-----|:----:|:-----|
+| **vLLM** | `serve_vllm.sh` | 8000 | Model engine — loads Llama 3.1 8B + QLoRA adapter, serves OpenAI-compatible chat completions |
+| **FastAPI** | `api.py` | 8001 | API layer — constructs training-format prompts, calls vLLM, parses structured predictions |
+| **Gradio** | `demo_ui.py` | 7860 | Web UI — interactive form with preset examples, calls FastAPI |
+
+#### API Reference
+
+**`POST /predict`** — Request body:
+
+| Field | Type | Description |
+|:------|:-----|:------------|
+| `home_team` | `TeamStats` | Home team statistics |
+| `away_team` | `TeamStats` | Away team statistics |
+| `match` | `MatchContext` | Tournament, stage, venue |
+
+**TeamStats fields:** `name`, `goals`, `goals_per_90`, `assists`, `avg_rating`, `top_scorer_goals`, `yellows`, `reds`, `tackles_per_90`, `duels_pct`, `pass_accuracy`, `formation`, `coach`
+
+Response:
+
+```json
+{
+  "prediction": "home_win",
+  "score": "2-1",
+  "reasoning": "Argentina's squad has higher goal output...",
+  "raw_output": "Prediction: home_win\nScore: 2-1\nReasoning: ..."
+}
+```
+
+**`GET /health`** — Returns vLLM connectivity status and available models.
+
+#### Configuration
+
+| Variable | Default | Description |
+|:---------|:--------|:------------|
+| `VLLM_BASE_URL` | `http://localhost:8000/v1` | vLLM server URL (in `api.py`) |
+| `MODEL_NAME` | `football-llm` | LoRA adapter name registered in vLLM |
+| `API_URL` | `http://localhost:8001` | FastAPI URL (in `demo_ui.py`) |
+| `PORT` | `8000` | vLLM port (in `serve_vllm.sh`) |
+| `GPU_MEM_UTIL` | `0.9` | vLLM GPU memory fraction |
+| `MAX_MODEL_LEN` | `768` | Max sequence length |
+
 ---
 
 ## Roadmap
@@ -348,7 +463,7 @@ Open [`notebooks/eval_harness.ipynb`](notebooks/eval_harness.ipynb) on Colab to 
 - [x] QLoRA fine-tuning on Colab T4
 - [x] Evaluation harness with baselines + memorization test
 - [x] Adapter weights on HuggingFace Hub
-- [ ] vLLM inference server for production serving
+- [x] vLLM + FastAPI + Gradio serving stack
 - [ ] Expand to 2026 World Cup predictions
 
 ---
