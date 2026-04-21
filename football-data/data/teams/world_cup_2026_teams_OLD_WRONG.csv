@@ -1,0 +1,43 @@
+team_id,country,code,founded,national,logo,venue_name,venue_city,venue_capacity,is_host,team_name
+1507,Algeria,ALG,1958,True,https://media.api-sports.io/football/teams/1507.png,Stade 5 Juillet 1962,Algiers,64000,False,Algeria
+26,Argentina,ARG,1893,True,https://media.api-sports.io/football/teams/26.png,Estadio Alberto José Armando,Ciudad de Buenos Aires,57200,False,Argentina
+20,Australia,AUS,1961,True,https://media.api-sports.io/football/teams/20.png,CommBank Stadium,Sydney,30000,False,Australia
+769,Austria,AUT,1904,True,https://media.api-sports.io/football/teams/769.png,Ernst Happel Stadion,Vienna,50865,False,Austria
+1,Belgium,BEL,1895,True,https://media.api-sports.io/football/teams/1.png,Stade Roi Baudouin,Brussel,50093,False,Belgium
+6,Brazil,BRA,1914,True,https://media.api-sports.io/football/teams/6.png,Neo Química Arena,"São Paulo, São Paulo",49205,False,Brazil
+5529,Canada,CAN,1912,True,https://media.api-sports.io/football/teams/5529.png,BMO Field,"Toronto, Ontario",36045,True,Canada
+1096,Cape Verde,,,True,,,,,False,Cape Verde
+1505,Colombia,COL,1924,True,https://media.api-sports.io/football/teams/1505.png,Estadio Metropolitano Roberto Meléndez,Barranquilla,46788,False,Colombia
+3,Croatia,CRO,1912,True,https://media.api-sports.io/football/teams/3.png,Stadion Maksimir,Zagreb,37168,False,Croatia
+2321,Curaçao,,,True,,,,,False,Curaçao
+2382,Ecuador,ECU,1925,True,https://media.api-sports.io/football/teams/2382.png,Estadio Rodrigo Paz Delgado,Quito,55104,False,Ecuador
+1508,Egypt,EGY,1921,True,https://media.api-sports.io/football/teams/1508.png,Cairo International Stadium,Cairo,74100,False,Egypt
+10,England,ENG,1863,True,https://media.api-sports.io/football/teams/10.png,The City Ground,"Nottingham, Nottinghamshire",30576,False,England
+2,France,FRA,1919,True,https://media.api-sports.io/football/teams/2.png,Stade de France,Saint-Denis,81338,False,France
+25,Germany,GER,1900,True,https://media.api-sports.io/football/teams/25.png,Olympiastadion Berlin,Berlin,74667,False,Germany
+1504,Ghana,GHA,1957,True,https://media.api-sports.io/football/teams/1504.png,,,,False,Ghana
+1083,Haiti,,,True,,,,,False,Haiti
+22,Iran,IRA,1920,True,https://media.api-sports.io/football/teams/22.png,Imam Reza Stadium,Mashhad,25000,False,Iran
+1499,Ivory-Coast,CIV,1960,True,https://media.api-sports.io/football/teams/1499.png,Stade de la Paix,Bouaké,40000,False,Ivory Coast
+12,Japan,JAP,1921,True,https://media.api-sports.io/football/teams/12.png,Panasonic Stadium Suita,Suita,40322,False,Japan
+2409,Jordan,JOR,1949,True,https://media.api-sports.io/football/teams/2409.png,,,,False,Jordan
+16,Mexico,MEX,1927,True,https://media.api-sports.io/football/teams/16.png,Oakland-Alameda County Coliseum,"Oakland, California",63026,True,Mexico
+31,Morocco,MOR,1955,True,https://media.api-sports.io/football/teams/31.png,Complexe Sportif de Fès,Fès,45000,False,Morocco
+1118,Netherlands,NET,1889,True,https://media.api-sports.io/football/teams/1118.png,Johan Cruijff ArenA,Amsterdam,55885,False,Netherlands
+1101,New-Zealand,NZL,1891,True,https://media.api-sports.io/football/teams/1101.png,Westpac Stadium,Wellington,34500,False,New Zealand
+1091,Norway,,,True,,,,,False,Norway
+1509,Panama,PAN,1937,True,https://media.api-sports.io/football/teams/1509.png,Estadio Rommel Fernández,Panama City,32000,False,Panama
+1510,Paraguay,PAR,1906,True,https://media.api-sports.io/football/teams/1510.png,Estadio General Pablo Rojas,Asunción,45000,False,Paraguay
+27,Portugal,POR,1914,True,https://media.api-sports.io/football/teams/27.png,Estádio Nacional,"Jamor, Oeiras",38000,False,Portugal
+1569,Qatar,QAT,1960,True,https://media.api-sports.io/football/teams/1569.png,Khalifa International Stadium,Al Rayyan (Ar-Rayyan),45857,False,Qatar
+23,Saudi-Arabia,SAU,1956,True,https://media.api-sports.io/football/teams/23.png,EGO Stadium,Ad Dammām (Dammam),15000,False,Saudi Arabia
+1108,Scotland,SCO,1873,True,https://media.api-sports.io/football/teams/1108.png,Hampden Park,Glasgow,52500,False,Scotland
+13,Senegal,SEN,1960,True,https://media.api-sports.io/football/teams/13.png,Stade Me Abdoulaye Wade,Diamniadio,50000,False,Senegal
+5040,South-Africa,RSA,1991,True,https://media.api-sports.io/football/teams/5040.png,FNB Stadium,Johannesburg,94736,False,South Africa
+17,South-Korea,SOU,1933,True,https://media.api-sports.io/football/teams/17.png,Yongin Mireu Stadium,Yongin,37155,False,South Korea
+9,Spain,SPA,1913,True,https://media.api-sports.io/football/teams/9.png,Estadio Santiago Bernabéu,Madrid,85454,False,Spain
+15,Switzerland,SWI,1895,True,https://media.api-sports.io/football/teams/15.png,kybunpark,St. Gallen,20029,False,Switzerland
+28,Tunisia,TUN,1957,True,https://media.api-sports.io/football/teams/28.png,Stade olympique Hammadi-Agrebi,Radès,65000,False,Tunisia
+2384,USA,USA,1913,True,https://media.api-sports.io/football/teams/2384.png,GEODIS Park,"Nashville, Tennessee",30109,True,USA
+7,Uruguay,URU,1900,True,https://media.api-sports.io/football/teams/7.png,Estadio Centenario,Montevideo,60235,False,Uruguay
+1503,Uzbekistan,UZB,1946,True,https://media.api-sports.io/football/teams/1503.png,Milliy Stadium,Tashkent,34000,False,Uzbekistan

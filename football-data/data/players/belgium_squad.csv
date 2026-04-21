@@ -1,0 +1,31 @@
+player_id,player_name,team_id,team_name,age,number,position,photo
+730,T. Courtois,1,Belgium,33,1,Goalkeeper,https://media.api-sports.io/football/players/730.png
+162511,S. Lammens,1,Belgium,23,1,Goalkeeper,https://media.api-sports.io/football/players/162511.png
+340151,M. Penders,1,Belgium,20,12,Goalkeeper,https://media.api-sports.io/football/players/340151.png
+2919,M. Sels,1,Belgium,33,13,Goalkeeper,https://media.api-sports.io/football/players/2919.png
+1924,M. Vandevoordt,1,Belgium,23,12,Goalkeeper,https://media.api-sports.io/football/players/1924.png
+2920,T. Castagne,1,Belgium,30,21,Defender,https://media.api-sports.io/football/players/2920.png
+162007,M. De Cuyper,1,Belgium,25,5,Defender,https://media.api-sports.io/football/players/162007.png
+162141,K. De Winter,1,Belgium,23,16,Defender,https://media.api-sports.io/football/players/162141.png
+304228,Z. Debast,1,Belgium,22,2,Defender,https://media.api-sports.io/football/players/304228.png
+69,B. Mechele,1,Belgium,32,4,Defender,https://media.api-sports.io/football/players/69.png
+264,T. Meunier,1,Belgium,34,15,Defender,https://media.api-sports.io/football/players/264.png
+375974,J. Seys,1,Belgium,20,2,Defender,https://media.api-sports.io/football/players/375974.png
+204043,A. Theate,1,Belgium,25,3,Defender,https://media.api-sports.io/football/players/204043.png
+629,K. De Bruyne,1,Belgium,34,7,Midfielder,https://media.api-sports.io/football/players/629.png
+147859,C. De Ketelaere,1,Belgium,24,17,Midfielder,https://media.api-sports.io/football/players/147859.png
+335056,Diego Moreira,1,Belgium,21,7,Midfielder,https://media.api-sports.io/football/players/335056.png
+162714,A. Onana,1,Belgium,24,18,Midfielder,https://media.api-sports.io/football/players/162714.png
+2120,N. Raskin,1,Belgium,24,23,Midfielder,https://media.api-sports.io/football/players/2120.png
+1417,A. Saelemaekers,1,Belgium,26,22,Midfielder,https://media.api-sports.io/football/players/1417.png
+2926,Y. Tielemans,1,Belgium,28,8,Midfielder,https://media.api-sports.io/football/players/2926.png
+78,H. Vanaken,1,Belgium,33,20,Midfielder,https://media.api-sports.io/football/players/78.png
+8680,C. Vanhoutte,1,Belgium,27,18,Midfielder,https://media.api-sports.io/football/players/8680.png
+20,A. Witsel,1,Belgium,36,6,Midfielder,https://media.api-sports.io/football/players/20.png
+2927,M. Batshuayi,1,Belgium,32,23,Attacker,https://media.api-sports.io/football/players/2927.png
+1422,J. Doku,1,Belgium,23,11,Attacker,https://media.api-sports.io/football/players/1422.png
+361348,M. Fofana,1,Belgium,20,19,Attacker,https://media.api-sports.io/football/players/361348.png
+25458,D. Lukebakio,1,Belgium,28,14,Attacker,https://media.api-sports.io/football/players/25458.png
+86,L. Openda,1,Belgium,25,9,Attacker,https://media.api-sports.io/football/players/86.png
+1946,L. Trossard,1,Belgium,31,10,Attacker,https://media.api-sports.io/football/players/1946.png
+271276,R. Vermant,1,Belgium,21,19,Attacker,https://media.api-sports.io/football/players/271276.png

@@ -16,7 +16,10 @@ env/
 
 # ---- Secrets / configs ----
 .env
+.env.local
 *.secret
+*_token
+*_secret
 
 # ---- Jupyter / Notebooks ----
 .ipynb_checkpoints/
@@ -24,6 +27,7 @@ env/
 # ---- IDE / Editor ----
 .idea/
 .vscode/
+.claude/
 *.swp
 *.swo
 *~
@@ -46,5 +50,14 @@ checkpoints/
 # ---- Hugging Face cache ----
 .cache/
 
-# ---- Results (optional, uncomment if you don't want to track) ----
-# results/
+# ---- Testing / CI ----
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.mypy_cache/
+.ruff_cache/
+
+# ---- Figures (generated artifacts, not committed) ----
+figures/

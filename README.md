@@ -2,39 +2,53 @@
 
 # Football-LLM
 
-**Fine-tuning Llama 3.1 8B to predict FIFA World Cup match outcomes from player statistics**
+**A QLoRA-fine-tuned Llama 3.1 8B for halftime-conditioned Over/Under betting on World Cup matches**
 
 [![Model on HF](https://img.shields.io/badge/%F0%9F%A4%97_Model-football--llm--qlora-blue)](https://huggingface.co/zanwenfu/football-llm-qlora)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![CI](https://github.com/zanwenfu/football-llm/actions/workflows/ci.yml/badge.svg)](https://github.com/zanwenfu/football-llm/actions/workflows/ci.yml)
 
 <br/>
 
-| Metric | Base Llama 3.1 8B | **Football-LLM** | Always Home | Random |
-|:---|:---:|:---:|:---:|:---:|
-| Result Accuracy | 45.3% | **52.3%** | 45.3% | 35.9% |
-| Exact Score Match | 0.0% | **29.7%** | 10.9% | 7.8% |
-| Goal MAE | 2.13 | **1.29** | 1.11 | 1.27 |
-| Parse Rate | 100% | **100%** | 100% | 100% |
+| Metric (held-out 2022 WC, n=128) | Pregame | Halftime | **Halftime + Events** |
+|:---|:---:|:---:|:---:|
+| Result Accuracy (1X2) | 52.3% | **64.1%** | 61.7% |
+| O/U 2.5 Directional Accuracy | 65.6% | 74.2% | **79.7%** |
+| Goal MAE | 1.32 | 1.21 | **1.12** |
+| Calibration (ECE, O/U 2.5) | 0.272 | 0.239 | **0.182** |
 
-<sub>Evaluated on 128 held-out 2022 FIFA World Cup samples (64 named + 64 anonymized)</sub>
+<sub>Paired McNemar: pregame → halftime on 1X2 <b>p = 0.024</b> · pregame → halftime+events on O/U 2.5 <b>p = 0.006</b></sub>
+<br/>
+<sub>On the 64 named matches, halftime+events reaches <b>84.4%</b> O/U 2.5 accuracy (Wilson CI [0.736, 0.913]).</sub>
 
 </div>
 
 ---
 
-## Overview
+## TL;DR
 
-Football-LLM is an end-to-end machine learning project that fine-tunes [Meta's Llama 3.1 8B Instruct](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct) to predict FIFA World Cup match results, scores, and reasoning from structured team statistics.
+Football-LLM is a QLoRA adapter over Llama 3.1 8B that predicts **final scorelines** for World Cup matches from player-level team statistics. Three inference regimes are supported: pregame, halftime-conditioned, and halftime + first-half event enrichment (goals/cards with timestamps).
 
-The project demonstrates a complete ML pipeline — from raw data engineering through model training to evaluation — constrained to **free-tier Google Colab (T4 GPU, 16 GB VRAM)**.
+The headline finding — and the reason the LLM beats a feature-matched XGBoost baseline — is a clean **magnitude/direction decomposition**:
 
-### Key Highlights
+- **On 1X2 (direction) the LLM ties XGBoost** within 2pp. Deploying an LLM for win/draw/loss prediction is not justified on this dataset.
+- **On Over/Under 2.5 goals (magnitude) the LLM beats XGBoost by 19pp pregame and 16pp halftime.** This is driven by pretrained scoreline priors (team identity → mixture over typical 2–0 / 2–1 / 3–1 scorelines) that tabular features cannot replicate.
 
-- **Data Engineering Pipeline**: 3-stage pipeline that transforms raw player career stats + World Cup match data into compact, token-budget-aware training prompts
-- **QLoRA Fine-tuning**: 4-bit quantized training with LoRA (r=16) on a single T4 GPU in ~43 minutes
-- **Rigorous Evaluation**: Custom eval harness comparing against base model + statistical baselines, with memorization testing via anonymized team variants
-- **Production-Ready**: Adapter weights on HuggingFace Hub, with vLLM serving support (coming soon)
+The decomposition makes a falsifiable prediction: enriching the halftime prompt with a first-half event summary should improve **magnitude** metrics (O/U, MAE, calibration) without improving **direction** (1X2). Results match the prediction exactly — O/U 2.5 accuracy climbs monotonically 65.6% → 74.2% → 79.7%, calibration ECE falls 0.272 → 0.239 → 0.182, and 1X2 accuracy does not improve (paired p = 0.58).
+
+See [IDS598_Final_Project_Report.pdf](IDS598_Final_Project_Report.pdf) for the full paper with Wilson CIs, paired McNemar tests, Kelly-fraction × bet-cap sensitivity grid, and 10,000-trial bootstrap on simulated P&L.
+
+---
+
+## Why this repo is interesting
+
+For engineers evaluating the project:
+
+1. **Reproducible end-to-end on free hardware.** Training runs in 43 minutes on a Colab T4 (16 GB VRAM), peak 5.7 GB. Every number in the paper regenerates from [`scripts/reproduce_paper.py`](scripts/reproduce_paper.py) against committed prediction dumps in [`results/`](results/).
+2. **Statistical honesty.** All proportions use Wilson CIs, all within-match comparisons use paired exact McNemar, calibration reported via ECE + Brier + reliability diagrams, and the backtest includes a 10,000-trial bootstrap with the caveat that it characterizes P&L variance conditional on the observed per-bet return distribution — **not** a forecast of live returns.
+3. **A falsifiable thesis, not just a benchmark.** The magnitude/direction decomposition predicts which metrics should and should not improve under event enrichment. The experiment supports it. This rules out the "LLM is just generically better" interpretation.
+4. **Production-adjacent serving.** vLLM + FastAPI + Gradio stack, containerized, with `docker compose up` bringing the full stack online.
 
 ---
 
@@ -44,451 +58,321 @@ The project demonstrates a complete ML pipeline — from raw data engineering th
 ┌─────────────────────────────────────────────────────────────────┐
 │                     DATA PREPARATION                            │
 │                                                                 │
-│  Raw Data (5 CSVs + 40+ country stat files)                    │
+│  API-Football feed (2010–2022 World Cups + first-half events)  │
 │       │                                                         │
 │       ▼                                                         │
-│  Step 1: aggregate_player_stats.py                             │
-│       │  Merge career + league stats → 41K player-season rows  │
-│       ▼                                                         │
-│  Step 2: build_team_profiles.py                                │
-│       │  Starting XI lookup → team-level profiles per match    │
-│       │  + prior WC performance + H2H records                  │
-│       ▼                                                         │
-│  Step 3: generate_training_data.py                             │
-│       │  Compact prompts (≤350 tokens) in HF messages format   │
-│       ▼                                                         │
-│  train.jsonl (384 samples) + eval.jsonl (128 samples)          │
+│  Step 1  aggregate_player_stats.py  → 41K player-season rows   │
+│  Step 2  build_team_profiles.py     → 256 match contexts       │
+│  Step 3  generate_training_data.py  → 384 train + 128 eval     │
+│       │  (named + anonymized variants, compact ≤350 tokens)    │
 └─────────────────────────────────────────────────────────────────┘
                             │
                             ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                        TRAINING                                 │
 │                                                                 │
-│  Llama 3.1 8B Instruct + QLoRA (4-bit NF4)                    │
-│  • LoRA r=16, α=32, all linear layers                          │
-│  • 3 epochs, effective batch 16, lr=2e-4 cosine                │
-│  • Max sequence length: 768 tokens                             │
-│  • T4 GPU, ~43 min, ~5.7 GB VRAM                              │
-│  • Adapter: 83.9 MB on HuggingFace Hub                        │
+│  Llama 3.1 8B Instruct + QLoRA (r=16, α=32, NF4 4-bit)        │
+│  3 epochs · eff. batch 16 · lr 2e-4 cosine · max_len 768       │
+│  T4 GPU · 43 min · 5.7 GB peak · 83.9 MB adapter              │
 └─────────────────────────────────────────────────────────────────┘
                             │
                             ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                       EVALUATION                                │
 │                                                                 │
-│  Held-out: 2022 FIFA World Cup (64 matches × 2 variants)      │
-│  Metrics: Result accuracy, exact score, goal MAE, parse rate   │
-│  Memorization test: Named (50.0%) vs Anonymized (54.7%)        │
-│  → Model learns from stats, not team name memorization         │
+│  Three prompt regimes on held-out 2022 WC (128 samples)        │
+│  ┌─────────────┬──────────────┬───────────────────┐           │
+│  │  Pregame    │  Halftime    │  HT + Events      │           │
+│  │  team stats │  + HT score  │  + goals/cards    │           │
+│  └─────────────┴──────────────┴───────────────────┘           │
+│                                                                 │
+│  Baselines: always-home · HT-leader · HT×2 · coarse prior ·    │
+│             ESPN-proxy prior · XGBoost (pregame + halftime)    │
+│                                                                 │
+│  Metrics: 1X2 acc · exact score · goal MAE · O/U 2.5/3.5 acc · │
+│           Brier · ECE · paired McNemar · Wilson CIs            │
 └─────────────────────────────────────────────────────────────────┘
                             │
                             ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                        SERVING                                  │
 │                                                                 │
-│  vLLM + FastAPI + Gradio  (serve_vllm.sh → api.py → demo_ui)  │
+│  vLLM (8000) ── FastAPI (8001) ── Gradio (7860)                │
+│  One-command:  docker compose up                                │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Project Structure
+## Headline results
 
-```
-football-llm/
-├── data/
-│   ├── raw/                          # Source datasets
-│   │   ├── world_cup_matches.csv     # 256 WC matches (2010–2022)
-│   │   ├── world_cup_lineups.csv     # Starting XI per match
-│   │   ├── world_cup_events.csv      # Goals, cards, substitutions
-│   │   ├── world_cup_team_match_stats.csv
-│   │   ├── world_cup_player_match_stats.csv
-│   │   └── player_stats/             # 40+ country player stat files
-│   ├── processed/
-│   │   ├── player_season_stats.csv   # 41K aggregated player-season rows
-│   │   └── match_contexts.json       # 256 enriched match contexts
-│   └── training/
-│       ├── train.jsonl               # 384 training samples
-│       └── eval.jsonl                # 128 evaluation samples
-├── src/
-│   ├── data_prep/
-│   │   ├── aggregate_player_stats.py # Step 1: merge player data sources
-│   │   ├── build_team_profiles.py    # Step 2: build team profiles per match
-│   │   ├── generate_training_data.py # Step 3: compact prompt generation
-│   │   └── run_pipeline.py           # Orchestrate all 3 steps
-│   ├── training/
-│   │   ├── run_sft.py               # CLI training script (multi-GPU)
-│   │   ├── merge_adapter_weights.py  # Merge LoRA → standalone model
-│   │   └── recipes/
-│   │       └── llama-3-1-8b-instruct-qlora.yaml
-│   ├── eval/
-│   │   └── eval_results.json          # Saved evaluation metrics
-│   └── serving/
-│       ├── serve_vllm.sh              # Launch vLLM server
-│       ├── api.py                     # FastAPI prediction endpoint
-│       └── demo_ui.py                 # Gradio interactive UI
-├── notebooks/
-│   ├── train_colab.ipynb             # End-to-end training on Colab T4
-│   ├── eval_harness.ipynb            # Full evaluation + baselines
-│   └── serve_demo.ipynb              # Serving demo on Colab T4
-├── results/                          # Eval output artifacts
-├── requirements.txt
-└── README.md
-```
+All numbers are on the 2022 FIFA World Cup held-out set. `n=128` = 64 matches × {named, anonymized} variants. `n=64` = unique matches (named subset, for XGBoost parity).
+
+### LLM vs. feature-matched XGBoost (n=64 named)
+
+| Metric | Pregame LLM | Pregame XGB | Halftime LLM | Halftime XGB |
+|:---|:---:|:---:|:---:|:---:|
+| 1X2 Result Accuracy | 50.0% | **51.6%** | **65.6%** | 62.5% |
+| Score Exact-Match | **39.1%** | 6.2% | **51.6%** | 10.9% |
+| Goal MAE | 1.06 | **0.98** | **0.68** | 0.77 |
+| **O/U 2.5 Directional** | **76.6%** | 54.7% | **81.3%** | 65.6% |
+
+The LLM's edge is almost entirely on score magnitude (39.1% vs. 6.2% exact-match pregame is a 6× gap), which flows through to 19–22pp gaps on O/U 2.5 directional accuracy.
+
+### Halftime-conditioned lift (n=128, paired)
+
+| Comparison | Metric | Δ | Exact McNemar |
+|:---|:---|:---:|:---:|
+| Pregame → Halftime | 1X2 accuracy | +11.8 pp | **p = 0.024** |
+| Pregame → Halftime + Events | O/U 2.5 accuracy | +14.1 pp | **p = 0.006** |
+| Halftime → Halftime + Events | 1X2 accuracy | −2.4 pp | p = 0.58 (noise) |
+| Halftime → Halftime + Events | O/U 2.5 accuracy | +5.5 pp | p = 0.12 |
+
+**The direction-vs-magnitude asymmetry is the key result.** Event enrichment improves magnitude-aware metrics (O/U, MAE, calibration) but not direction-aware metrics (1X2) — exactly as the decomposition predicts.
+
+### Simulated backtest (halftime strategy, 64 named matches)
+
+Fractional Kelly `f = 0.25`, 10% per-match cap, 5% edge threshold, flat 1.90/1.90 odds.
+
+| | LLM Halftime | LLM Pregame | XGBoost Halftime |
+|:---|:---:|:---:|:---:|
+| Win rate | **81.3%** | 76.6% | 65.6% |
+| Simulated ROI | +1,468% | +737% | +445% |
+| Max drawdown | **−10.4%** | −18.6% | −28.2% |
+| Match Sharpe | **4.08** | 3.42 | 2.24 |
+
+10,000-trial bootstrap (resample per-bet returns with replacement): median $15,968, 5th–95th percentile $[6,205, 37,379]$, profitable in 100% of resamples.
+
+> **Caveat.** The bootstrap is a CI on *conditional variance*, not a forecast of live returns. Realistic deployment after odds drift, tax, and conservative sizing (5% Kelly) projects to **15–40% per tournament cycle**. The 1,468% is a simulation artifact under flat odds — it is not a business plan.
 
 ---
 
-## Data Pipeline
+## Quickstart
 
-### Input Data
+### Option A — Reproduce the paper (no GPU needed)
 
-| Dataset | Records | Description |
-|:--------|--------:|:------------|
-| `world_cup_matches.csv` | 256 | Match metadata (2010–2022 World Cups) |
-| `world_cup_lineups.csv` | ~5,600 | Starting XI + substitutes per match |
-| `world_cup_events.csv` | ~2,400 | Goals, cards, substitutions with timestamps |
-| `world_cup_team_match_stats.csv` | ~512 | Team-level match stats (xG, possession, shots) |
-| `player_stats/` (40+ files) | ~41,000 | Per-player season stats from domestic leagues |
-
-### Step 1: Aggregate Player Stats
-
-Merges two data sources — WC player career stats and domestic league stats — into a unified player-season table. Deduplicates on `(player_id, season, team_id, league_id)`, computes per-90 rates (goals/90, tackles/90, dribble success %), and outputs **41,154 player-season rows**.
-
-### Step 2: Build Team Profiles
-
-For each of the 256 World Cup matches, looks up the starting XI, retrieves each player's stats from the **3 seasons prior** to the tournament, and aggregates into team-level profiles:
-
-- **Attacking**: total goals, goals/90, assists, top scorer, shots on target
-- **Defensive**: yellow/red cards, tackles/90, duel win %
-- **Technical**: passing accuracy, average player rating, dribble success %
-- **Context**: formation, coach, position breakdown, prior WC record, head-to-head history
-
-### Step 3: Generate Training Data
-
-Converts match contexts into a **compact prompt format** designed to fit within the 768-token sequence limit:
-
-```
-[System] You are a football match prediction model. Given team stats,
-         predict the result, score, and brief reasoning.
-
-[User]   World Cup 2018 | Group Stage - 1 | Luzhniki Stadium
-         Russia (Home) | Coach: Stanislav Cherchesov | Formation: 3-4-1-2
-         Squad: 11 starters | Avg Rating: 7.0
-         Attack: 104 goals (0.18/90) | 48 assists | Top scorer: 26 goals
-         Defense: 75 yellows, 1 reds | Tackles/90: 0.57 | Duels: 52%
-         Passing: 70% accuracy
-         ...
-         Predict result, score, and reasoning.
-
-[Assistant] Prediction: home_win
-            Score: 5-0
-            Reasoning: Russia's squad has higher goal output (104 vs 23)...
-```
-
-**Token budget**: All 512 samples (384 train + 128 eval) fit within **350 tokens** (against a 768 limit), ensuring the model sees the complete assistant response during training.
-
-**Temporal split**: Train on 2010 + 2014 + 2018 → Eval on 2022 (no data leakage).
-
-**Anonymization**: Each match generates two variants — one with real team names and one with "Team A / Team B" — to force the model to learn from statistical patterns rather than memorized team reputations. This doubles the dataset to 384 train + 128 eval.
-
----
-
-## Training
-
-### Configuration
-
-| Parameter | Value |
-|:----------|:------|
-| Base model | `meta-llama/Llama-3.1-8B-Instruct` |
-| Method | QLoRA (4-bit NF4 quantization) |
-| LoRA rank / alpha | r=16, α=32 |
-| LoRA targets | All linear layers (q/k/v/o/gate/up/down proj) |
-| Sequence length | 768 tokens |
-| Epochs | 3 |
-| Effective batch size | 16 (1 × 16 gradient accumulation) |
-| Learning rate | 2e-4 (cosine schedule, 10% warmup) |
-| Precision | float16 compute, NF4 quantized base |
-| GPU | Google Colab T4 (16 GB VRAM) |
-| Training time | **43 minutes** |
-| Peak VRAM | **5.7 GB** |
-| Adapter size | **83.9 MB** |
-
-### Training Curves
-
-| Epoch | Train Loss | Eval Loss |
-|:-----:|:----------:|:---------:|
-| 1 | 0.352 | 0.539 |
-| 2 | 0.259 | 0.595 |
-| 3 | 0.244 | 0.609 |
-
-The eval loss increases after epoch 1, indicating mild overfitting — expected with only 384 training samples. The model's downstream task performance (result accuracy, score matching) steadily improves regardless, since cross-entropy loss on the full sequence doesn't directly measure prediction quality.
-
----
-
-## Evaluation
-
-### Methodology
-
-The evaluation harness ([`eval_harness.ipynb`](notebooks/eval_harness.ipynb)) runs inference on all 128 held-out 2022 World Cup samples and computes:
-
-- **Result Accuracy**: Correct prediction of `home_win` / `draw` / `away_win`
-- **Exact Score Match**: Predicted score exactly matches ground truth
-- **Goal MAE**: Mean absolute error across home and away goals
-- **Parse Rate**: % of outputs that parse into a valid structured prediction
-
-### Results
-
-| Model | Parse Rate | Result Acc | Exact Score | Goal MAE |
-|:------|:----------:|:----------:|:-----------:|:--------:|
-| Base Llama 3.1 8B Instruct | 100% | 45.3% | 0.0% | 2.13 |
-| **Football-LLM (QLoRA)** | **100%** | **52.3%** | **29.7%** | **1.29** |
-| Baseline: Always Home Win | 100% | 45.3% | 10.9% | 1.11 |
-| Baseline: Random Weighted | 100% | 35.9% | 7.8% | 1.27 |
-| Baseline: Always Draw | 100% | 23.4% | 7.8% | 0.97 |
-
-### Key Findings
-
-1. **+7.0pp result accuracy** over the base model (52.3% vs 45.3%), showing the model learned meaningful patterns from the statistical profiles
-
-2. **29.7% exact score prediction** — the base model scored 0.0% (it doesn't understand the expected output format), while Football-LLM correctly predicts nearly 1 in 3 exact scorelines
-
-3. **100% parse rate** — every output follows the trained format (`Prediction: ... / Score: ... / Reasoning: ...`), confirming reliable structured generation
-
-4. **No memorization**: The anonymized variants (Team A/B) achieve 54.7% result accuracy vs 50.0% for named teams — the model performs *better* without team names, confirming it reasons from statistics rather than memorized reputations
-
-### Sample Prediction
-
-```
-Input:  England (Home) vs Iran (Away) — World Cup 2022 Group Stage
-
-Output: Prediction: home_win
-        Score: 6-2
-        Reasoning: England's squad has higher goal output (309 vs 141).
-        England's top scorer is more prolific (110 vs 78 goals).
-
-Actual: England 6 - 2 Iran ✓ (exact score match)
-```
-
----
-
-## Quick Start
-
-### 1. Run the Data Pipeline
+Every number in the paper regenerates from committed prediction dumps in [`results/`](results/):
 
 ```bash
-# Clone the repo
 git clone https://github.com/zanwenfu/football-llm.git
 cd football-llm
+pip install -e ".[dev]"
 
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the full 3-step data pipeline
-python src/data_prep/run_pipeline.py
+python scripts/reproduce_paper.py --output-dir figures/
 ```
 
-### 2. Train on Google Colab
+This regenerates Tables 1–2, every figure, the McNemar tests, the Wilson CIs, the Kelly sensitivity grid, and the bootstrap CI. Run time: ~30 seconds on a laptop.
 
-Open [`notebooks/train_colab.ipynb`](notebooks/train_colab.ipynb) in Google Colab:
+### Option B — Run the full pipeline (GPU required for training)
 
-1. Select **T4 GPU** runtime
-2. Add your HuggingFace token (requires Llama 3.1 access)
-3. Run all cells — training completes in ~43 minutes
+```bash
+# 1. Install
+pip install -e ".[train,serve]"
 
-### 3. Run Inference
+# 2. Rebuild training data from raw CSVs
+python -m football_llm.data_prep.run_pipeline
 
-```python
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
-from peft import PeftModel
+# 3. Fine-tune (Colab T4 or local ≥16GB VRAM, ~43 min)
+python -m football_llm.training.run_sft \
+  --config src/football_llm/training/recipes/llama-3-1-8b-instruct-qlora.yaml
 
-# Load model
-bnb_config = BitsAndBytesConfig(
-    load_in_4bit=True, bnb_4bit_use_double_quant=True,
-    bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.float16,
-)
-base_model = AutoModelForCausalLM.from_pretrained(
-    "meta-llama/Llama-3.1-8B-Instruct",
-    quantization_config=bnb_config, low_cpu_mem_usage=True,
-)
-model = PeftModel.from_pretrained(base_model, "zanwenfu/football-llm-qlora")
-tokenizer = AutoTokenizer.from_pretrained("zanwenfu/football-llm-qlora")
+# 4. Run inference across all three prompt regimes
+python -m football_llm.eval.run_inference --regime halftime_events
 
-# Predict
-messages = [
-    {"role": "system", "content": "You are a football match prediction model. Given team stats, predict the result, score, and brief reasoning."},
-    {"role": "user", "content": """World Cup 2022 | Semi Final | Al Bayt Stadium
+# 5. Recompute metrics and figures
+python scripts/reproduce_paper.py
+```
 
-Argentina (Home) | Coach: Lionel Scaloni | Formation: 4-3-3
+### Option C — One-command serving stack
+
+```bash
+export HUGGING_FACE_HUB_TOKEN=hf_...  # needs Llama 3.1 gated access
+docker compose up
+```
+
+Exposes:
+- vLLM OpenAI-compatible API at `http://localhost:8000`
+- FastAPI prediction endpoint at `http://localhost:8001/predict`
+- Gradio UI at `http://localhost:7860`
+
+---
+
+## Three prompt regimes
+
+All three use **identical model weights and decoding parameters** (temperature 0.1, top-p 0.9, 300 max tokens). The only difference is the user message content — halftime and event regimes are *pure prompt-template generalization* (the fine-tuning dataset contained no halftime scores or event sequences).
+
+### 1. Pregame
+
+```
+{tournament} | {stage} | {venue}
+
+{Home} (Home) | Coach: ... | Formation: ...
 Squad: 11 starters | Avg Rating: 7.2
 Attack: 450 goals (0.35/90) | 180 assists | Top scorer: 200 goals
 Defense: 120 yellows, 2 reds | Tackles/90: 0.6 | Duels: 55%
 Passing: 72% accuracy
 
-Croatia (Away) | Coach: Zlatko Dalic | Formation: 4-3-3
-Squad: 11 starters | Avg Rating: 7.0
-Attack: 280 goals (0.28/90) | 120 assists | Top scorer: 85 goals
-Defense: 95 yellows, 1 reds | Tackles/90: 0.55 | Duels: 53%
-Passing: 70% accuracy
+{Away} (Away) | ...
 
-H2H: No prior meetings
-
-Predict result, score, and reasoning."""}
-]
-
-inputs = tokenizer.apply_chat_template(messages, tokenize=True, return_tensors="pt", add_generation_prompt=True).to("cuda")
-outputs = model.generate(inputs, max_new_tokens=200, temperature=0.1, top_p=0.9, do_sample=True)
-print(tokenizer.decode(outputs[0][inputs.shape[1]:], skip_special_tokens=True))
+Predict result, score, and reasoning.
 ```
 
-### 4. Evaluate
+### 2. Halftime-conditioned
 
-Open [`notebooks/eval_harness.ipynb`](notebooks/eval_harness.ipynb) on Colab to reproduce all evaluation results, baselines, and the memorization test.
+Same team blocks, plus:
 
-### 5. Serve (Colab or Local)
-
-**Option A — Colab (recommended):** Open [`notebooks/serve_demo.ipynb`](notebooks/serve_demo.ipynb) on a T4 runtime. It launches vLLM, runs a test prediction, and starts a Gradio demo with a public URL.
-
-**Option B — Local GPU (≥16 GB VRAM):**
-
-Prerequisites: GPU with ≥16 GB VRAM (T4, A10, L4, A100), CUDA 12.x, Python 3.10+, and access to `meta-llama/Llama-3.1-8B-Instruct` on HuggingFace.
-
-```bash
-pip install -r requirements.txt
-huggingface-cli login  # required for gated Llama model
+```
+Halftime Score: {Home} 1 - 0 {Away}
+Given the halftime state, predict the FINAL result, FINAL score, and brief reasoning.
 ```
 
-**Step 1 — Start vLLM server** (port 8000):
+### 3. Halftime + first-half events
 
-```bash
-./src/serving/serve_vllm.sh
-# Wait until "Uvicorn running on http://0.0.0.0:8000"
-curl http://localhost:8000/v1/models   # verify
+Same as halftime, plus a chronological event line:
+
+```
+Halftime Score: {Home} 1 - 0 {Away}
+First-half events: 10' {Home} goal (penalty); 25' {Away} yellow card; 44' {Home} goal
+Given the halftime state and first-half events, predict the FINAL result, FINAL score, and brief reasoning.
 ```
 
-**Step 2 — Start FastAPI** (port 8001, new terminal):
+Events are filtered to `minute ≤ 45` and mapped to `Team A / Team B` in the anonymized variant so identity does not leak through event text.
 
-```bash
-uvicorn src.serving.api:app --host 0.0.0.0 --port 8001
-curl http://localhost:8001/health       # verify
+---
+
+## Project structure
+
+```
+football-llm/
+├── src/football_llm/
+│   ├── data_prep/          # 3-stage training-data pipeline
+│   ├── training/           # QLoRA SFT + adapter merge
+│   ├── eval/               # Metrics, backtest, figures (reproduces the paper)
+│   ├── baselines/          # XGBoost baseline on identical features
+│   └── serving/            # vLLM + FastAPI + Gradio stack
+├── scripts/
+│   ├── reproduce_paper.py  # Regenerate every number and figure in the PDF
+│   └── make_figures.py     # Just the figures
+├── tests/                  # Pytest suite (metrics, parser, prompt builder)
+├── results/
+│   ├── ft_predictions_pregame.json          # 128 predictions, audit trail
+│   ├── ft_predictions_halftime.json
+│   ├── ft_predictions_halftime_events.json
+│   └── README.md                            # Schema for each file
+├── data/
+│   ├── raw/                # API-Football scraper output (committed)
+│   ├── processed/          # Aggregated player-season + match contexts
+│   └── training/           # train.jsonl / eval.jsonl
+├── notebooks/              # Colab notebooks (train, eval, serve demo)
+├── football-data/          # API-Football scraper sub-project
+├── docker/                 # Dockerfile + compose config
+├── .github/workflows/      # CI: lint + tests
+├── pyproject.toml
+└── IDS598_Final_Project_Report.pdf
 ```
 
-Test a prediction:
+---
+
+## Statistical methodology
+
+This project takes statistical rigor seriously because the ML claims are pointing at real dollars.
+
+| Claim type | Test used | Why |
+|:---|:---|:---|
+| Proportion (e.g. "64.1% accuracy") | **Wilson score interval** | Better-calibrated than normal-approx near 0 or 1, especially at n=64 or 128 |
+| Within-match pairs (e.g. "halftime beats pregame") | **Exact McNemar test** | Higher power than unpaired tests on the same matches |
+| Probability calibration | **ECE (10 bins) + Brier** | ECE is the standard, Brier decomposes into calibration + sharpness |
+| Backtest P&L variance | **10,000-trial bootstrap** on per-bet returns | Interpreted as conditional variance, **not** a forecast |
+
+Where a test fails to reach p < 0.05, we say so explicitly rather than leaning on point estimates. See §4.2 of the paper.
+
+---
+
+## Serving
+
+The serving stack is three processes composed via `docker compose`:
+
+| Component | Port | Role |
+|:---|:---:|:---|
+| **vLLM** | 8000 | Loads Llama 3.1 8B + QLoRA adapter, serves OpenAI-compatible chat completions |
+| **FastAPI** | 8001 | Domain API — builds training-format prompts, calls vLLM, parses structured output |
+| **Gradio** | 7860 | Interactive web UI with preset examples |
+
+### Example: FastAPI `/predict`
 
 ```bash
 curl -X POST http://localhost:8001/predict \
   -H "Content-Type: application/json" \
   -d '{
-    "home_team": {
-      "name": "Argentina",
-      "goals": 450, "goals_per_90": 0.35, "assists": 180,
-      "avg_rating": 7.2, "top_scorer_goals": 200,
-      "yellows": 120, "reds": 2, "tackles_per_90": 0.6,
-      "duels_pct": 55, "pass_accuracy": 72,
-      "formation": "4-3-3", "coach": "Lionel Scaloni"
-    },
-    "away_team": {
-      "name": "France",
-      "goals": 420, "goals_per_90": 0.38, "assists": 170,
-      "avg_rating": 7.3, "top_scorer_goals": 190,
-      "yellows": 100, "reds": 1, "tackles_per_90": 0.55,
-      "duels_pct": 54, "pass_accuracy": 74,
-      "formation": "4-2-3-1", "coach": "Didier Deschamps"
-    },
-    "match": {
-      "tournament": "World Cup 2022",
-      "stage": "Final",
-      "venue": "Lusail Stadium"
-    }
+    "home_team": {"name": "Argentina", "goals": 450, "goals_per_90": 0.35, ...},
+    "away_team": {"name": "France", "goals": 420, "goals_per_90": 0.38, ...},
+    "match": {"tournament": "World Cup 2022", "stage": "Final", "venue": "Lusail"},
+    "regime": "halftime_events",
+    "halftime_score": {"home": 2, "away": 2},
+    "first_half_events": ["23'\'' Argentina goal (penalty)", "36'\'' Argentina goal", "45+1'\'' France goal"]
   }'
 ```
-
-**Step 3 — Start Gradio UI** (port 7860, new terminal):
-
-```bash
-python src/serving/demo_ui.py
-```
-
-Open http://localhost:7860 to predict matches interactively.
-
-#### Serving Architecture
-
-| Component | File | Port | Role |
-|:----------|:-----|:----:|:-----|
-| **vLLM** | `serve_vllm.sh` | 8000 | Model engine — loads Llama 3.1 8B + QLoRA adapter, serves OpenAI-compatible chat completions |
-| **FastAPI** | `api.py` | 8001 | API layer — constructs training-format prompts, calls vLLM, parses structured predictions |
-| **Gradio** | `demo_ui.py` | 7860 | Web UI — interactive form with preset examples, calls FastAPI |
-
-#### API Reference
-
-**`POST /predict`** — Request body:
-
-| Field | Type | Description |
-|:------|:-----|:------------|
-| `home_team` | `TeamStats` | Home team statistics |
-| `away_team` | `TeamStats` | Away team statistics |
-| `match` | `MatchContext` | Tournament, stage, venue |
-
-**TeamStats fields:** `name`, `goals`, `goals_per_90`, `assists`, `avg_rating`, `top_scorer_goals`, `yellows`, `reds`, `tackles_per_90`, `duels_pct`, `pass_accuracy`, `formation`, `coach`
 
 Response:
 
 ```json
 {
   "prediction": "home_win",
-  "score": "2-1",
-  "reasoning": "Argentina's squad has higher goal output...",
-  "raw_output": "Prediction: home_win\nScore: 2-1\nReasoning: ..."
+  "score": "3-3",
+  "over_2_5_probability": 0.94,
+  "reasoning": "Argentina leads 2-2 at halftime after trading goals...",
+  "regime": "halftime_events",
+  "raw_output": "..."
 }
 ```
 
-**`GET /health`** — Returns vLLM connectivity status and available models.
-
-#### Configuration
+Configuration via environment variables (all have sensible defaults):
 
 | Variable | Default | Description |
-|:---------|:--------|:------------|
-| `VLLM_BASE_URL` | `http://localhost:8000/v1` | vLLM server URL (in `api.py`) |
-| `MODEL_NAME` | `football-llm` | LoRA adapter name registered in vLLM |
-| `API_URL` | `http://localhost:8001` | FastAPI URL (in `demo_ui.py`) |
-| `PORT` | `8000` | vLLM port (in `serve_vllm.sh`) |
+|:---|:---|:---|
+| `VLLM_BASE_URL` | `http://localhost:8000/v1` | vLLM endpoint |
+| `MODEL_NAME` | `football-llm` | LoRA adapter name |
+| `API_TOKEN` | *(unset)* | Optional bearer token — when set, required on `/predict` |
+| `MAX_MODEL_LEN` | `768` | vLLM max sequence length |
 | `GPU_MEM_UTIL` | `0.9` | vLLM GPU memory fraction |
-| `MAX_MODEL_LEN` | `768` | Max sequence length |
 
 ---
 
-## Roadmap
+## Limitations
 
-- [x] Data engineering pipeline (3-stage)
-- [x] QLoRA fine-tuning on Colab T4
-- [x] Evaluation harness with baselines + memorization test
-- [x] Adapter weights on HuggingFace Hub
-- [x] vLLM + FastAPI + Gradio serving stack
-- [ ] Expand to 2026 World Cup predictions
+The paper's §7 lists these in detail. Short version:
+
+- **Single tournament (n=64 unique matches).** Paired McNemar on n=128 is significant (p=0.024 for halftime lift, p=0.006 for events lift on O/U 2.5). Individual LLM-vs-baseline comparisons at n=64 generally are not. Extension to Euro 2024 + Copa 2024 (~83 more matches) would push borderline comparisons below p=0.05 if the effect size replicates.
+- **Template-generalization, not trained on halftime prompts.** Both halftime and halftime+events regimes are inference-time prompt additions; the model was never fine-tuned on these formats. A natural next experiment is to regenerate training data with halftime+events prompts and retrain.
+- **Poisson approximation for O/U conversion.** Football scorelines are mildly over-dispersed vs. Poisson; a Conway-Maxwell-Poisson or negative-binomial fit could tighten probability estimates.
+- **Only Llama 3.1 8B tested.** A 70B variant on the same data would likely improve magnitude further; T4 compute budget prevented testing.
+- **XGBoost at feature parity only.** A heavily feature-engineered tabular baseline (H2H history, rest days, travel) could plausibly close the O/U gap. The predictive-validity test (§5.8) is partly a response to this: the event-enrichment magnitude gain is pattern that's harder to replicate without sequence modeling.
 
 ---
 
-## Technical Decisions
+## Citation
 
-| Decision | Rationale |
-|:---------|:----------|
-| **Compact prompts (≤350 tokens)** | Initial verbose prompts exceeded the 768-token limit — model never saw assistant completions during training. Redesigned to team-level aggregates only. |
-| **Anonymized variants** | Doubles dataset size and forces the model to learn from statistical patterns. Memorization test confirms 54.7% anon vs 50.0% named accuracy. |
-| **3-season lookback** | Balances recency (current form) with sample size (enough data per player). |
-| **Score-based result parsing** | Model sometimes outputs contradictory labels — parser derives result from predicted score for consistency. |
-| **float16 (not bf16)** | T4 GPU (Turing architecture) does not support bfloat16. |
+```bibtex
+@misc{fu2026footballllm,
+  author = {Fu, Zanwen},
+  title = {Dynamic In-Play Football Betting via a QLoRA-Fine-Tuned LLM:
+           A Halftime-Conditioned Strategy for Over/Under Markets},
+  year = {2026},
+  url = {https://github.com/zanwenfu/football-llm},
+}
+```
 
 ---
 
 ## References
 
-- [How to fine-tune open LLMs in 2025](https://www.philschmid.de/fine-tune-llms-in-2025) — Phil Schmid (training methodology)
-- [Llama 3.1 8B Instruct](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct) — Meta AI
-- [QLoRA: Efficient Finetuning of Quantized Language Models](https://arxiv.org/abs/2305.14314) — Dettmers et al., 2023
-- [TRL: Transformer Reinforcement Learning](https://github.com/huggingface/trl) — Hugging Face
+1. Dettmers et al. **QLoRA: Efficient Finetuning of Quantized LLMs.** NeurIPS 2023.
+2. Dixon & Coles. **Modelling association football scores and inefficiencies in the football betting market.** JRSS-C, 1997.
+3. Paul & Weinbach. **Bettor preferences and market efficiency in football totals markets.** J. Economics and Finance, 2013.
+4. Phil Schmid. [How to fine-tune open LLMs in 2025](https://www.philschmid.de/fine-tune-llms-in-2025) — training methodology.
 
 ---
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE).

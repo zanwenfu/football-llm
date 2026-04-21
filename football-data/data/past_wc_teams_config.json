@@ -1,0 +1,151 @@
+{
+  "4": {
+    "name": "Russia",
+    "wc_years": [
+      2018,
+      2014
+    ],
+    "file_key": "russia"
+  },
+  "5": {
+    "name": "Sweden",
+    "wc_years": [
+      2018
+    ],
+    "file_key": "sweden"
+  },
+  "14": {
+    "name": "Serbia",
+    "wc_years": [
+      2022,
+      2018,
+      2010
+    ],
+    "file_key": "serbia"
+  },
+  "18": {
+    "name": "Iceland",
+    "wc_years": [
+      2018
+    ],
+    "file_key": "iceland"
+  },
+  "19": {
+    "name": "Nigeria",
+    "wc_years": [
+      2018,
+      2014,
+      2010
+    ],
+    "file_key": "nigeria"
+  },
+  "21": {
+    "name": "Denmark",
+    "wc_years": [
+      2022,
+      2018,
+      2010
+    ],
+    "file_key": "denmark"
+  },
+  "24": {
+    "name": "Poland",
+    "wc_years": [
+      2022,
+      2018
+    ],
+    "file_key": "poland"
+  },
+  "29": {
+    "name": "Costa Rica",
+    "wc_years": [
+      2022,
+      2018,
+      2014
+    ],
+    "file_key": "costa_rica"
+  },
+  "30": {
+    "name": "Peru",
+    "wc_years": [
+      2018
+    ],
+    "file_key": "peru"
+  },
+  "767": {
+    "name": "Wales",
+    "wc_years": [
+      2022
+    ],
+    "file_key": "wales"
+  },
+  "768": {
+    "name": "Italy",
+    "wc_years": [
+      2014,
+      2010
+    ],
+    "file_key": "italy"
+  },
+  "773": {
+    "name": "Slovakia",
+    "wc_years": [
+      2010
+    ],
+    "file_key": "slovakia"
+  },
+  "1091": {
+    "name": "Slovenia",
+    "wc_years": [
+      2010
+    ],
+    "file_key": "slovenia"
+  },
+  "1113": {
+    "name": "Bosnia & Herzegovina",
+    "wc_years": [
+      2014
+    ],
+    "file_key": "bosnia_and_herzegovina"
+  },
+  "1117": {
+    "name": "Greece",
+    "wc_years": [
+      2014,
+      2010
+    ],
+    "file_key": "greece"
+  },
+  "1530": {
+    "name": "Cameroon",
+    "wc_years": [
+      2022,
+      2014,
+      2010
+    ],
+    "file_key": "cameroon"
+  },
+  "1561": {
+    "name": "North Korea",
+    "wc_years": [
+      2010
+    ],
+    "file_key": "north_korea"
+  },
+  "2383": {
+    "name": "Chile",
+    "wc_years": [
+      2014,
+      2010
+    ],
+    "file_key": "chile"
+  },
+  "4672": {
+    "name": "Honduras",
+    "wc_years": [
+      2014,
+      2010
+    ],
+    "file_key": "honduras"
+  }
+}

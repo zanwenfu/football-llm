@@ -1,0 +1,84 @@
+# Football-LLM serving stack: vLLM (model engine) + FastAPI (domain API) + Gradio (UI).
+#
+# Usage:
+#   export HUGGING_FACE_HUB_TOKEN=hf_...  # required for gated Llama 3.1
+#   docker compose up
+#
+# Requires: NVIDIA GPU with ≥16 GB VRAM + nvidia-container-toolkit.
+# To skip vLLM (e.g. on CPU-only hosts), bring up just api+ui and point
+# VLLM_BASE_URL at an external vLLM server:
+#   docker compose up api ui
+#
+# Ports:
+#   8000 — vLLM OpenAI-compatible API
+#   8001 — FastAPI domain service
+#   7860 — Gradio UI
+
+services:
+  vllm:
+    image: vllm/vllm-openai:latest
+    profiles: ["gpu"]  # opt-in: not started unless --profile gpu
+    ports:
+      - "8000:8000"
+    environment:
+      - HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN:?set HUGGING_FACE_HUB_TOKEN in .env}
+      - HF_HUB_ENABLE_HF_TRANSFER=1
+    ipc: host
+    volumes:
+      - hf-cache:/root/.cache/huggingface
+    command: >
+      --model meta-llama/Llama-3.1-8B-Instruct
+      --enable-lora
+      --lora-modules football-llm=zanwenfu/football-llm-qlora
+      --max-model-len 768
+      --gpu-memory-utilization 0.9
+      --quantization bitsandbytes
+      --load-format bitsandbytes
+      --dtype float16
+      --max-lora-rank 16
+      --trust-remote-code
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/v1/models || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    ports:
+      - "8001:8001"
+    environment:
+      - VLLM_BASE_URL=${VLLM_BASE_URL:-http://vllm:8000/v1}
+      - MODEL_NAME=${MODEL_NAME:-football-llm}
+      - API_TOKEN=${API_TOKEN:-}
+      - MAX_OUTPUT_TOKENS=${MAX_OUTPUT_TOKENS:-300}
+      - TEMPERATURE=${TEMPERATURE:-0.1}
+      - TOP_P=${TOP_P:-0.9}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    restart: unless-stopped
+
+  ui:
+    build:
+      context: .
+      dockerfile: docker/ui.Dockerfile
+    ports:
+      - "7860:7860"
+    environment:
+      - API_URL=${API_URL:-http://api:8001}
+    depends_on:
+      api:
+        condition: service_started
+    restart: unless-stopped
+
+volumes:
+  hf-cache:

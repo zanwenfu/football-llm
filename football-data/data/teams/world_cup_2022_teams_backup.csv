@@ -1,0 +1,33 @@
+team_id,team_name,country,code,founded,national,logo,venue_name,venue_city,venue_capacity,is_host
+1,Belgium,Belgium,BEL,1895,True,https://media.api-sports.io/football/teams/1.png,Stade Roi Baudouin,Brussel,50093,False
+2,France,France,FRA,1919,True,https://media.api-sports.io/football/teams/2.png,Stade de France,Saint-Denis,81338,False
+3,Croatia,Croatia,CRO,1912,True,https://media.api-sports.io/football/teams/3.png,Stadion Maksimir,Zagreb,37168,False
+6,Brazil,Brazil,BRA,1914,True,https://media.api-sports.io/football/teams/6.png,Neo Química Arena,"São Paulo, São Paulo",49205,False
+7,Uruguay,Uruguay,URU,1900,True,https://media.api-sports.io/football/teams/7.png,Estadio Centenario,Montevideo,60235,False
+9,Spain,Spain,SPA,1913,True,https://media.api-sports.io/football/teams/9.png,Estadio Santiago Bernabéu,Madrid,85454,False
+10,England,England,ENG,1863,True,https://media.api-sports.io/football/teams/10.png,The City Ground,"Nottingham, Nottinghamshire",30576,False
+12,Japan,Japan,JAP,1921,True,https://media.api-sports.io/football/teams/12.png,Panasonic Stadium Suita,Suita,40322,False
+13,Senegal,Senegal,SEN,1960,True,https://media.api-sports.io/football/teams/13.png,Stade Me Abdoulaye Wade,Diamniadio,50000,False
+14,Serbia,Serbia,SER,1919,True,https://media.api-sports.io/football/teams/14.png,Stadion Rajko Mitić,Beograd,51862,False
+15,Switzerland,Switzerland,SWI,1895,True,https://media.api-sports.io/football/teams/15.png,kybunpark,St. Gallen,20029,False
+16,Mexico,Mexico,MEX,1927,True,https://media.api-sports.io/football/teams/16.png,Oakland-Alameda County Coliseum,"Oakland, California",63026,True
+17,South Korea,South-Korea,SOU,1933,True,https://media.api-sports.io/football/teams/17.png,Yongin Mireu Stadium,Yongin,37155,False
+20,Australia,Australia,AUS,1961,True,https://media.api-sports.io/football/teams/20.png,CommBank Stadium,Sydney,30000,False
+21,Denmark,Denmark,DEN,1889,True,https://media.api-sports.io/football/teams/21.png,Nature Energy Park,Odense,15790,False
+22,Iran,Iran,IRA,1920,True,https://media.api-sports.io/football/teams/22.png,Imam Reza Stadium,Mashhad,25000,False
+23,Saudi Arabia,Saudi-Arabia,SAU,1956,True,https://media.api-sports.io/football/teams/23.png,EGO Stadium,Ad Dammām (Dammam),15000,False
+24,Poland,Poland,POL,1919,True,https://media.api-sports.io/football/teams/24.png,Stadion Śląski,Chorzów,55211,False
+25,Germany,Germany,GER,1900,True,https://media.api-sports.io/football/teams/25.png,Olympiastadion Berlin,Berlin,74667,False
+26,Argentina,Argentina,ARG,1893,True,https://media.api-sports.io/football/teams/26.png,Estadio Alberto José Armando,Ciudad de Buenos Aires,57200,False
+27,Portugal,Portugal,POR,1914,True,https://media.api-sports.io/football/teams/27.png,Estádio Nacional,"Jamor, Oeiras",38000,False
+28,Tunisia,Tunisia,TUN,1957,True,https://media.api-sports.io/football/teams/28.png,Stade olympique Hammadi-Agrebi,Radès,65000,False
+29,Costa Rica,Costa-Rica,COS,1921,True,https://media.api-sports.io/football/teams/29.png,Snapdragon Stadium,"San Diego, California",35000,False
+31,Morocco,Morocco,MOR,1955,True,https://media.api-sports.io/football/teams/31.png,Complexe Sportif de Fès,Fès,45000,False
+767,Wales,Wales,WAL,1876,True,https://media.api-sports.io/football/teams/767.png,Swansea.com Stadium,Swansea,21028,False
+1118,Netherlands,Netherlands,NET,1889,True,https://media.api-sports.io/football/teams/1118.png,Johan Cruijff ArenA,Amsterdam,55885,False
+1504,Ghana,Ghana,GHA,1957,True,https://media.api-sports.io/football/teams/1504.png,Accra Sports Stadium,Accra,35000,False
+1530,Cameroon,Cameroon,CAM,1959,True,https://media.api-sports.io/football/teams/1530.png,Stade Omnisports de Bafoussam,Bafoussam,20000,False
+1569,Qatar,Qatar,QAT,1960,True,https://media.api-sports.io/football/teams/1569.png,Khalifa International Stadium,Al Rayyan (Ar-Rayyan),45857,False
+2382,Ecuador,Ecuador,ECU,1925,True,https://media.api-sports.io/football/teams/2382.png,Estadio Rodrigo Paz Delgado,Quito,55104,False
+2384,USA,USA,USA,1913,True,https://media.api-sports.io/football/teams/2384.png,GEODIS Park,"Nashville, Tennessee",30109,True
+5529,Canada,Canada,CAN,1912,True,https://media.api-sports.io/football/teams/5529.png,BMO Field,"Toronto, Ontario",36045,True

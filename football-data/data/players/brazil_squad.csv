@@ -1,0 +1,44 @@
+player_id,player_name,team_id,team_name,age,number,position,photo
+280,Alisson Becker,6,Brazil,33,1.0,Goalkeeper,https://media.api-sports.io/football/players/280.png
+10111,Bento,6,Brazil,26,12.0,Goalkeeper,https://media.api-sports.io/football/players/10111.png
+617,Ederson,6,Brazil,32,23.0,Goalkeeper,https://media.api-sports.io/football/players/617.png
+123759,Hugo Souza,6,Brazil,26,23.0,Goalkeeper,https://media.api-sports.io/football/players/123759.png
+70366,John,6,Brazil,29,,Goalkeeper,https://media.api-sports.io/football/players/70366.png
+860,Alex Sandro,6,Brazil,34,6.0,Defender,https://media.api-sports.io/football/players/860.png
+142691,Alexsandro Ribeiro,6,Brazil,26,15.0,Defender,https://media.api-sports.io/football/players/142691.png
+307835,Beraldo,6,Brazil,22,15.0,Defender,https://media.api-sports.io/football/players/307835.png
+10316,Caio Henrique,6,Brazil,28,16.0,Defender,https://media.api-sports.io/football/players/10316.png
+618,Danilo,6,Brazil,34,2.0,Defender,https://media.api-sports.io/football/players/618.png
+372,Éder Militão,6,Brazil,27,3.0,Defender,https://media.api-sports.io/football/players/372.png
+10089,Fabrício Bruno,6,Brazil,29,14.0,Defender,https://media.api-sports.io/football/players/10089.png
+22224,Gabriel Magalhães,6,Brazil,28,3.0,Defender,https://media.api-sports.io/football/players/22224.png
+257,Marquinhos,6,Brazil,31,4.0,Defender,https://media.api-sports.io/football/players/257.png
+133910,Paulo Henrique,6,Brazil,29,,Defender,https://media.api-sports.io/football/players/133910.png
+24866,Douglas Santos,6,Brazil,31,6.0,Defender,https://media.api-sports.io/football/players/24866.png
+8661,Vitinho,6,Brazil,26,13.0,Defender,https://media.api-sports.io/football/players/8661.png
+349001,Wesley,6,Brazil,22,2.0,Defender,https://media.api-sports.io/football/players/349001.png
+265784,André,6,Brazil,24,18.0,Midfielder,https://media.api-sports.io/football/players/265784.png
+305834,Andrey Santos,6,Brazil,21,18.0,Midfielder,https://media.api-sports.io/football/players/305834.png
+10135,Bruno Guimarães,6,Brazil,28,8.0,Midfielder,https://media.api-sports.io/football/players/10135.png
+10238,Carlos Augusto,6,Brazil,26,16.0,Midfielder,https://media.api-sports.io/football/players/10238.png
+747,Casemiro,6,Brazil,33,5.0,Midfielder,https://media.api-sports.io/football/players/747.png
+299,Fabinho,6,Brazil,32,15.0,Midfielder,https://media.api-sports.io/football/players/299.png
+9994,Jean Lucas,6,Brazil,27,17.0,Midfielder,https://media.api-sports.io/football/players/9994.png
+195103,João Gomes,6,Brazil,24,5.0,Midfielder,https://media.api-sports.io/football/players/195103.png
+723,Joelinton,6,Brazil,29,17.0,Midfielder,https://media.api-sports.io/football/players/723.png
+1646,Lucas Paquetá,6,Brazil,28,11.0,Midfielder,https://media.api-sports.io/football/players/1646.png
+899,Andreas Pereira,6,Brazil,29,5.0,Midfielder,https://media.api-sports.io/football/players/899.png
+126936,Samuel Lino,6,Brazil,26,21.0,Midfielder,https://media.api-sports.io/football/players/126936.png
+1165,Matheus Cunha,6,Brazil,26,21.0,Attacker,https://media.api-sports.io/football/players/1165.png
+425733,Estêvão,6,Brazil,18,20.0,Attacker,https://media.api-sports.io/football/players/425733.png
+9366,Igor Jesus,6,Brazil,24,9.0,Attacker,https://media.api-sports.io/football/players/9366.png
+10329,João Pedro,6,Brazil,24,7.0,Attacker,https://media.api-sports.io/football/players/10329.png
+10008,Kaio Jorge,6,Brazil,23,17.0,Attacker,https://media.api-sports.io/football/players/10008.png
+197383,Luciano Juba,6,Brazil,26,,Attacker,https://media.api-sports.io/football/players/197383.png
+265785,Luiz Henrique,6,Brazil,24,19.0,Attacker,https://media.api-sports.io/football/players/265785.png
+127769,Gabriel Martinelli,6,Brazil,24,22.0,Attacker,https://media.api-sports.io/football/players/127769.png
+1496,Raphinha,6,Brazil,29,10.0,Attacker,https://media.api-sports.io/football/players/1496.png
+2413,Richarlison,6,Brazil,28,9.0,Attacker,https://media.api-sports.io/football/players/2413.png
+10009,Rodrygo,6,Brazil,24,10.0,Attacker,https://media.api-sports.io/football/players/10009.png
+762,Vinícius Júnior,6,Brazil,25,10.0,Attacker,https://media.api-sports.io/football/players/762.png
+340279,Vitor Roque,6,Brazil,20,9.0,Attacker,https://media.api-sports.io/football/players/340279.png

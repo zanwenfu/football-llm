@@ -1,0 +1,257 @@
+fixture_id,world_cup_year,date,round,venue_name,venue_city,referee,status,status_long,elapsed_minutes,home_team_id,home_team_name,home_team_winner,away_team_id,away_team_name,away_team_winner,home_goals,away_goals,halftime_home,halftime_away,fulltime_home,fulltime_away,extratime_home,extratime_away,went_to_extra_time,penalty_home,penalty_away,went_to_penalties
+208393,2010,2010-06-11T14:00:00+00:00,Group Stage - 1,FNB Stadium,"Johannesburg, GA",R. Irmatov,FT,Match Finished,90,1531,South Africa,,16,Mexico,,1,1,0,0,1,1,,,False,,,False
+208394,2010,2010-06-11T18:30:00+00:00,Group stage - 1,Cape Town Stadium (Cape Town),,,FT,Match Finished,90,7,Uruguay,,2,France,,0,0,0,0,0,0,,,False,,,False
+208395,2010,2010-06-12T11:30:00+00:00,Group Stage - 1,Nelson Mandela Bay Stadium,Port Elizabeth,M. Hester,FT,Match Finished,90,17,South Korea,True,1117,Greece,False,2,0,1,0,2,0,,,False,,,False
+208396,2010,2010-06-12T14:00:00+00:00,Group Stage - 1,Emirates Airline Park,"Johannesburg, GA",W. Stark,FT,Match Finished,90,26,Argentina,True,19,Nigeria,False,1,0,1,0,1,0,,,False,,,False
+208397,2010,2010-06-12T18:30:00+00:00,Group Stage - 1,Royal Bafokeng Stadium,"Phokeng, NW",Carlos Simon,FT,Match Finished,90,10,England,,2384,USA,,1,1,1,1,1,1,,,False,,,False
+208398,2010,2010-06-13T11:30:00+00:00,Group Stage - 1,Peter Mokaba Stadium,Pietersburg,C. Batres,FT,Match Finished,90,1532,Algeria,False,1091,Slovenia,True,0,1,0,0,0,1,,,False,,,False
+208399,2010,2010-06-13T14:00:00+00:00,Group Stage - 1,Loftus Versfeld Stadium,Tshwane,H. Baldassi,FT,Match Finished,90,14,Serbia,False,1504,Ghana,True,0,1,0,0,0,1,,,False,,,False
+208400,2010,2010-06-13T18:30:00+00:00,Group Stage - 1,Moses Mabhida Stadium,Durban,M. Rodríguez,FT,Match Finished,90,25,Germany,True,20,Australia,False,4,0,2,0,4,0,,,False,,,False
+208401,2010,2010-06-14T11:30:00+00:00,Group Stage - 1,FNB Stadium,"Johannesburg, GA",S. Lannoy,FT,Match Finished,90,1118,Netherlands,True,21,Denmark,False,2,0,0,0,2,0,,,False,,,False
+208402,2010,2010-06-14T14:00:00+00:00,Group Stage - 1,Free State Stadium,Bloemfontein,Olegário Benquerença,FT,Match Finished,90,12,Japan,True,1530,Cameroon,False,1,0,1,0,1,0,,,False,,,False
+208403,2010,2010-06-14T18:30:00+00:00,Group Stage - 1,Cape Town Stadium,Cape Town,B. Archundia,FT,Match Finished,90,768,Italy,,2380,Paraguay,,1,1,0,1,1,1,,,False,,,False
+208404,2010,2010-06-15T11:30:00+00:00,Group Stage - 1,Royal Bafokeng Stadium,"Phokeng, NW",J. Damon,FT,Match Finished,90,4673,New Zealand,,773,Slovakia,,1,1,0,0,1,1,,,False,,,False
+208405,2010,2010-06-15T14:00:00+00:00,Group Stage - 1,Nelson Mandela Bay Stadium,Port Elizabeth,J. Larrionda,FT,Match Finished,90,1501,Ivory Coast,,27,Portugal,,0,0,0,0,0,0,,,False,,,False
+208406,2010,2010-06-15T18:30:00+00:00,Group Stage - 1,Emirates Airline Park,"Johannesburg, GA",V. Kassai,FT,Match Finished,90,6,Brazil,True,1561,North Korea,False,2,1,0,0,2,1,,,False,,,False
+208407,2010,2010-06-16T11:30:00+00:00,Group Stage - 1,Mbombela Stadium,Nelspruit,E. Maillet,FT,Match Finished,90,4672,Honduras,False,2383,Chile,True,0,1,0,1,0,1,,,False,,,False
+208408,2010,2010-06-16T14:00:00+00:00,Group Stage - 1,Moses Mabhida Stadium,Durban,H. Webb,FT,Match Finished,90,9,Spain,False,15,Switzerland,True,0,1,0,0,0,1,,,False,,,False
+208409,2010,2010-06-16T18:30:00+00:00,Group stage - 2,Loftus Versfeld Stadium (Pretoria (Tshwane)),,,FT,Match Finished,90,1531,South Africa,False,7,Uruguay,True,0,3,0,1,0,3,,,False,,,False
+208410,2010,2010-06-17T11:30:00+00:00,Group Stage - 2,FNB Stadium,"Johannesburg, GA",F. De Bleeckere,FT,Match Finished,90,26,Argentina,True,17,South Korea,False,4,1,2,1,4,1,,,False,,,False
+208411,2010,2010-06-17T14:00:00+00:00,Group Stage - 2,Free State Stadium,Bloemfontein,O. Ruíz,FT,Match Finished,90,1117,Greece,True,19,Nigeria,False,2,1,1,1,2,1,,,False,,,False
+208412,2010,2010-06-17T18:30:00+00:00,Group Stage - 2,Peter Mokaba Stadium,Pietersburg,Khalil Al Ghamdi,FT,Match Finished,90,2,France,False,16,Mexico,True,0,2,0,0,0,2,,,False,,,False
+208413,2010,2010-06-18T11:30:00+00:00,Group Stage - 2,Nelson Mandela Bay Stadium,Port Elizabeth,Alberto Undiano,FT,Match Finished,90,25,Germany,False,14,Serbia,True,0,1,0,1,0,1,,,False,,,False
+208414,2010,2010-06-18T14:00:00+00:00,Group Stage - 2,Emirates Airline Park,"Johannesburg, GA",K. Coulibaly,FT,Match Finished,90,1091,Slovenia,,2384,USA,,2,2,2,0,2,2,,,False,,,False
+208415,2010,2010-06-18T18:30:00+00:00,Group Stage - 2,Cape Town Stadium,Cape Town,R. Irmatov,FT,Match Finished,90,10,England,,1532,Algeria,,0,0,0,0,0,0,,,False,,,False
+208416,2010,2010-06-19T11:30:00+00:00,Group Stage - 2,Moses Mabhida Stadium,Durban,H. Baldassi,FT,Match Finished,90,1118,Netherlands,True,12,Japan,False,1,0,0,0,1,0,,,False,,,False
+208417,2010,2010-06-19T14:00:00+00:00,Group Stage - 2,Royal Bafokeng Stadium,"Phokeng, NW",R. Rosetti,FT,Match Finished,90,1504,Ghana,,20,Australia,,1,1,1,1,1,1,,,False,,,False
+208418,2010,2010-06-19T18:30:00+00:00,Group Stage - 2,Loftus Versfeld Stadium,Tshwane,J. Larrionda,FT,Match Finished,90,1530,Cameroon,False,21,Denmark,True,1,2,1,1,1,2,,,False,,,False
+208419,2010,2010-06-20T11:30:00+00:00,Group Stage - 2,Free State Stadium,Bloemfontein,E. Maillet,FT,Match Finished,90,773,Slovakia,False,2380,Paraguay,True,0,2,0,1,0,2,,,False,,,False
+208420,2010,2010-06-20T14:00:00+00:00,Group Stage - 2,Mbombela Stadium,Nelspruit,C. Batres,FT,Match Finished,90,768,Italy,,4673,New Zealand,,1,1,1,1,1,1,,,False,,,False
+208421,2010,2010-06-20T18:30:00+00:00,Group Stage - 2,FNB Stadium,"Johannesburg, GA",S. Lannoy,FT,Match Finished,90,6,Brazil,True,1501,Ivory Coast,False,3,1,1,0,3,1,,,False,,,False
+208422,2010,2010-06-21T11:30:00+00:00,Group Stage - 2,Cape Town Stadium,Cape Town,P. Pozo,FT,Match Finished,90,27,Portugal,True,1561,North Korea,False,7,0,1,0,7,0,,,False,,,False
+208423,2010,2010-06-21T14:00:00+00:00,Group Stage - 2,Nelson Mandela Bay Stadium,Port Elizabeth,Khalil Al Ghamdi,FT,Match Finished,90,2383,Chile,True,15,Switzerland,False,1,0,0,0,1,0,,,False,,,False
+208424,2010,2010-06-21T18:30:00+00:00,Group Stage - 2,Emirates Airline Park,"Johannesburg, GA",Y. Nishimura,FT,Match Finished,90,9,Spain,True,4672,Honduras,False,2,0,1,0,2,0,,,False,,,False
+208425,2010,2010-06-22T14:00:00+00:00,Group Stage - 3,Free State Stadium,Bloemfontein,O. Ruíz,FT,Match Finished,90,2,France,False,1531,South Africa,True,1,2,0,2,1,2,,,False,,,False
+208426,2010,2010-06-22T14:00:00+00:00,Group stage - 4,"Royal Bafokeng Stadium (Phokeng, NW)",,,FT,Match Finished,90,16,Mexico,False,7,Uruguay,True,0,1,0,1,0,1,,,False,,,False
+208427,2010,2010-06-22T18:30:00+00:00,Group Stage - 3,Moses Mabhida Stadium,Durban,Olegário Benquerença,FT,Match Finished,90,19,Nigeria,,17,South Korea,,2,2,1,1,2,2,,,False,,,False
+208428,2010,2010-06-22T18:30:00+00:00,Group Stage - 3,Peter Mokaba Stadium,Pietersburg,R. Irmatov,FT,Match Finished,90,1117,Greece,False,26,Argentina,True,0,2,0,0,0,2,,,False,,,False
+208429,2010,2010-06-23T14:00:00+00:00,Group Stage - 3,Nelson Mandela Bay Stadium,Port Elizabeth,W. Stark,FT,Match Finished,90,1091,Slovenia,False,10,England,True,0,1,0,1,0,1,,,False,,,False
+208430,2010,2010-06-23T14:00:00+00:00,Group Stage - 3,Loftus Versfeld Stadium,Tshwane,F. De Bleeckere,FT,Match Finished,90,2384,USA,True,1532,Algeria,False,1,0,0,0,1,0,,,False,,,False
+208431,2010,2010-06-23T18:30:00+00:00,Group Stage - 3,Mbombela Stadium,Nelspruit,J. Larrionda,FT,Match Finished,90,20,Australia,True,14,Serbia,False,2,1,0,0,2,1,,,False,,,False
+208432,2010,2010-06-23T18:30:00+00:00,Group Stage - 3,FNB Stadium,"Johannesburg, GA",Carlos Simon,FT,Match Finished,90,1504,Ghana,False,25,Germany,True,0,1,0,0,0,1,,,False,,,False
+208433,2010,2010-06-24T14:00:00+00:00,Group Stage - 3,Emirates Airline Park,"Johannesburg, GA",H. Webb,FT,Match Finished,90,773,Slovakia,True,768,Italy,False,3,2,1,0,3,2,,,False,,,False
+208434,2010,2010-06-24T14:00:00+00:00,Group Stage - 3,Peter Mokaba Stadium,Pietersburg,Y. Nishimura,FT,Match Finished,90,2380,Paraguay,,4673,New Zealand,,0,0,0,0,0,0,,,False,,,False
+208435,2010,2010-06-24T18:30:00+00:00,Group Stage - 3,Cape Town Stadium,Cape Town,P. Pozo,FT,Match Finished,90,1530,Cameroon,False,1118,Netherlands,True,1,2,0,1,1,2,,,False,,,False
+208436,2010,2010-06-24T18:30:00+00:00,Group Stage - 3,Royal Bafokeng Stadium,"Phokeng, NW",J. Damon,FT,Match Finished,90,21,Denmark,False,12,Japan,True,1,3,0,2,1,3,,,False,,,False
+208437,2010,2010-06-25T14:00:00+00:00,Group Stage - 3,Moses Mabhida Stadium,Durban,B. Archundia,FT,Match Finished,90,27,Portugal,,6,Brazil,,0,0,0,0,0,0,,,False,,,False
+208438,2010,2010-06-25T14:00:00+00:00,Group Stage - 3,Mbombela Stadium,Nelspruit,Alberto Undiano,FT,Match Finished,90,1561,North Korea,False,1501,Ivory Coast,True,0,3,0,2,0,3,,,False,,,False
+208439,2010,2010-06-25T18:30:00+00:00,Group Stage - 3,Loftus Versfeld Stadium,Tshwane,M. Rodríguez,FT,Match Finished,90,2383,Chile,False,9,Spain,True,1,2,0,2,1,2,,,False,,,False
+208440,2010,2010-06-25T18:30:00+00:00,Group Stage - 3,Free State Stadium,Bloemfontein,H. Baldassi,FT,Match Finished,90,15,Switzerland,,4672,Honduras,,0,0,0,0,0,0,,,False,,,False
+208377,2010,2010-06-26T14:00:00+00:00,8th Finals,Nelson Mandela Bay Stadium,Port Elizabeth,W. Stark,FT,Match Finished,90,7,Uruguay,True,17,South Korea,False,2,1,1,0,2,1,,,False,,,False
+208378,2010,2010-06-26T18:30:00+00:00,8th Finals,Royal Bafokeng Stadium,"Phokeng, NW",V. Kassai,AET,Match Finished,120,2384,USA,False,1504,Ghana,True,1,2,0,1,1,1,0.0,1.0,True,,,False
+208379,2010,2010-06-27T14:00:00+00:00,8th Finals,Free State Stadium,Bloemfontein,J. Larrionda,FT,Match Finished,90,25,Germany,True,10,England,False,4,1,2,1,4,1,,,False,,,False
+208380,2010,2010-06-27T18:30:00+00:00,8th Finals,FNB Stadium,"Johannesburg, GA",R. Rosetti,FT,Match Finished,90,26,Argentina,True,16,Mexico,False,3,1,2,0,3,1,,,False,,,False
+208381,2010,2010-06-28T14:00:00+00:00,8th Finals,Moses Mabhida Stadium,Durban,Alberto Undiano,FT,Match Finished,90,1118,Netherlands,True,773,Slovakia,False,2,1,1,0,2,1,,,False,,,False
+208382,2010,2010-06-28T18:30:00+00:00,8th Finals,Emirates Airline Park,"Johannesburg, GA",H. Webb,FT,Match Finished,90,6,Brazil,True,2383,Chile,False,3,0,2,0,3,0,,,False,,,False
+208383,2010,2010-06-29T14:00:00+00:00,8th Finals,Loftus Versfeld Stadium,Tshwane,F. De Bleeckere,PEN,Match Finished,120,2380,Paraguay,True,12,Japan,False,0,0,0,0,0,0,0.0,0.0,True,5.0,3.0,True
+208384,2010,2010-06-29T18:30:00+00:00,8th Finals,Cape Town Stadium,Cape Town,H. Baldassi,FT,Match Finished,90,9,Spain,True,27,Portugal,False,1,0,0,0,1,0,,,False,,,False
+208385,2010,2010-07-02T14:00:00+00:00,Quarter-finals,Nelson Mandela Bay Stadium,Port Elizabeth,Y. Nishimura,FT,Match Finished,90,1118,Netherlands,True,6,Brazil,False,2,1,0,1,2,1,,,False,,,False
+208386,2010,2010-07-02T18:30:00+00:00,Quarter-finals,FNB Stadium,"Johannesburg, GA",Olegário Benquerença,PEN,Match Finished,120,7,Uruguay,True,1504,Ghana,False,1,1,0,1,1,1,0.0,0.0,True,4.0,2.0,True
+208387,2010,2010-07-03T14:00:00+00:00,Quarter-finals,Cape Town Stadium,Cape Town,R. Irmatov,FT,Match Finished,90,26,Argentina,False,25,Germany,True,0,4,0,1,0,4,,,False,,,False
+208388,2010,2010-07-03T18:30:00+00:00,Quarter-finals,Emirates Airline Park,"Johannesburg, GA",C. Batres,FT,Match Finished,90,2380,Paraguay,False,9,Spain,True,0,1,0,0,0,1,,,False,,,False
+208389,2010,2010-07-06T18:30:00+00:00,Semi-finals,Cape Town Stadium,Cape Town,R. Irmatov,FT,Match Finished,90,7,Uruguay,False,1118,Netherlands,True,2,3,1,1,2,3,,,False,,,False
+208390,2010,2010-07-07T18:30:00+00:00,Semi-finals,Moses Mabhida Stadium,Durban,V. Kassai,FT,Match Finished,90,25,Germany,False,9,Spain,True,0,1,0,0,0,1,,,False,,,False
+208392,2010,2010-07-10T18:30:00+00:00,3rd Place Final,Nelson Mandela Bay Stadium,Port Elizabeth,B. Archundia,FT,Match Finished,90,7,Uruguay,False,25,Germany,True,2,3,1,1,2,3,,,False,,,False
+208391,2010,2010-07-11T18:30:00+00:00,Final,FNB Stadium,"Johannesburg, GA",H. Webb,FT,Match Finished,90,1118,Netherlands,False,9,Spain,True,0,1,0,0,0,1,,,False,,,False
+208329,2014,2014-06-12T20:00:00+00:00,Group stage - 1,"Arena Corinthians (São Paulo, São Paulo)",,,FT,Match Finished,90,6,Brazil,True,3,Croatia,False,3,1,1,1,3,1,,,False,,,False
+208330,2014,2014-06-13T16:00:00+00:00,Group stage - 1,"Arena das Dunas (Natal, Rio Grande do Norte)",,,FT,Match Finished,90,16,Mexico,True,1530,Cameroon,False,1,0,0,0,1,0,,,False,,,False
+208331,2014,2014-06-13T19:00:00+00:00,Group stage - 1,"Itaipava Arena Fonte Nova (Salvador, Bahia)",,,FT,Match Finished,90,9,Spain,False,1118,Netherlands,True,1,5,1,1,1,5,,,False,,,False
+208332,2014,2014-06-13T22:00:00+00:00,Group stage - 1,"Arena Pantanal (Cuiabá, Mato Grosso)",,,FT,Match Finished,90,2383,Chile,True,20,Australia,False,3,1,2,1,3,1,,,False,,,False
+208333,2014,2014-06-14T16:00:00+00:00,Group stage - 1,"Estádio Governador Magalhães Pinto (Belo Horizonte, Minas Gerais)",,,FT,Match Finished,90,8,Colombia,True,1117,Greece,False,3,0,1,0,3,0,,,False,,,False
+208334,2014,2014-06-14T19:00:00+00:00,Group stage - 1,"Estádio Governador Plácido Aderaldo Castelo (Fortaleza, Ceará)",,,FT,Match Finished,90,7,Uruguay,False,29,Costa Rica,True,1,3,1,0,1,3,,,False,,,False
+208335,2014,2014-06-14T22:00:00+00:00,Group stage - 1,"Arena Amazônia (Manaus, Amazonas)",,,FT,Match Finished,90,10,England,False,768,Italy,True,1,2,1,1,1,2,,,False,,,False
+208336,2014,2014-06-15T01:00:00+00:00,Group stage - 1,"Itaipava Arena Pernambuco (Recife, Pernambuco)",,,FT,Match Finished,90,1501,Ivory Coast,True,12,Japan,False,2,1,0,1,2,1,,,False,,,False
+208337,2014,2014-06-15T16:00:00+00:00,Group stage - 1,"Estádio Nacional de Brasília (Brasília, Distrito Federal)",,,FT,Match Finished,90,15,Switzerland,True,2382,Ecuador,False,2,1,0,1,2,1,,,False,,,False
+208338,2014,2014-06-15T19:00:00+00:00,Group stage - 1,"Estádio José Pinheiro Borba (Beira-Rio) (Porto Alegre, Rio Grande do Sul)",,,FT,Match Finished,90,2,France,True,4672,Honduras,False,3,0,1,0,3,0,,,False,,,False
+208339,2014,2014-06-15T22:00:00+00:00,Group stage - 1,"Estadio Jornalista Mário Filho (Maracanã) (Rio de Janeiro, Rio de Janeiro)",,,FT,Match Finished,90,26,Argentina,True,1113,Bosnia & Herzegovina,False,2,1,1,0,2,1,,,False,,,False
+208340,2014,2014-06-16T16:00:00+00:00,Group stage - 1,"Itaipava Arena Fonte Nova (Salvador, Bahia)",,,FT,Match Finished,90,25,Germany,True,27,Portugal,False,4,0,3,0,4,0,,,False,,,False
+208341,2014,2014-06-16T19:00:00+00:00,Group stage - 1,"Estádio Joaquim Américo Guimarães (Curitiba, Paraná)",,,FT,Match Finished,90,22,Iran,,19,Nigeria,,0,0,0,0,0,0,,,False,,,False
+208342,2014,2014-06-16T22:00:00+00:00,Group stage - 1,"Arena das Dunas (Natal, Rio Grande do Norte)",,,FT,Match Finished,90,1504,Ghana,False,2384,USA,True,1,2,0,1,1,2,,,False,,,False
+208343,2014,2014-06-17T16:00:00+00:00,Group stage - 1,"Estádio Governador Magalhães Pinto (Belo Horizonte, Minas Gerais)",,,FT,Match Finished,90,1,Belgium,True,1532,Algeria,False,2,1,0,1,2,1,,,False,,,False
+208345,2014,2014-06-17T19:00:00+00:00,Group stage - 2,"Estádio Governador Plácido Aderaldo Castelo (Fortaleza, Ceará)",,,FT,Match Finished,90,6,Brazil,,16,Mexico,,0,0,0,0,0,0,,,False,,,False
+208344,2014,2014-06-17T22:00:00+00:00,Group stage - 1,"Arena Pantanal (Cuiabá, Mato Grosso)",,,FT,Match Finished,90,4,Russia,,17,South Korea,,1,1,0,0,1,1,,,False,,,False
+208346,2014,2014-06-18T16:00:00+00:00,Group stage - 2,"Estádio José Pinheiro Borba (Beira-Rio) (Porto Alegre, Rio Grande do Sul)",,,FT,Match Finished,90,20,Australia,False,1118,Netherlands,True,2,3,1,1,2,3,,,False,,,False
+208347,2014,2014-06-18T19:00:00+00:00,Group stage - 2,"Estadio Jornalista Mário Filho (Maracanã) (Rio de Janeiro, Rio de Janeiro)",,,FT,Match Finished,90,9,Spain,False,2383,Chile,True,0,2,0,2,0,2,,,False,,,False
+208348,2014,2014-06-18T22:00:00+00:00,Group stage - 2,"Arena Amazônia (Manaus, Amazonas)",,,FT,Match Finished,90,1530,Cameroon,False,3,Croatia,True,0,4,0,1,0,4,,,False,,,False
+208349,2014,2014-06-19T16:00:00+00:00,Group stage - 2,"Estádio Nacional de Brasília (Brasília, Distrito Federal)",,,FT,Match Finished,90,8,Colombia,True,1501,Ivory Coast,False,2,1,0,0,2,1,,,False,,,False
+208350,2014,2014-06-19T19:00:00+00:00,Group stage - 2,"Arena Corinthians (São Paulo, São Paulo)",,,FT,Match Finished,90,7,Uruguay,True,10,England,False,2,1,1,0,2,1,,,False,,,False
+208351,2014,2014-06-19T22:00:00+00:00,Group stage - 2,"Arena das Dunas (Natal, Rio Grande do Norte)",,,FT,Match Finished,90,12,Japan,,1117,Greece,,0,0,0,0,0,0,,,False,,,False
+208352,2014,2014-06-20T16:00:00+00:00,Group stage - 2,"Itaipava Arena Pernambuco (Recife, Pernambuco)",,,FT,Match Finished,90,768,Italy,False,29,Costa Rica,True,0,1,0,1,0,1,,,False,,,False
+208353,2014,2014-06-20T19:00:00+00:00,Group stage - 2,"Itaipava Arena Fonte Nova (Salvador, Bahia)",,,FT,Match Finished,90,15,Switzerland,False,2,France,True,2,5,0,3,2,5,,,False,,,False
+208354,2014,2014-06-20T22:00:00+00:00,Group stage - 2,"Estádio Joaquim Américo Guimarães (Curitiba, Paraná)",,,FT,Match Finished,90,4672,Honduras,False,2382,Ecuador,True,1,2,1,1,1,2,,,False,,,False
+208355,2014,2014-06-21T16:00:00+00:00,Group stage - 2,"Estádio Governador Magalhães Pinto (Belo Horizonte, Minas Gerais)",,,FT,Match Finished,90,26,Argentina,True,22,Iran,False,1,0,0,0,1,0,,,False,,,False
+208356,2014,2014-06-21T19:00:00+00:00,Group stage - 2,"Estádio Governador Plácido Aderaldo Castelo (Fortaleza, Ceará)",,,FT,Match Finished,90,25,Germany,,1504,Ghana,,2,2,0,0,2,2,,,False,,,False
+208357,2014,2014-06-21T22:00:00+00:00,Group stage - 2,"Arena Pantanal (Cuiabá, Mato Grosso)",,,FT,Match Finished,90,19,Nigeria,True,1113,Bosnia & Herzegovina,False,1,0,1,0,1,0,,,False,,,False
+208358,2014,2014-06-22T16:00:00+00:00,Group stage - 2,"Estadio Jornalista Mário Filho (Maracanã) (Rio de Janeiro, Rio de Janeiro)",,,FT,Match Finished,90,1,Belgium,True,4,Russia,False,1,0,0,0,1,0,,,False,,,False
+208359,2014,2014-06-22T19:00:00+00:00,Group stage - 2,"Estádio José Pinheiro Borba (Beira-Rio) (Porto Alegre, Rio Grande do Sul)",,,FT,Match Finished,90,17,South Korea,False,1532,Algeria,True,2,4,0,3,2,4,,,False,,,False
+208360,2014,2014-06-22T22:00:00+00:00,Group stage - 2,"Arena Amazônia (Manaus, Amazonas)",,,FT,Match Finished,90,2384,USA,,27,Portugal,,2,2,0,1,2,2,,,False,,,False
+208361,2014,2014-06-23T16:00:00+00:00,Group stage - 3,"Estádio Joaquim Américo Guimarães (Curitiba, Paraná)",,,FT,Match Finished,90,20,Australia,False,9,Spain,True,0,3,0,1,0,3,,,False,,,False
+208362,2014,2014-06-23T16:00:00+00:00,Group stage - 3,"Arena Corinthians (São Paulo, São Paulo)",,,FT,Match Finished,90,1118,Netherlands,True,2383,Chile,False,2,0,0,0,2,0,,,False,,,False
+208364,2014,2014-06-23T20:00:00+00:00,Group stage - 3,"Itaipava Arena Pernambuco (Recife, Pernambuco)",,,FT,Match Finished,90,3,Croatia,False,16,Mexico,True,1,3,0,0,1,3,,,False,,,False
+208363,2014,2014-06-23T20:00:00+00:00,Group stage - 3,"Estádio Nacional de Brasília (Brasília, Distrito Federal)",,,FT,Match Finished,90,1530,Cameroon,False,6,Brazil,True,1,4,1,2,1,4,,,False,,,False
+208365,2014,2014-06-24T16:00:00+00:00,Group stage - 3,"Estádio Governador Magalhães Pinto (Belo Horizonte, Minas Gerais)",,,FT,Match Finished,90,29,Costa Rica,,10,England,,0,0,0,0,0,0,,,False,,,False
+208366,2014,2014-06-24T16:00:00+00:00,Group stage - 3,"Arena das Dunas (Natal, Rio Grande do Norte)",,,FT,Match Finished,90,768,Italy,False,7,Uruguay,True,0,1,0,0,0,1,,,False,,,False
+208367,2014,2014-06-24T20:00:00+00:00,Group stage - 3,"Arena Pantanal (Cuiabá, Mato Grosso)",,,FT,Match Finished,90,12,Japan,False,8,Colombia,True,1,4,1,1,1,4,,,False,,,False
+208368,2014,2014-06-24T20:00:00+00:00,Group stage - 3,"Estádio Governador Plácido Aderaldo Castelo (Fortaleza, Ceará)",,,FT,Match Finished,90,1117,Greece,True,1501,Ivory Coast,False,2,1,1,0,2,1,,,False,,,False
+208369,2014,2014-06-25T16:00:00+00:00,Group stage - 3,"Estádio José Pinheiro Borba (Beira-Rio) (Porto Alegre, Rio Grande do Sul)",,,FT,Match Finished,90,19,Nigeria,False,26,Argentina,True,2,3,1,2,2,3,,,False,,,False
+208370,2014,2014-06-25T16:00:00+00:00,Group stage - 3,"Itaipava Arena Fonte Nova (Salvador, Bahia)",,,FT,Match Finished,90,1113,Bosnia & Herzegovina,True,22,Iran,False,3,1,1,0,3,1,,,False,,,False
+208372,2014,2014-06-25T20:00:00+00:00,Group stage - 3,"Estadio Jornalista Mário Filho (Maracanã) (Rio de Janeiro, Rio de Janeiro)",,,FT,Match Finished,90,2382,Ecuador,,2,France,,0,0,0,0,0,0,,,False,,,False
+208371,2014,2014-06-25T20:00:00+00:00,Group stage - 3,"Arena Amazônia (Manaus, Amazonas)",,,FT,Match Finished,90,4672,Honduras,False,15,Switzerland,True,0,3,0,2,0,3,,,False,,,False
+208373,2014,2014-06-26T16:00:00+00:00,Group stage - 3,"Estádio Nacional de Brasília (Brasília, Distrito Federal)",,,FT,Match Finished,90,27,Portugal,True,1504,Ghana,False,2,1,1,0,2,1,,,False,,,False
+208374,2014,2014-06-26T16:00:00+00:00,Group stage - 3,"Itaipava Arena Pernambuco (Recife, Pernambuco)",,,FT,Match Finished,90,2384,USA,False,25,Germany,True,0,1,0,0,0,1,,,False,,,False
+208376,2014,2014-06-26T20:00:00+00:00,Group stage - 3,"Arena Corinthians (São Paulo, São Paulo)",,,FT,Match Finished,90,17,South Korea,False,1,Belgium,True,0,1,0,0,0,1,,,False,,,False
+208375,2014,2014-06-26T20:00:00+00:00,Group stage - 3,"Estádio Joaquim Américo Guimarães (Curitiba, Paraná)",,,FT,Match Finished,90,1532,Algeria,,4,Russia,,1,1,0,1,1,1,,,False,,,False
+208321,2014,2014-06-28T16:00:00+00:00,Round of 16,"Estádio Governador Magalhães Pinto (Belo Horizonte, Minas Gerais)",,,PEN,Match Finished,120,6,Brazil,True,2383,Chile,False,2,2,1,1,1,1,1.0,1.0,True,3.0,2.0,True
+208322,2014,2014-06-28T20:00:00+00:00,Round of 16,"Estadio Jornalista Mário Filho (Maracanã) (Rio de Janeiro, Rio de Janeiro)",,,FT,Match Finished,90,8,Colombia,True,7,Uruguay,False,2,0,1,0,2,0,,,False,,,False
+208323,2014,2014-06-29T16:00:00+00:00,Round of 16,"Estádio Governador Plácido Aderaldo Castelo (Fortaleza, Ceará)",,,FT,Match Finished,90,1118,Netherlands,True,16,Mexico,False,2,1,0,0,2,1,,,False,,,False
+208324,2014,2014-06-29T20:00:00+00:00,Round of 16,"Itaipava Arena Pernambuco (Recife, Pernambuco)",,,PEN,Match Finished,120,29,Costa Rica,True,1117,Greece,False,2,2,0,0,1,1,1.0,1.0,True,5.0,3.0,True
+208325,2014,2014-06-30T16:00:00+00:00,Round of 16,"Estádio Nacional de Brasília (Brasília, Distrito Federal)",,,FT,Match Finished,90,2,France,True,19,Nigeria,False,2,0,0,0,2,0,,,False,,,False
+208326,2014,2014-06-30T20:00:00+00:00,Round of 16,"Estádio José Pinheiro Borba (Beira-Rio) (Porto Alegre, Rio Grande do Sul)",,,AET,Match Finished,120,25,Germany,True,1532,Algeria,False,2,1,0,0,0,0,2.0,1.0,True,,,False
+208327,2014,2014-07-01T16:00:00+00:00,Round of 16,"Arena Corinthians (São Paulo, São Paulo)",,,AET,Match Finished,120,26,Argentina,True,15,Switzerland,False,1,0,0,0,0,0,1.0,0.0,True,,,False
+208328,2014,2014-07-01T20:00:00+00:00,Round of 16,"Itaipava Arena Fonte Nova (Salvador, Bahia)",,,AET,Match Finished,120,1,Belgium,True,2384,USA,False,2,1,0,0,0,0,2.0,1.0,True,,,False
+208313,2014,2014-07-04T16:00:00+00:00,Quarter-finals,"Estadio Jornalista Mário Filho (Maracanã) (Rio de Janeiro, Rio de Janeiro)",,,FT,Match Finished,90,2,France,False,25,Germany,True,0,1,0,1,0,1,,,False,,,False
+208314,2014,2014-07-04T20:00:00+00:00,Quarter-finals,"Estádio Governador Plácido Aderaldo Castelo (Fortaleza, Ceará)",,,FT,Match Finished,90,6,Brazil,True,8,Colombia,False,2,1,1,0,2,1,,,False,,,False
+208315,2014,2014-07-05T16:00:00+00:00,Quarter-finals,"Estádio Nacional de Brasília (Brasília, Distrito Federal)",,,FT,Match Finished,90,26,Argentina,True,1,Belgium,False,1,0,1,0,1,0,,,False,,,False
+208316,2014,2014-07-05T20:00:00+00:00,Quarter-finals,"Itaipava Arena Fonte Nova (Salvador, Bahia)",,,PEN,Match Finished,120,1118,Netherlands,True,29,Costa Rica,False,0,0,0,0,0,0,0.0,0.0,True,4.0,3.0,True
+208317,2014,2014-07-08T20:00:00+00:00,Semi-finals,"Estádio Governador Magalhães Pinto (Belo Horizonte, Minas Gerais)",,,FT,Match Finished,90,6,Brazil,False,25,Germany,True,1,7,0,5,1,7,,,False,,,False
+208318,2014,2014-07-09T20:00:00+00:00,Semi-finals,"Arena Corinthians (São Paulo, São Paulo)",,,PEN,Match Finished,120,1118,Netherlands,False,26,Argentina,True,0,0,0,0,0,0,0.0,0.0,True,2.0,4.0,True
+208319,2014,2014-07-12T20:00:00+00:00,3rd Place Final,"Estádio Nacional de Brasília (Brasília, Distrito Federal)",,,FT,Match Finished,90,6,Brazil,False,1118,Netherlands,True,0,3,0,2,0,3,,,False,,,False
+208320,2014,2014-07-13T19:00:00+00:00,Final,"Estadio Jornalista Mário Filho (Maracanã) (Rio de Janeiro, Rio de Janeiro)",,,AET,Match Finished,120,25,Germany,True,26,Argentina,False,1,0,0,0,0,0,1.0,0.0,True,,,False
+135777,2018,2018-06-14T15:00:00+00:00,Group Stage - 1,Stadion Luzhniki,Moskva,N. Pitana,FT,Match Finished,90,4,Russia,True,23,Saudi Arabia,False,5,0,2,0,5,0,,,False,,,False
+135778,2018,2018-06-15T12:00:00+00:00,Group Stage - 1,Ekaterinburg Arena,Ekaterinburg,B. Kuipers,FT,Match Finished,90,32,Egypt,False,7,Uruguay,True,0,1,0,0,0,1,,,False,,,False
+135779,2018,2018-06-15T15:00:00+00:00,Group Stage - 1,Saint-Petersburg Stadium,St. Petersburg,C. Çakιr,FT,Match Finished,90,31,Morocco,False,22,Iran,True,0,1,0,0,0,1,,,False,,,False
+135780,2018,2018-06-15T18:00:00+00:00,Group Stage - 1,Olimpiyskiy Stadion Fisht,Sochi,G. Rocchi,FT,Match Finished,90,27,Portugal,,9,Spain,,3,3,2,1,3,3,,,False,,,False
+135781,2018,2018-06-16T10:00:00+00:00,Group Stage - 1,Kazan' Arena,Kazan',A. Cunha,FT,Match Finished,90,2,France,True,20,Australia,False,2,1,0,0,2,1,,,False,,,False
+135782,2018,2018-06-16T13:00:00+00:00,Group Stage - 1,Otkrytiye Arena,Moskva,S. Marciniak,FT,Match Finished,90,26,Argentina,,18,Iceland,,1,1,1,1,1,1,,,False,,,False
+135783,2018,2018-06-16T16:00:00+00:00,Group Stage - 1,Mordovia Arena,Saransk,B. Gassama,FT,Match Finished,90,30,Peru,False,21,Denmark,True,0,1,0,0,0,1,,,False,,,False
+135784,2018,2018-06-16T19:00:00+00:00,Group Stage - 1,Stadion Kaliningrad,Kaliningrad,Sandro Ricci,FT,Match Finished,90,3,Croatia,True,19,Nigeria,False,2,0,1,0,2,0,,,False,,,False
+135785,2018,2018-06-17T12:00:00+00:00,Group Stage - 1,Solidarnost Arena,Samara,M. Diedhiou,FT,Match Finished,90,29,Costa Rica,False,14,Serbia,True,0,1,0,0,0,1,,,False,,,False
+135786,2018,2018-06-17T15:00:00+00:00,Group Stage - 1,Stadion Luzhniki,Moskva,A. Faghani,FT,Match Finished,90,25,Germany,False,16,Mexico,True,0,1,0,1,0,1,,,False,,,False
+135787,2018,2018-06-17T18:00:00+00:00,Group Stage - 1,Rostov Arena,Rostov-na-Donu,C. Ramos,FT,Match Finished,90,6,Brazil,,15,Switzerland,,1,1,1,0,1,1,,,False,,,False
+135788,2018,2018-06-18T12:00:00+00:00,Group Stage - 1,Stadion Nizhny Novgorod,Nizhniy Novgorod,J. Aguilar,FT,Match Finished,90,5,Sweden,True,17,South Korea,False,1,0,0,0,1,0,,,False,,,False
+135789,2018,2018-06-18T15:00:00+00:00,Group Stage - 1,Olimpiyskiy Stadion Fisht,Sochi,J. Sikazwe,FT,Match Finished,90,1,Belgium,True,11,Panama,False,3,0,0,0,3,0,,,False,,,False
+135790,2018,2018-06-18T18:00:00+00:00,Group Stage - 1,Volgograd Arena,Volgograd,W. Roldán,FT,Match Finished,90,28,Tunisia,False,10,England,True,1,2,1,1,1,2,,,False,,,False
+135791,2018,2018-06-19T12:00:00+00:00,Group Stage - 1,Mordovia Arena,Saransk,D. Skomina,FT,Match Finished,90,8,Colombia,False,12,Japan,True,1,2,1,1,1,2,,,False,,,False
+135792,2018,2018-06-19T15:00:00+00:00,Group Stage - 1,Otkrytiye Arena,Moskva,Nawaf Shukralla,FT,Match Finished,90,24,Poland,False,13,Senegal,True,1,2,0,1,1,2,,,False,,,False
+135793,2018,2018-06-19T18:00:00+00:00,Group Stage - 2,Saint-Petersburg Stadium,St. Petersburg,E. Cáceres,FT,Match Finished,90,4,Russia,True,32,Egypt,False,3,1,0,0,3,1,,,False,,,False
+135794,2018,2018-06-20T12:00:00+00:00,Group Stage - 2,Stadion Luzhniki,Moskva,M. Geiger,FT,Match Finished,90,27,Portugal,True,31,Morocco,False,1,0,1,0,1,0,,,False,,,False
+135795,2018,2018-06-20T15:00:00+00:00,Group Stage - 2,Rostov Arena,Rostov-na-Donu,C. Turpin,FT,Match Finished,90,7,Uruguay,True,23,Saudi Arabia,False,1,0,1,0,1,0,,,False,,,False
+135796,2018,2018-06-20T18:00:00+00:00,Group Stage - 2,Kazan' Arena,Kazan',A. Cunha,FT,Match Finished,90,22,Iran,False,9,Spain,True,0,1,0,0,0,1,,,False,,,False
+135797,2018,2018-06-21T12:00:00+00:00,Group Stage - 2,Solidarnost Arena,Samara,Antonio Mateu,FT,Match Finished,90,21,Denmark,,20,Australia,,1,1,1,1,1,1,,,False,,,False
+135798,2018,2018-06-21T15:00:00+00:00,Group Stage - 2,Ekaterinburg Arena,Ekaterinburg,Mohamed Abdulla Hassan Mohd,FT,Match Finished,90,2,France,True,30,Peru,False,1,0,1,0,1,0,,,False,,,False
+135799,2018,2018-06-21T18:00:00+00:00,Group Stage - 2,Stadion Nizhny Novgorod,Nizhniy Novgorod,R. Irmatov,FT,Match Finished,90,26,Argentina,False,3,Croatia,True,0,3,0,0,0,3,,,False,,,False
+135800,2018,2018-06-22T12:00:00+00:00,Group Stage - 2,Saint-Petersburg Stadium,St. Petersburg,B. Kuipers,FT,Match Finished,90,6,Brazil,True,29,Costa Rica,False,2,0,0,0,2,0,,,False,,,False
+135801,2018,2018-06-22T15:00:00+00:00,Group Stage - 2,Volgograd Arena,Volgograd,M. Conger,FT,Match Finished,90,19,Nigeria,True,18,Iceland,False,2,0,0,0,2,0,,,False,,,False
+135802,2018,2018-06-22T18:00:00+00:00,Group Stage - 2,Stadion Kaliningrad,Kaliningrad,F. Brych,FT,Match Finished,90,14,Serbia,False,15,Switzerland,True,1,2,1,0,1,2,,,False,,,False
+135803,2018,2018-06-23T12:00:00+00:00,Group Stage - 2,Otkrytiye Arena,Moskva,J. Marrufo,FT,Match Finished,90,1,Belgium,True,28,Tunisia,False,5,2,3,1,5,2,,,False,,,False
+135804,2018,2018-06-23T15:00:00+00:00,Group Stage - 2,Rostov Arena,Rostov-na-Donu,M. Mažić,FT,Match Finished,90,17,South Korea,False,16,Mexico,True,1,2,0,1,1,2,,,False,,,False
+135805,2018,2018-06-23T18:00:00+00:00,Group Stage - 2,Olimpiyskiy Stadion Fisht,Sochi,S. Marciniak,FT,Match Finished,90,25,Germany,True,5,Sweden,False,2,1,0,1,2,1,,,False,,,False
+135806,2018,2018-06-24T12:00:00+00:00,Group Stage - 2,Stadion Nizhny Novgorod,Nizhniy Novgorod,Ghead Grisha,FT,Match Finished,90,10,England,True,11,Panama,False,6,1,5,0,6,1,,,False,,,False
+135807,2018,2018-06-24T15:00:00+00:00,Group Stage - 2,Ekaterinburg Arena,Ekaterinburg,G. Rocchi,FT,Match Finished,90,12,Japan,,13,Senegal,,2,2,1,1,2,2,,,False,,,False
+135808,2018,2018-06-24T18:00:00+00:00,Group Stage - 2,Kazan' Arena,Kazan',C. Ramos,FT,Match Finished,90,24,Poland,False,8,Colombia,True,0,3,0,1,0,3,,,False,,,False
+135809,2018,2018-06-25T14:00:00+00:00,Group Stage - 3,Solidarnost Arena,Samara,M. Diedhiou,FT,Match Finished,90,7,Uruguay,True,4,Russia,False,3,0,2,0,3,0,,,False,,,False
+135810,2018,2018-06-25T14:00:00+00:00,Group Stage - 3,Volgograd Arena,Volgograd,W. Roldán,FT,Match Finished,90,23,Saudi Arabia,True,32,Egypt,False,2,1,1,1,2,1,,,False,,,False
+135812,2018,2018-06-25T18:00:00+00:00,Group Stage - 3,Stadion Kaliningrad,Kaliningrad,R. Irmatov,FT,Match Finished,90,9,Spain,,31,Morocco,,2,2,1,1,2,2,,,False,,,False
+135811,2018,2018-06-25T18:00:00+00:00,Group Stage - 3,Mordovia Arena,Saransk,E. Cáceres,FT,Match Finished,90,22,Iran,,27,Portugal,,1,1,0,1,1,1,,,False,,,False
+135814,2018,2018-06-26T14:00:00+00:00,Group Stage - 3,Olimpiyskiy Stadion Fisht,Sochi,S. Karasev,FT,Match Finished,90,20,Australia,False,30,Peru,True,0,2,0,1,0,2,,,False,,,False
+135813,2018,2018-06-26T14:00:00+00:00,Group Stage - 3,Stadion Luzhniki,Moskva,Sandro Ricci,FT,Match Finished,90,21,Denmark,,2,France,,0,0,0,0,0,0,,,False,,,False
+135816,2018,2018-06-26T18:00:00+00:00,Group Stage - 3,Rostov Arena,Rostov-na-Donu,Antonio Mateu,FT,Match Finished,90,18,Iceland,False,3,Croatia,True,1,2,0,0,1,2,,,False,,,False
+135815,2018,2018-06-26T18:00:00+00:00,Group Stage - 3,Saint-Petersburg Stadium,St. Petersburg,C. Çakιr,FT,Match Finished,90,19,Nigeria,False,26,Argentina,True,1,2,0,1,1,2,,,False,,,False
+135818,2018,2018-06-27T14:00:00+00:00,Group Stage - 3,Ekaterinburg Arena,Ekaterinburg,N. Pitana,FT,Match Finished,90,16,Mexico,False,5,Sweden,True,0,3,0,0,0,3,,,False,,,False
+135817,2018,2018-06-27T14:00:00+00:00,Group Stage - 3,Kazan' Arena,Kazan',M. Geiger,FT,Match Finished,90,17,South Korea,True,25,Germany,False,2,0,0,0,2,0,,,False,,,False
+135819,2018,2018-06-27T18:00:00+00:00,Group Stage - 3,Otkrytiye Arena,Moskva,A. Faghani,FT,Match Finished,90,14,Serbia,False,6,Brazil,True,0,2,0,1,0,2,,,False,,,False
+135820,2018,2018-06-27T18:00:00+00:00,Group Stage - 3,Stadion Nizhny Novgorod,Nizhniy Novgorod,C. Turpin,FT,Match Finished,90,15,Switzerland,,29,Costa Rica,,2,2,1,0,2,2,,,False,,,False
+135821,2018,2018-06-28T14:00:00+00:00,Group Stage - 3,Volgograd Arena,Volgograd,J. Sikazwe,FT,Match Finished,90,12,Japan,False,24,Poland,True,0,1,0,0,0,1,,,False,,,False
+135822,2018,2018-06-28T14:00:00+00:00,Group Stage - 3,Solidarnost Arena,Samara,M. Mažić,FT,Match Finished,90,13,Senegal,False,8,Colombia,True,0,1,0,0,0,1,,,False,,,False
+135823,2018,2018-06-28T18:00:00+00:00,Group Stage - 3,Stadion Kaliningrad,Kaliningrad,D. Skomina,FT,Match Finished,90,10,England,False,1,Belgium,True,0,1,0,0,0,1,,,False,,,False
+135824,2018,2018-06-28T18:00:00+00:00,Group Stage - 3,Mordovia Arena,Saransk,Nawaf Shukralla,FT,Match Finished,90,11,Panama,False,28,Tunisia,True,1,2,1,0,1,2,,,False,,,False
+135761,2018,2018-06-30T14:00:00+00:00,8th Finals,Kazan' Arena,Kazan',A. Faghani,FT,Match Finished,90,2,France,True,26,Argentina,False,4,3,1,1,4,3,,,False,,,False
+135762,2018,2018-06-30T18:00:00+00:00,8th Finals,Olimpiyskiy Stadion Fisht,Sochi,C. Ramos,FT,Match Finished,90,7,Uruguay,True,27,Portugal,False,2,1,1,0,2,1,,,False,,,False
+135763,2018,2018-07-01T14:00:00+00:00,8th Finals,Stadion Luzhniki,Moskva,B. Kuipers,PEN,Match Finished,120,9,Spain,False,4,Russia,True,1,1,1,1,1,1,0.0,0.0,True,3.0,4.0,True
+135764,2018,2018-07-01T18:00:00+00:00,8th Finals,Stadion Nizhny Novgorod,Nizhniy Novgorod,N. Pitana,PEN,Match Finished,120,3,Croatia,True,21,Denmark,False,1,1,1,1,1,1,0.0,0.0,True,3.0,2.0,True
+135765,2018,2018-07-02T14:00:00+00:00,8th Finals,Solidarnost Arena,Samara,G. Rocchi,FT,Match Finished,90,6,Brazil,True,16,Mexico,False,2,0,0,0,2,0,,,False,,,False
+135766,2018,2018-07-02T18:00:00+00:00,8th Finals,Rostov Arena,Rostov-na-Donu,M. Diedhiou,FT,Match Finished,90,1,Belgium,True,12,Japan,False,3,2,0,0,3,2,,,False,,,False
+135767,2018,2018-07-03T14:00:00+00:00,8th Finals,Saint-Petersburg Stadium,St. Petersburg,D. Skomina,FT,Match Finished,90,5,Sweden,True,15,Switzerland,False,1,0,0,0,1,0,,,False,,,False
+135768,2018,2018-07-03T18:00:00+00:00,8th Finals,Otkrytiye Arena,Moskva,M. Geiger,PEN,Match Finished,120,8,Colombia,False,10,England,True,1,1,0,0,1,1,0.0,0.0,True,3.0,4.0,True
+135769,2018,2018-07-06T14:00:00+00:00,Quarter-finals,Stadion Nizhny Novgorod,Nizhniy Novgorod,N. Pitana,FT,Match Finished,90,7,Uruguay,False,2,France,True,0,2,0,1,0,2,,,False,,,False
+135770,2018,2018-07-06T18:00:00+00:00,Quarter-finals,Kazan' Arena,Kazan',M. Mažić,FT,Match Finished,90,6,Brazil,False,1,Belgium,True,1,2,0,2,1,2,,,False,,,False
+135771,2018,2018-07-07T14:00:00+00:00,Quarter-finals,Solidarnost Arena,Samara,B. Kuipers,FT,Match Finished,90,5,Sweden,False,10,England,True,0,2,0,1,0,2,,,False,,,False
+135772,2018,2018-07-07T18:00:00+00:00,Quarter-finals,Olimpiyskiy Stadion Fisht,Sochi,Sandro Ricci,PEN,Match Finished,120,4,Russia,False,3,Croatia,True,2,2,1,1,1,1,1.0,1.0,True,3.0,4.0,True
+135773,2018,2018-07-10T18:00:00+00:00,Semi-finals,Saint-Petersburg Stadium,St. Petersburg,A. Cunha,FT,Match Finished,90,2,France,True,1,Belgium,False,1,0,0,0,1,0,,,False,,,False
+135774,2018,2018-07-11T18:00:00+00:00,Semi-finals,Stadion Luzhniki,Moskva,C. Çakιr,AET,Match Finished,120,3,Croatia,True,10,England,False,2,1,0,1,1,1,1.0,0.0,True,,,False
+135775,2018,2018-07-14T14:00:00+00:00,3rd Place Final,Saint-Petersburg Stadium,St. Petersburg,A. Faghani,FT,Match Finished,90,1,Belgium,True,10,England,False,2,0,1,0,2,0,,,False,,,False
+135776,2018,2018-07-15T15:00:00+00:00,Final,Stadion Luzhniki,Moskva,N. Pitana,FT,Match Finished,90,2,France,True,3,Croatia,False,4,2,2,1,4,2,,,False,,,False
+855736,2022,2022-11-20T16:00:00+00:00,Group Stage - 1,Al Bayt Stadium,Al Khor,D. Orsato,FT,Match Finished,90,1569,Qatar,False,2382,Ecuador,True,0,2,0,2,0,2,,,False,,,False
+855735,2022,2022-11-21T13:00:00+00:00,Group Stage - 1,Khalifa International Stadium,Ar-Rayyan,Raphael Claus,FT,Match Finished,90,10,England,True,22,Iran,False,6,2,3,0,6,2,,,False,,,False
+855734,2022,2022-11-21T16:00:00+00:00,Group Stage - 1,Al Thumama Stadium,Doha,Wilton Pereira Sampaio,FT,Match Finished,90,13,Senegal,False,1118,Netherlands,True,0,2,0,0,0,2,,,False,,,False
+866681,2022,2022-11-21T19:00:00+00:00,Group Stage - 1,Ahmad bin Ali Stadium,Al-Rayyan,Abdulrahman Al Jassim,FT,Match Finished,90,2384,USA,,767,Wales,,1,1,1,0,1,1,,,False,,,False
+855737,2022,2022-11-22T10:00:00+00:00,Group Stage - 1,Lusail Iconic Stadium,Lusail,S. Vinčić,FT,Match Finished,90,26,Argentina,False,23,Saudi Arabia,True,1,2,1,0,1,2,,,False,,,False
+855738,2022,2022-11-22T13:00:00+00:00,Group Stage - 1,Education City Stadium,Ar-Rayyan,C. Ramos,FT,Match Finished,90,21,Denmark,,28,Tunisia,,0,0,0,0,0,0,,,False,,,False
+855739,2022,2022-11-22T16:00:00+00:00,Group Stage - 1,Stadium 974,Doha,C. Beath,FT,Match Finished,90,16,Mexico,,24,Poland,,0,0,0,0,0,0,,,False,,,False
+871850,2022,2022-11-22T19:00:00+00:00,Group Stage - 1,Al Janoub Stadium,Al Wakrah,V. Gomes,FT,Match Finished,90,2,France,True,20,Australia,False,4,1,2,1,4,1,,,False,,,False
+855740,2022,2022-11-23T10:00:00+00:00,Group Stage - 1,Al Bayt Stadium,Al Khor,F. Rapallini,FT,Match Finished,90,31,Morocco,,3,Croatia,,0,0,0,0,0,0,,,False,,,False
+855741,2022,2022-11-23T13:00:00+00:00,Group Stage - 1,Khalifa International Stadium,Ar-Rayyan,Ivan Cisneros,FT,Match Finished,90,25,Germany,False,12,Japan,True,1,2,1,0,1,2,,,False,,,False
+871851,2022,2022-11-23T16:00:00+00:00,Group Stage - 1,Al Thumama Stadium,Doha,Mohamed Abdulla Hassan Mohd,FT,Match Finished,90,9,Spain,True,29,Costa Rica,False,7,0,3,0,7,0,,,False,,,False
+855742,2022,2022-11-23T19:00:00+00:00,Group Stage - 1,Ahmad bin Ali Stadium,Al-Rayyan,J. Sikazwe,FT,Match Finished,90,1,Belgium,True,5529,Canada,False,1,0,1,0,1,0,,,False,,,False
+855743,2022,2022-11-24T10:00:00+00:00,Group Stage - 1,Al Janoub Stadium,Al Wakrah,F. Tello,FT,Match Finished,90,15,Switzerland,True,1530,Cameroon,False,1,0,0,0,1,0,,,False,,,False
+855744,2022,2022-11-24T13:00:00+00:00,Group Stage - 1,Education City Stadium,Ar-Rayyan,C. Turpin,FT,Match Finished,90,7,Uruguay,,17,South Korea,,0,0,0,0,0,0,,,False,,,False
+855745,2022,2022-11-24T16:00:00+00:00,Group Stage - 1,Stadium 974,Doha,I. Elfath,FT,Match Finished,90,27,Portugal,True,1504,Ghana,False,3,2,0,0,3,2,,,False,,,False
+855746,2022,2022-11-24T19:00:00+00:00,Group Stage - 1,Lusail Iconic Stadium,Lusail,A. Faghani,FT,Match Finished,90,6,Brazil,True,14,Serbia,False,2,0,0,0,2,0,,,False,,,False
+866682,2022,2022-11-25T10:00:00+00:00,Group Stage - 2,Ahmad bin Ali Stadium,Al-Rayyan,M. Escobar,FT,Match Finished,90,767,Wales,False,22,Iran,True,0,2,0,0,0,2,,,False,,,False
+855747,2022,2022-11-25T13:00:00+00:00,Group Stage - 2,Al Thumama Stadium,Doha,Antonio Mateu,FT,Match Finished,90,1569,Qatar,False,13,Senegal,True,1,3,0,1,1,3,,,False,,,False
+855748,2022,2022-11-25T16:00:00+00:00,Group Stage - 2,Khalifa International Stadium,Ar-Rayyan,M. Ghorbal,FT,Match Finished,90,1118,Netherlands,,2382,Ecuador,,1,1,1,0,1,1,,,False,,,False
+855749,2022,2022-11-25T19:00:00+00:00,Group Stage - 2,Al Bayt Stadium,Al Khor,J. Valenzuela,FT,Match Finished,90,10,England,,2384,USA,,0,0,0,0,0,0,,,False,,,False
+871852,2022,2022-11-26T10:00:00+00:00,Group Stage - 2,Al Janoub Stadium,Al Wakrah,D. Siebert,FT,Match Finished,90,28,Tunisia,False,20,Australia,True,0,1,0,1,0,1,,,False,,,False
+855750,2022,2022-11-26T13:00:00+00:00,Group Stage - 2,Education City Stadium,Ar-Rayyan,Wilton Pereira Sampaio,FT,Match Finished,90,24,Poland,True,23,Saudi Arabia,False,2,0,1,0,2,0,,,False,,,False
+855751,2022,2022-11-26T16:00:00+00:00,Group Stage - 2,Stadium 974,Doha,S. Marciniak,FT,Match Finished,90,2,France,True,21,Denmark,False,2,1,0,0,2,1,,,False,,,False
+855752,2022,2022-11-26T19:00:00+00:00,Group Stage - 2,Lusail Iconic Stadium,Lusail,D. Orsato,FT,Match Finished,90,26,Argentina,True,16,Mexico,False,2,0,0,0,2,0,,,False,,,False
+871853,2022,2022-11-27T10:00:00+00:00,Group Stage - 2,Ahmad bin Ali Stadium,Al-Rayyan,M. Oliver,FT,Match Finished,90,12,Japan,False,29,Costa Rica,True,0,1,0,0,0,1,,,False,,,False
+855753,2022,2022-11-27T13:00:00+00:00,Group Stage - 2,Al Thumama Stadium,Doha,C. Ramos,FT,Match Finished,90,1,Belgium,False,31,Morocco,True,0,2,0,0,0,2,,,False,,,False
+855754,2022,2022-11-27T16:00:00+00:00,Group Stage - 2,Khalifa International Stadium,Ar-Rayyan,A. Matonte,FT,Match Finished,90,3,Croatia,True,5529,Canada,False,4,1,2,1,4,1,,,False,,,False
+855755,2022,2022-11-27T19:00:00+00:00,Group Stage - 2,Al Bayt Stadium,Al Khor,D. Makkelie,FT,Match Finished,90,9,Spain,,25,Germany,,1,1,0,0,1,1,,,False,,,False
+855756,2022,2022-11-28T10:00:00+00:00,Group Stage - 2,Al Janoub Stadium,Al Wakrah,Mohamed Abdulla Hassan Mohd,FT,Match Finished,90,1530,Cameroon,,14,Serbia,,3,3,1,2,3,3,,,False,,,False
+855757,2022,2022-11-28T13:00:00+00:00,Group Stage - 2,Education City Stadium,Ar-Rayyan,A. Taylor,FT,Match Finished,90,17,South Korea,False,1504,Ghana,True,2,3,0,2,2,3,,,False,,,False
+855758,2022,2022-11-28T16:00:00+00:00,Group Stage - 2,Stadium 974,Doha,Ivan Cisneros,FT,Match Finished,90,6,Brazil,True,15,Switzerland,False,1,0,0,0,1,0,,,False,,,False
+855759,2022,2022-11-28T19:00:00+00:00,Group Stage - 2,Lusail Iconic Stadium,Lusail,A. Faghani,FT,Match Finished,90,27,Portugal,True,7,Uruguay,False,2,0,0,0,2,0,,,False,,,False
+855760,2022,2022-11-29T15:00:00+00:00,Group Stage - 3,Al Bayt Stadium,Al Khor,B. Gassama,FT,Match Finished,90,1118,Netherlands,True,1569,Qatar,False,2,0,1,0,2,0,,,False,,,False
+855761,2022,2022-11-29T15:00:00+00:00,Group Stage - 3,Khalifa International Stadium,Ar-Rayyan,C. Turpin,FT,Match Finished,90,2382,Ecuador,False,13,Senegal,True,1,2,0,1,1,2,,,False,,,False
+855762,2022,2022-11-29T19:00:00+00:00,Group Stage - 3,Al Thumama Stadium,Doha,Antonio Mateu,FT,Match Finished,90,22,Iran,False,2384,USA,True,0,1,0,1,0,1,,,False,,,False
+866683,2022,2022-11-29T19:00:00+00:00,Group Stage - 3,Ahmad bin Ali Stadium,Al-Rayyan,S. Vinčić,FT,Match Finished,90,767,Wales,False,10,England,True,0,3,0,0,0,3,,,False,,,False
+871854,2022,2022-11-30T15:00:00+00:00,Group Stage - 3,Al Janoub Stadium,Al Wakrah,M. Ghorbal,FT,Match Finished,90,20,Australia,True,21,Denmark,False,1,0,0,0,1,0,,,False,,,False
+855763,2022,2022-11-30T15:00:00+00:00,Group Stage - 3,Education City Stadium,Ar-Rayyan,M. Conger,FT,Match Finished,90,28,Tunisia,True,2,France,False,1,0,0,0,1,0,,,False,,,False
+855765,2022,2022-11-30T19:00:00+00:00,Group Stage - 3,Lusail Iconic Stadium,Lusail,M. Oliver,FT,Match Finished,90,23,Saudi Arabia,False,16,Mexico,True,1,2,0,0,1,2,,,False,,,False
+855764,2022,2022-11-30T19:00:00+00:00,Group Stage - 3,Stadium 974,Doha,D. Makkelie,FT,Match Finished,90,24,Poland,False,26,Argentina,True,0,2,0,0,0,2,,,False,,,False
+855766,2022,2022-12-01T15:00:00+00:00,Group Stage - 3,Ahmad bin Ali Stadium,Al-Rayyan,A. Taylor,FT,Match Finished,90,3,Croatia,,1,Belgium,,0,0,0,0,0,0,,,False,,,False
+855767,2022,2022-12-01T15:00:00+00:00,Group Stage - 3,Al Thumama Stadium,Doha,Raphael Claus,FT,Match Finished,90,5529,Canada,False,31,Morocco,True,1,2,1,2,1,2,,,False,,,False
+855768,2022,2022-12-01T19:00:00+00:00,Group Stage - 3,Khalifa International Stadium,Ar-Rayyan,V. Gomes,FT,Match Finished,90,12,Japan,True,9,Spain,False,2,1,0,1,2,1,,,False,,,False
+871855,2022,2022-12-01T19:00:00+00:00,Group Stage - 3,Al Bayt Stadium,Al Khor,S. Frappart,FT,Match Finished,90,29,Costa Rica,False,25,Germany,True,2,4,0,1,2,4,,,False,,,False
+855769,2022,2022-12-02T15:00:00+00:00,Group Stage - 3,Education City Stadium,Ar-Rayyan,F. Tello,FT,Match Finished,90,17,South Korea,True,27,Portugal,False,2,1,1,1,2,1,,,False,,,False
+855770,2022,2022-12-02T15:00:00+00:00,Group Stage - 3,Al Janoub Stadium,Al Wakrah,D. Siebert,FT,Match Finished,90,1504,Ghana,False,7,Uruguay,True,0,2,0,2,0,2,,,False,,,False
+855772,2022,2022-12-02T19:00:00+00:00,Group Stage - 3,Stadium 974,Doha,F. Rapallini,FT,Match Finished,90,14,Serbia,False,15,Switzerland,True,2,3,2,2,2,3,,,False,,,False
+855771,2022,2022-12-02T19:00:00+00:00,Group Stage - 3,Lusail Iconic Stadium,Lusail,I. Elfath,FT,Match Finished,90,1530,Cameroon,True,6,Brazil,False,1,0,0,0,1,0,,,False,,,False
+976533,2022,2022-12-03T15:00:00+00:00,Round of 16,Khalifa International Stadium,Ar-Rayyan,Wilton Pereira Sampaio,FT,Match Finished,90,1118,Netherlands,True,2384,USA,False,3,1,2,0,3,1,,,False,,,False
+976642,2022,2022-12-03T19:00:00+00:00,Round of 16,Ahmad bin Ali Stadium,Al-Rayyan,S. Marciniak,FT,Match Finished,90,26,Argentina,True,20,Australia,False,2,1,1,0,2,1,,,False,,,False
+976643,2022,2022-12-04T15:00:00+00:00,Round of 16,Al Thumama Stadium,Doha,J. Valenzuela,FT,Match Finished,90,2,France,True,24,Poland,False,3,1,1,0,3,1,,,False,,,False
+976534,2022,2022-12-04T19:00:00+00:00,Round of 16,Al Bayt Stadium,Al Khor,Ivan Cisneros,FT,Match Finished,90,10,England,True,13,Senegal,False,3,0,2,0,3,0,,,False,,,False
+977344,2022,2022-12-05T15:00:00+00:00,Round of 16,Al Janoub Stadium,Al Wakrah,I. Elfath,PEN,Match Finished,120,12,Japan,False,3,Croatia,True,1,1,1,0,1,1,0.0,0.0,True,1.0,3.0,True
+977705,2022,2022-12-05T19:00:00+00:00,Round of 16,Stadium 974,Doha,C. Turpin,FT,Match Finished,90,6,Brazil,True,17,South Korea,False,4,1,4,0,4,1,,,False,,,False
+977345,2022,2022-12-06T15:00:00+00:00,Round of 16,Education City Stadium,Ar-Rayyan,F. Rapallini,PEN,Match Finished,120,31,Morocco,True,9,Spain,False,0,0,0,0,0,0,0.0,0.0,True,3.0,0.0,True
+977706,2022,2022-12-06T19:00:00+00:00,Round of 16,Lusail Iconic Stadium,Lusail,C. Ramos,FT,Match Finished,90,27,Portugal,True,15,Switzerland,False,6,1,2,0,6,1,,,False,,,False
+978072,2022,2022-12-09T15:00:00+00:00,Quarter-finals,Education City Stadium,Ar-Rayyan,M. Oliver,PEN,Match Finished,120,3,Croatia,True,6,Brazil,False,1,1,0,0,0,0,1.0,1.0,True,4.0,2.0,True
+977794,2022,2022-12-09T19:00:00+00:00,Quarter-finals,Lusail Iconic Stadium,Lusail,Antonio Mateu,PEN,Match Finished,120,1118,Netherlands,False,26,Argentina,True,2,2,0,1,2,2,0.0,0.0,True,3.0,4.0,True
+978088,2022,2022-12-10T15:00:00+00:00,Quarter-finals,Al Thumama Stadium,Doha,F. Tello,FT,Match Finished,90,31,Morocco,True,27,Portugal,False,1,0,1,0,1,0,,,False,,,False
+978036,2022,2022-12-10T19:00:00+00:00,Quarter-finals,Al Bayt Stadium,Al Khor,Wilton Pereira Sampaio,FT,Match Finished,90,10,England,False,2,France,True,1,2,0,1,1,2,,,False,,,False
+978279,2022,2022-12-13T19:00:00+00:00,Semi-finals,Lusail Iconic Stadium,Lusail,D. Orsato,FT,Match Finished,90,26,Argentina,True,3,Croatia,False,3,0,2,0,3,0,,,False,,,False
+978488,2022,2022-12-14T19:00:00+00:00,Semi-finals,Al Bayt Stadium,Al Khor,C. Ramos,FT,Match Finished,90,2,France,True,31,Morocco,False,2,0,1,0,2,0,,,False,,,False
+979138,2022,2022-12-17T15:00:00+00:00,3rd Place Final,Khalifa International Stadium,Ar-Rayyan,Abdulrahman Al Jassim,FT,Match Finished,90,3,Croatia,True,31,Morocco,False,2,1,2,1,2,1,,,False,,,False
+979139,2022,2022-12-18T15:00:00+00:00,Final,Lusail Iconic Stadium,Lusail,S. Marciniak,PEN,Match Finished,120,26,Argentina,True,2,France,False,3,3,2,0,2,2,1.0,1.0,True,4.0,2.0,True

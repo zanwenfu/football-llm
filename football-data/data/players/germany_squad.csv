@@ -1,0 +1,36 @@
+player_id,player_name,team_id,team_name,age,number,position,photo
+702,O. Baumann,25,Germany,35,1,Goalkeeper,https://media.api-sports.io/football/players/702.png
+25903,F. Dahmen,25,Germany,27,21,Goalkeeper,https://media.api-sports.io/football/players/25903.png
+399,A. Nübel,25,Germany,29,12,Goalkeeper,https://media.api-sports.io/football/players/399.png
+25368,W. Anton,25,Germany,29,3,Defender,https://media.api-sports.io/football/players/25368.png
+280074,N. Brown,25,Germany,22,18,Defender,https://media.api-sports.io/football/players/280074.png
+269531,N. Collins,25,Germany,21,5,Defender,https://media.api-sports.io/football/players/269531.png
+26238,R. Koch,25,Germany,29,3,Defender,https://media.api-sports.io/football/players/26238.png
+25342,M. Mittelstädt,25,Germany,28,18,Defender,https://media.api-sports.io/football/players/25342.png
+25158,D. Raum,25,Germany,27,22,Defender,https://media.api-sports.io/football/players/25158.png
+2285,A. Rüdiger,25,Germany,32,2,Defender,https://media.api-sports.io/football/players/2285.png
+26243,N. Schlotterbeck,25,Germany,26,15,Defender,https://media.api-sports.io/football/players/26243.png
+972,J. Tah,25,Germany,29,4,Defender,https://media.api-sports.io/football/players/972.png
+163189,M. Thiaw,25,Germany,24,2,Defender,https://media.api-sports.io/football/players/163189.png
+714,N. Amiri,25,Germany,29,10,Midfielder,https://media.api-sports.io/football/players/714.png
+24903,R. Andrich,25,Germany,31,23,Midfielder,https://media.api-sports.io/football/players/24903.png
+25917,R. Baku,25,Germany,27,23,Midfielder,https://media.api-sports.io/football/players/25917.png
+432310,S. El Mala,25,Germany,19,13,Midfielder,https://media.api-sports.io/football/players/432310.png
+511,L. Goretzka,25,Germany,30,8,Midfielder,https://media.api-sports.io/football/players/511.png
+18970,P. Groß,25,Germany,34,5,Midfielder,https://media.api-sports.io/football/players/18970.png
+502,J. Kimmich,25,Germany,30,6,Midfielder,https://media.api-sports.io/football/players/502.png
+202736,P. Nebel,25,Germany,23,19,Midfielder,https://media.api-sports.io/football/players/202736.png
+637,F. Nmecha,25,Germany,25,13,Midfielder,https://media.api-sports.io/football/players/637.png
+380978,A. Ouédraogo,25,Germany,19,9,Midfielder,https://media.api-sports.io/football/players/380978.png
+328033,A. Pavlović,25,Germany,21,5,Midfielder,https://media.api-sports.io/football/players/328033.png
+178077,K. Schade,25,Germany,24,16,Midfielder,https://media.api-sports.io/football/players/178077.png
+137210,A. Stiller,25,Germany,24,16,Midfielder,https://media.api-sports.io/football/players/137210.png
+203224,F. Wirtz,25,Germany,22,17,Midfielder,https://media.api-sports.io/football/players/203224.png
+7334,K. Adeyemi,25,Germany,23,14,Attacker,https://media.api-sports.io/football/players/7334.png
+158644,M. Beier,25,Germany,23,9,Attacker,https://media.api-sports.io/football/players/158644.png
+25926,J. Burkardt,25,Germany,25,10,Attacker,https://media.api-sports.io/football/players/25926.png
+25391,N. Füllkrug,25,Germany,32,9,Attacker,https://media.api-sports.io/football/players/25391.png
+510,S. Gnabry,25,Germany,30,20,Attacker,https://media.api-sports.io/football/players/510.png
+128533,J. Leweling,25,Germany,24,7,Attacker,https://media.api-sports.io/football/players/128533.png
+644,L. Sané,25,Germany,29,19,Attacker,https://media.api-sports.io/football/players/644.png
+158054,N. Woltemade,25,Germany,23,11,Attacker,https://media.api-sports.io/football/players/158054.png

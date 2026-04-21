@@ -1,0 +1,34 @@
+.git/
+.github/
+.claude/
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+.DS_Store
+*.swp
+*.log
+
+# Large artifacts not needed in the image
+data/
+notebooks/
+football-data/
+figures/
+results/
+*.ipynb
+IDS598_Final_Project_Report.pdf
+
+# Secrets
+.env
+.env.local
+
+# Editor
+.vscode/
+.idea/

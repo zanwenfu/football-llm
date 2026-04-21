@@ -1,35 +1,12 @@
-# Data processing
-pandas>=2.0.0
-numpy>=1.24.0
-
-# ML / Fine-tuning
-torch>=2.4.0
-transformers>=4.46.0
-datasets>=3.1.0
-accelerate>=1.1.0
-peft>=0.13.0
-trl>=0.12.0
-bitsandbytes>=0.44.0
-
-# Optimization
-liger-kernel>=0.4.2
-
-# Evaluation
-lm-eval[api]>=0.4.5
-openai>=1.0.0
-
-# Serving
-vllm>=0.6.0
-fastapi>=0.104.0
-uvicorn[standard]>=0.24.0
-gradio>=4.0.0
-requests>=2.31.0
-pydantic>=2.0.0
-
-# Utilities
-huggingface-hub>=0.25.0
-hf-transfer>=0.1.8
-tensorboard>=2.15.0
-python-dotenv>=1.0.0
-tqdm>=4.66.0
-jsonlines>=4.0.0
+# Football-LLM dependencies
+#
+# This file is kept for backwards compatibility. The canonical source of truth
+# is pyproject.toml. Prefer:
+#
+#   pip install -e ".[dev]"           # reproduce the paper + run tests
+#   pip install -e ".[train]"         # fine-tuning (GPU required)
+#   pip install -e ".[serve,vllm]"    # full serving stack (GPU required)
+#   pip install -e ".[all]"           # everything
+#
+# The lines below install the everything-bucket and are equivalent to `.[all]`.
+-e .[baselines,train,serve,dev]
