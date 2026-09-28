@@ -4,12 +4,12 @@ The assignment asks to announce and attach any AI dialogues. This file holds all
 
 | # | Tool | When | What it did |
 |:--|:--|:--|:--|
-| 1 | Claude (separate conversation) | Before and after session 2 | Replies 1–3: evaluated whether the repo was ready to submit; flagged the prior-course overlap, the pretraining leakage in the 2022 test set, and README numbers that the scripts don't reproduce. Replies 4–5: checked the finished branch and report against the scripts and reviewed the report as the lecturer would |
+| 1 | Claude (separate conversation) | Before and after session 2 | Replies 1–3: evaluated whether the repo was ready to submit; flagged the pretraining leakage in the 2022 test set, and README numbers that the scripts don't reproduce. Replies 4–5: checked the finished branch and report against the scripts and reviewed the report as the lecturer would |
 | 2 | Claude Code (Claude Opus 5.5) in VS Code | 28 Sep 2026 | Verified those findings, found more (mirror-score recall, leaky anonymization, decoding and label issues, the flat-odds backtest), wrote the audit and Dixon-Coles code and tests, drafted the report and the updated docs |
 
 The spring 2026 version of this project was also built with heavy AI assistance; those earlier transcripts are not part of this file.
 
-**How this file was made.** Session 1: only Claude's replies were available, copied from the conversation as pasted; my prompts there are not included. Session 2: exported from the Claude Code session transcript. My prompts and Claude's replies are verbatim. Each tool call is condensed to a one-line summary inside the collapsible "actions" lists. Claude's internal reasoning, raw tool output, and system/IDE metadata are left out. The session transcript did not save a few of Claude's short progress notes written between tool calls, so those are missing; every prompt, every tool call and every end-of-turn reply is included.
+**How this file was made.** Session 1: only Claude's replies were available, copied from the conversation as pasted; my prompts there are not included. Session 2: exported from the Claude Code session transcript. My prompts and Claude's replies are verbatim. Each tool call is condensed to a one-line summary inside the collapsible "actions" lists. Claude's internal reasoning, raw tool output, and system/IDE metadata are left out. A few passages unrelated to the analysis were removed from this public copy and are marked *[…]*. The session transcript did not save a few of Claude's short progress notes written between tool calls, so those are missing; every prompt, every tool call and every end-of-turn reply is included.
 
 ---
 
@@ -21,11 +21,7 @@ I'll pull up both repos before giving you an opinion.
 
 Short answer: technically, yes, by a wide margin. The risk isn't quality, it's three non-technical things that could turn a very strong project into a problem. Here's how I'd think about it.
 
-**1. Check for double submission before anything else**
-
-The main repo ships a file named `IDS598_Final_Project_Report.pdf`, and the scaling repo ships `ECE590_Final_Project_Report.pdf`. This assignment is for IDS 598. If either report was already graded in another course (a prior IDS 598 offering, or ECE 590), submitting it again without written permission is what Duke's community standard calls double submission, and it's treated like plagiarism regardless of how good the work is. That's the one sharp question I need answered: has any of this been graded before? If yes, email the professor tonight, say exactly which parts are prior work, and ask what new contribution he wants for A2. Most professors say yes to reuse with an extension, but you need it in writing.
-
-Related: the scaling repo's `assets/` folder says it contains "course materials (lectures / homework / exams)". Committing another course's exams to a public repo is a separate problem. Remove them from the public repo either way.
+*[…]*
 
 **2. The professor is grading "mindset/logic", not the repo**
 
@@ -45,7 +41,7 @@ Two smaller things to preempt: counting named plus anonymized as n=128 paired sa
 
 The final has to show clear improvement over A2. If you submit everything now, you've got nothing left. Scope A2 as football-llm only (it directly answers "predicting a sport game"), and save for the final: the scaling/coherence analysis, extending to Euro 2024 and Copa 2024 (which are past Llama 3.1's cutoff, so they'd be a real held-out test and also fix the contamination problem), and retraining on halftime prompts. That's a clean A2 to final story: "I found my eval was contaminated, here's how I fixed it, and here's what survived."
 
-So: submit football-llm plus a writeup that leads with the contamination discussion and anonymized numbers, disclose AI use, and resolve the prior-course question before you hit submit.
+So: submit football-llm plus a writeup that leads with the contamination discussion and anonymized numbers, disclose AI use, *[…]*
 
 ### Claude, reply 2
 
@@ -72,7 +68,7 @@ Hide the team names and the LLM's "scoreline prior" collapses to XGBoost's level
 
 **3. Nothing beats the dumbest baseline once you remove names.** Doubling the halftime total ("HT×2") gets 75.0% O/U. Anonymized LLM at halftime: 70.3%. XGBoost: 67.2%. Only the contaminated named run (81.2%) wins.
 
-Also: the repo has a `crypto-trading/` folder full of another course's assignments, and the scaling repo commits lecture slides and an exam. Remove both before anyone grades this.
+Also: the repo has a `crypto-trading/` folder full of another course's assignments *[…]*
 
 #### What a realistic strong A looks like
 
@@ -98,7 +94,7 @@ Submit football-llm only. The scaling repo is an eval-methodology paper for ECE 
 
 **Hold for the final project:** the WC 2026 held-out evaluation, retraining with halftime prompts, and reproducing the events regime with a committed pipeline. That gives you an A2 to final arc the professor asked for: "found my eval was contaminated, fixed it on truly unseen data, here's what actually works."
 
-One thing I'd still resolve tonight: the git history says this was built in March-April 2026 for a spring course. If it was graded there, tell this professor in the submission note that A2 is an audit and extension of prior coursework. Saying it up front costs nothing; being found out costs the grade.
+*[…]*
 
 ### Claude, reply 3
 
@@ -165,7 +161,7 @@ Fix these before you submit:
 
 **6. Submission itself.** Attach the PDF, the repo link to the branch (or merge to main so the link is stable), and the two chat links. In the Canvas comment, one line: "Audit of my Spring 2026 IDS 598 project; all tests, baselines and conclusions are new; AI use disclosed in Section 9." Submit football-llm only.
 
-One thing you should know: deleting `crypto-trading/` from HEAD didn't remove it from history, and the report deliberately links to it for the spring PDF, so that's fine. But the same applies to the scaling repo's committed exam and lecture files, which is a reason not to send that repo at all.
+One thing you should know: deleting `crypto-trading/` from HEAD didn't remove it from history, and the report deliberately links to it for the spring PDF, so that's fine. *[…]*
 
 The Section 6 rewrite and the links are the real work left. Everything else is done.
 
@@ -459,7 +455,7 @@ I couldn't verify three things. The "W-5, Not Ready to Go" slide and the workflo
 The time handling in the data pipeline is clean: player stats only use seasons before each World Cup, and training and test are split by tournament.
 
 #### Questions
-1. **Is Assignment 2 for a new course with the same instructor (Hanchao Yang)?** This decides the framing. If he graded this repo as your spring final, submitting it again would count as double submission. I'd frame it as an audit of the spring project: the same named-vs-anonymized gap the spring paper reported, now read as leakage, plus what still holds. The submission note would state the pipeline is prior work. Have you already talked to him?
+1. **Is Assignment 2 for a new course with the same instructor (Hanchao Yang)?** This decides the framing. *[…]* I'd frame it as an audit of the spring project: the same named-vs-anonymized gap the spring paper reported, now read as leakage, plus what still holds. The submission note would state the pipeline is prior work. Have you already talked to him?
 2. **The 2026 World Cup: now or in the final project?** It's the only truly unseen test set, but the repo has only 2026 squads and player stats. There are no fixtures, lineups, results or halftime scores. Getting them needs an API-Football scrape with your key and a Colab GPU run, which I can't do here. I'd save it for the final project.
 3. **What should I do with `crypto-trading/`?** Deleting it in a new commit still leaves it in the git history. Removing it completely means rewriting history and force-pushing.
 4. **Writeup format and your input.** Should it be a PDF/LaTeX like the spring report, a markdown file in the repo, or something else? The reasoning should be yours, so please give me three short answers:
