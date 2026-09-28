@@ -7,9 +7,6 @@
 [![Model on HF](https://img.shields.io/badge/%F0%9F%A4%97_Model-football--llm--qlora-blue)](https://huggingface.co/zanwenfu/football-llm-qlora)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![CI](https://github.com/zanwenfu/football-llm/actions/workflows/ci.yml/badge.svg)](https://github.com/zanwenfu/football-llm/actions/workflows/ci.yml)
-
-**Report:** [`report/A2_report.pdf`](report/A2_report.pdf)
 
 </div>
 
