@@ -14,7 +14,7 @@ git clone https://github.com/zanwenfu/football-llm.git
 cd football-llm
 pip install -e ".[baselines,dev]"   # everything needed to run tests + regenerate paper
 pre-commit install                  # hooks: ruff, black, detect-secrets
-pytest                              # should show 74+ tests passing in ~2s
+pytest                              # should show 100+ tests passing in ~2s
 python scripts/reproduce_paper.py --skip-bootstrap  # smoke test
 ```
 
@@ -27,7 +27,7 @@ pip install -e ".[all]"             # GPU required for train/vllm extras
 ## Ground rules
 
 - **Don't weaken the statistical protocol.** Claims must continue to use Wilson CIs for proportions and paired exact McNemar for within-match comparisons. If a new metric is added, add a test locking in at least one expected value.
-- **Add tests for new code.** We have 74+ tests and CI is green — keep it that way. For eval/metrics changes, prefer property-based or fixture-locked tests over hand-rolled asserts.
+- **Add tests for new code.** We have 100+ tests and CI is green — keep it that way. For eval/metrics changes, prefer property-based or fixture-locked tests over hand-rolled asserts.
 - **Don't commit secrets.** `.env` is gitignored and `detect-secrets` is a pre-commit hook. If you're adding a new env var, document it in `pyproject.toml` description + README + `api.py` docstring.
 - **Keep the package installable.** `pip install -e ".[dev]" && pytest` must pass from a clean checkout. CI verifies this on Python 3.10 and 3.11.
 - **Match the paper's sign-off discipline.** If your change affects headline numbers in the paper, either (a) the numbers don't change and existing tests still pass, or (b) the numbers change and you've updated `README.md`, the model card, and the relevant sections of `IDS598_Final_Project_Report.pdf` accordingly.

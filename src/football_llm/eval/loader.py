@@ -90,3 +90,33 @@ def pair_on_match(df_a: pd.DataFrame, df_b: pd.DataFrame) -> pd.DataFrame:
             f"Inner-join dropped rows: df_a={len(df_a)}, df_b={len(df_b)}, merged={len(merged)}"
         )
     return merged
+
+
+def result_accuracy_baselines(
+    halftime: pd.DataFrame, results_dir: Path | str | None = None
+) -> dict[str, tuple[int, int]]:
+    """(correct, n) for the naive 1X2 baselines in the spring report's Figure 1.
+
+    Computed from the prediction files rather than typed in: "Always home",
+    "HT-leader" and "HT×2" on the 64 unique fixtures, and "Random" from the
+    recorded seed-42 run in eval_results_legacy.json (n=128) when present.
+    """
+    unique = halftime[~halftime["anonymized"]]
+    hh, ha = unique["halftime_home"], unique["halftime_away"]
+    ht_leader = [result_from_score(h, a) for h, a in zip(hh, ha)]
+    ht_double = [result_from_score(2 * h, 2 * a) for h, a in zip(hh, ha)]
+    n = len(unique)
+    out: dict[str, tuple[int, int]] = {}
+
+    legacy = (Path(results_dir) if results_dir else RESULTS_DIR) / "eval_results_legacy.json"
+    if legacy.exists():
+        with legacy.open() as f:
+            m = json.load(f)["metrics"]["baseline_random"]
+        out["Random"] = (round(m["result_accuracy"] * m["total"]), m["total"])
+    out["Always home"] = (int((unique["gt_result"] == "home_win").sum()), n)
+    out["HT-leader"] = (
+        int((pd.Series(ht_leader, index=unique.index) == unique["gt_result"]).sum()),
+        n,
+    )
+    out["HT×2"] = (int((pd.Series(ht_double, index=unique.index) == unique["gt_result"]).sum()), n)
+    return out

@@ -60,4 +60,9 @@ coverage.xml
 .ruff_cache/
 
 # ---- Figures (generated artifacts, not committed) ----
-figures/
+/figures/
+
+# ---- LaTeX build files (report/A2_report.pdf is committed) ----
+report/*.aux
+report/*.out
+report/*.toc

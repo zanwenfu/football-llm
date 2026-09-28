@@ -1,87 +1,65 @@
-# `results/` — Model Predictions and Evaluation Outputs
+# `results/` — Predictions and Evaluation Outputs
 
-This directory is the **audit trail** for every number in the paper. Each prediction file contains per-sample model outputs from a specific prompt regime; the metrics scripts in [`src/football_llm/eval/`](../src/football_llm/eval/) consume these files and regenerate the tables, figures, and statistical tests in the PDF.
+The audit trail for every number in the [report](../report/A2_report.pdf). Each file holds per-match predictions; [`scripts/leakage_audit.py`](../scripts/leakage_audit.py) and [`scripts/reproduce_paper.py`](../scripts/reproduce_paper.py) read them and recompute every table, test and figure.
 
 ## File inventory
 
-| File | Regime | N samples | Produced by |
+| File | Model / regime | Rows | Produced by |
 |:---|:---|:---:|:---|
-| [`ft_predictions_pregame.json`](ft_predictions_pregame.json) | Pregame (team stats only) | 128 | `notebooks/eval_harness.ipynb` → `python -m football_llm.eval.run_inference --regime pregame` |
-| [`ft_predictions_halftime.json`](ft_predictions_halftime.json) | Halftime-conditioned | 128 | `python -m football_llm.eval.run_inference --regime halftime` |
-| `ft_predictions_halftime_events.json` | Halftime + first-half events | 128 | `python -m football_llm.eval.run_inference --regime halftime_events` (regenerate) |
-| [`eval_results_legacy.json`](eval_results_legacy.json) | Aggregate metrics, pre-pivot | — | Legacy 1X2-only summary from an earlier iteration; retained for history |
+| [`ft_predictions_pregame.json`](ft_predictions_pregame.json) | Fine-tuned LLM, pregame | 128 | [`notebooks/eval_harness.ipynb`](../notebooks/eval_harness.ipynb) (Colab T4) |
+| [`ft_predictions_halftime.json`](ft_predictions_halftime.json) | Fine-tuned LLM, halftime score in prompt | 128 | [`notebooks/eval_harness.ipynb`](../notebooks/eval_harness.ipynb) (Colab T4) |
+| [`xgboost_predictions_pregame.json`](xgboost_predictions_pregame.json) | XGBoost on the same features | 64 | `python -m football_llm.baselines.xgboost train --regime pregame` |
+| [`xgboost_predictions_halftime.json`](xgboost_predictions_halftime.json) | XGBoost plus halftime features | 64 | `python -m football_llm.baselines.xgboost train --regime halftime` |
+| [`dixon_coles_predictions_pregame.json`](dixon_coles_predictions_pregame.json) | Dixon-Coles fitted on WC 2010–2018 | 64 | `python -m football_llm.baselines.dixon_coles` |
+| [`eval_results_legacy.json`](eval_results_legacy.json) | Aggregate metrics from an earlier sampling run | — | Kept to show run-to-run variation (audit §4) |
 
-> The `halftime_events` file is not committed because it was produced during final paper writing against a scratch pipeline. Regenerate it by running inference against the adapter with the `halftime_events` prompt template. The [reproduce script](../scripts/reproduce_paper.py) will create it on first run if absent.
+**LLM files have 128 rows** = 64 matches of the 2022 World Cup × 2 prompt variants: real team names (`anonymized: false`) and `Team A` / `Team B` (`anonymized: true`). Baseline files have one row per match.
 
-**N = 128** = 64 unique 2022 World Cup matches × 2 anonymization variants (named + anonymized). Each match appears twice in each file — once with real team names, once with `Team A` / `Team B`.
+The spring report also described a "halftime + first-half events" regime. Its predictions came from a scratch pipeline and were never saved, so no numbers from it are reported.
 
-## Schema — pregame predictions
+## Schema — LLM predictions
 
 ```json
 {
   "fixture_id": 855736,            // API-Football fixture ID
-  "home_team": "Qatar",            // Real name (or "Team A" when anonymized=true)
+  "home_team": "Qatar",            // Real name, even when anonymized=true
   "away_team": "Ecuador",
-  "anonymized": false,             // false = named variant, true = Team A/B variant
-  "gt_home": 0,                    // Ground-truth final score, home
-  "gt_away": 2,                    // Ground-truth final score, away
-  "gt_result": "away_win",         // Ground-truth 1X2 label
-  "pred_result": "home_win",       // Parsed model prediction (derived from pred score)
-  "pred_home": 2,                  // Parsed predicted score, home
-  "pred_away": 0,                  // Parsed predicted score, away
-  "raw_output": "Prediction: ...\nScore: 2-0\nReasoning: ..."  // Full model text
+  "anonymized": false,             // false = names in prompt, true = Team A / Team B
+  "gt_home": 0,                    // Final score incl. extra time, home
+  "gt_away": 2,
+  "gt_result": "away_win",
+  "pred_result": "home_win",       // Derived from the predicted score
+  "pred_home": 2,                  // Parsed predicted score
+  "pred_away": 0,
+  "raw_output": "Prediction: ...\nScore: 2-0\nReasoning: ..."
 }
 ```
 
-## Schema — halftime predictions
+Halftime files add `halftime_home` and `halftime_away`, the observed halftime score that was put in the prompt.
 
-Same as pregame, plus two fields capturing the observed halftime state that was passed into the prompt:
+## Schema — baseline predictions
 
-```json
-{
-  ...,
-  "halftime_home": 0,              // Observed HT score, home (model input)
-  "halftime_away": 2,              // Observed HT score, away (model input)
-  ...
-}
-```
-
-## Schema — halftime + events predictions
-
-Same as halftime, plus the rendered event line:
-
-```json
-{
-  ...,
-  "halftime_home": 1,
-  "halftime_away": 0,
-  "first_half_events": "10' Argentina goal (penalty); 25' Saudi Arabia yellow card",
-  ...
-}
-```
-
-Events are filtered to `minute ≤ 45`, with pre-match staff cards (`minute < 0`) filtered as well. In the anonymized variant, real team names in the event string are remapped to `Team A` / `Team B`.
+XGBoost and Dixon-Coles share the LLM fields (without `raw_output`) plus 1X2 probabilities `p_home_win`, `p_draw`, `p_away_win`. Dixon-Coles also has its expected goals `lambda_home`, `lambda_away` and `p_over_25`, the probability of three or more goals.
 
 ## Label conventions
 
-- **`*_result`** ∈ `{"home_win", "draw", "away_win"}`.
-- **`pred_result` is always derived from `pred_home` vs. `pred_away`**, not from the model's text label. This is deliberate (§3.3, paper): the model's prose label is occasionally inconsistent with its predicted score, and the score is the downstream signal for O/U conversion. The parser in [`src/football_llm/serving/parsing.py`](../src/football_llm/serving/parsing.py) enforces this.
-- **Anonymized variants** use `Team A` / `Team B` consistently across team blocks *and* event strings, so team identity does not leak through event descriptions.
+- `*_result` ∈ `{"home_win", "draw", "away_win"}`.
+- `pred_result` is always derived from `pred_home` vs `pred_away`, not from the model's text label. The two disagree in 24 of 64 pregame outputs with names (audit §4).
+- `gt_*` is the score **after extra time** (Argentina–France is 3–3). Betting markets settle at 90 minutes; this affects 2 of the 64 matches.
+- The `Team A` / `Team B` prompts still contain the coach's name, stadium and round, so they are only partly anonymized.
 
-## Reproducing the paper from these files
+## Reproducing
 
 ```bash
 pip install -e ".[dev]"
-
-# One command regenerates every table, figure, and p-value in the PDF:
-python scripts/reproduce_paper.py --results results/ --output-dir figures/
+python scripts/leakage_audit.py --figures-dir report/figures   # the audit
+python scripts/reproduce_paper.py --output-dir figures/        # the spring tables and figures
 ```
 
-The script is deterministic modulo BLAS nondeterminism in the bootstrap (we fix `numpy` seed at 42). Expected runtime: ~30 seconds on a laptop.
+Both scripts are deterministic (NumPy seed 42) and run in seconds.
 
-## What's *not* in this directory
+## Not in this directory
 
-- **Raw match data** — lives in [`data/raw/`](../data/raw/) (see [data/README.md](../data/README.md) for schema + source).
-- **Training data** — lives in [`data/training/`](../data/training/).
-- **Model weights** — on HuggingFace at [`zanwenfu/football-llm-qlora`](https://huggingface.co/zanwenfu/football-llm-qlora).
-- **XGBoost baseline predictions** — regenerated by `python -m football_llm.baselines.xgboost` (fast; train in <10s on the 192 training matches).
+- **Raw match data:** [`data/raw/`](../data/raw/) (see [`docs/DATA_CARD.md`](../docs/DATA_CARD.md)).
+- **Training data:** [`data/training/`](../data/training/).
+- **Model weights:** on Hugging Face at [`zanwenfu/football-llm-qlora`](https://huggingface.co/zanwenfu/football-llm-qlora).
