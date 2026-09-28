@@ -35,9 +35,7 @@
 \newcommand{\keeplines}[1]{\par\vspace{0pt plus #1\baselineskip}\penalty-200%
   \vspace{0pt plus -#1\baselineskip}}
 
-% Visible on purpose: replace before submitting.
 \newcommand{\swatch}[1]{\textcolor{#1}{\rule{0.75em}{0.75em}}}
-\newcommand{\addlink}[1]{\textcolor{red}{\textbf{[add link: #1]}}}
 
 \newtcolorbox{note}[1][]{colback=black!3,colframe=black!25,boxrule=0.4pt,arc=1pt,
   left=6pt,right=6pt,top=4pt,bottom=4pt,fontupper=\small,#1}
@@ -439,16 +437,15 @@ I used AI assistants throughout, and I am disclosing all of it as the assignment
 \item \textbf{Spring project.} Code for the data pipeline, training, evaluation and serving,
   and drafting of the spring report and README, were done with heavy AI assistance.
 \item \textbf{This assignment.} Claude (Anthropic) reviewed the repository and flagged the
-  contamination risk (first dialogue below). In a Claude Code session it then wrote the audit
+  contamination risk (the first dialogue in \texttt{AI\_USAGE.md}). In a Claude Code session it then wrote the audit
   and Dixon-Coles code and their tests, ran the analyses, and drafted this report and the
   updated README from my direction. I chose the project and the question, and the conclusions in Section~6 are mine.
   Every number in this report is printed by the scripts in Section~8.
 \end{itemize}
 
-Dialogues:
-\begin{itemize}
-\item Claude conversation evaluating the project and identifying the gaps: \addlink{first chat}
-\item Claude Code session that built the audit and this report: \addlink{Claude Code session}
-\end{itemize}
+\textbf{Dialogues.} Both are attached in full in \texttt{AI\_USAGE.md} at the root of the
+repository: Claude's replies from the conversation that reviewed the project, and the Claude
+Code session that built the audit and drafted this report (my prompts, Claude's replies,
+and a one-line summary of every action it took).
 
 \end{document}

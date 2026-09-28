@@ -173,7 +173,7 @@ football-llm/
 
 ## History and AI use
 
-This project started as my IDS 598.1 final project in spring 2026 ([report at that commit](https://github.com/zanwenfu/football-llm/blob/2620371/crypto-trading/project/IDS598_Final_Project_Report.pdf)). The audit, the Dixon-Coles benchmark, the report in `report/`, and this README are new. The code and writing in both phases were produced with heavy AI assistance (Claude); the report's Section 9 discloses the details and links the dialogues.
+This project started as my IDS 598.1 final project in spring 2026 ([report at that commit](https://github.com/zanwenfu/football-llm/blob/2620371/crypto-trading/project/IDS598_Final_Project_Report.pdf)). The audit, the Dixon-Coles benchmark, the report in `report/`, and this README are new. The code and writing in both phases were produced with heavy AI assistance (Claude). The report's Section 9 discloses the details, and [`AI_USAGE.md`](AI_USAGE.md) holds the full dialogues.
 
 ## References
 
