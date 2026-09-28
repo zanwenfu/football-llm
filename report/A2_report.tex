@@ -1,0 +1,454 @@
+% Assignment 2 (Mini Project): Predicting a sport game.
+% Build: cd report && xelatex A2_report.tex && xelatex A2_report.tex
+% Figures: python scripts/leakage_audit.py --figures-dir report/figures
+\documentclass[11pt,letterpaper,parskip=half]{scrartcl}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{fontspec}
+\IfFontExistsTF{Charter}{\setmainfont{Charter}}{}
+\IfFontExistsTF{Helvetica Neue}{\setsansfont{Helvetica Neue}}{}
+\IfFontExistsTF{Menlo}{\setmonofont[Scale=0.85]{Menlo}}{}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage[font=small,labelfont=bf,labelsep=period]{caption}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=anon!85!black,linkcolor=black,citecolor=black}
+
+\definecolor{ink2}{HTML}{52514E}
+\definecolor{named}{HTML}{EB6834}
+\definecolor{anon}{HTML}{2A78D6}
+\definecolor{rule}{HTML}{1BAF7A}
+\setkomafont{disposition}{\sffamily\bfseries}
+\setkomafont{caption}{\small}
+\setlist{itemsep=2pt,topsep=3pt}
+\renewcommand{\arraystretch}{1.15}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+% Start a new page here unless #1 lines fit (needspace.sty is not installed).
+\newcommand{\keeplines}[1]{\par\vspace{0pt plus #1\baselineskip}\penalty-200%
+  \vspace{0pt plus -#1\baselineskip}}
+
+% Visible on purpose: replace before submitting.
+\newcommand{\swatch}[1]{\textcolor{#1}{\rule{0.75em}{0.75em}}}
+\newcommand{\addlink}[1]{\textcolor{red}{\textbf{[add link: #1]}}}
+
+\newtcolorbox{note}[1][]{colback=black!3,colframe=black!25,boxrule=0.4pt,arc=1pt,
+  left=6pt,right=6pt,top=4pt,bottom=4pt,fontupper=\small,#1}
+
+\title{Did My Model Predict the World Cup, or Remember It?}
+\subtitle{An audit of a fine-tuned LLM for football prediction\\[2pt]
+  \normalsize Assignment 2 (Mini Project): Predicting a Sport Game}
+\author{Zanwen Fu}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+\vspace{-1.5em}
+
+\begin{note}
+\textbf{Relationship to prior work.} The data pipeline, fine-tuned model, and prediction files
+used here were built for my IDS~598.1 final project in Spring 2026
+(\href{https://github.com/zanwenfu/football-llm/blob/2620371/crypto-trading/project/IDS598_Final_Project_Report.pdf}{spring report}).
+This assignment does not resubmit that project. It \emph{audits} it: every test, baseline,
+figure, and conclusion in Sections~4--7 is new, and several of them overturn claims I made in
+the spring. Code: \url{https://github.com/zanwenfu/football-llm}. AI use is disclosed in
+Section~9.
+\end{note}
+
+\section*{Summary}
+
+In the spring I fine-tuned Llama~3.1~8B on the 2010--2018 World Cups and reported that,
+before kickoff, it called over/under~2.5 goals correctly for 76.6\% of 2022 World Cup matches,
+more than 20 points ahead of a tabular XGBoost model, and that it turned \$1{,}000 into
+\$15{,}684 in a simulated backtest. For this assignment I asked a harder question: \emph{how much of that was
+prediction?} Llama~3.1's pretraining data runs to December~2023, so the 2022 results were
+already in the model's weights before I fine-tuned it.
+
+Three tests say the headline was mostly memory. Hiding the team names cuts exact-score
+accuracy from 43.8\% to 10.9\%. With names shown, 59\% of predictions are the real scoreline
+or its home/away mirror, against about 10\% by chance, and the tournament's famous upsets come
+back with the right digits and the wrong winner. And the same backtest pays +1{,}125\% to a
+rule with no model at all. Once the model cannot tell which match it is looking at, it is
+statistically indistinguishable from betting ``under'' every time. What survives is that the halftime score carries
+real information, but a one-line rule already captures it.
+
+My conclusion is not that LLMs cannot predict football. It is that \textbf{accuracy on past
+matches is not evidence of skill for a model that may have read the results}, and that the
+test which could show skill is a forward test on matches the model has never seen, priced
+against real odds.
+
+% ---------------------------------------------------------------------------
+\section{The question, and what would prove me wrong}
+
+\textbf{Target question.} Can a large language model predict football matches well enough
+to be worth pursuing as a betting strategy?
+
+My starting point was simple: I wanted to see whether an LLM can predict matches correctly,
+and whether this is a promising track. I believed it was. An LLM has read a great deal about
+football, it can take player statistics as text, and it can be conditioned on the state of a
+game at halftime without retraining. I expected that with more data and a stronger model it
+could produce positive returns over the long run.
+
+The spring project tested this on two decisions a bettor actually makes: who wins (1X2)
+and whether the match goes over or under 2.5 goals (O/U), each made either before kickoff
+or at halftime.
+
+\textbf{What would falsify it.} If the model has real skill, that skill should not depend on
+it knowing \emph{which} match it is predicting. If its advantage disappears once it cannot
+identify the match, then what I measured was recall of results it had read, not prediction.
+I built this control in the spring (a copy of every test prompt with the team names replaced
+by ``Team~A'' and ``Team~B'') but, as Section~4 shows, I read it on the wrong metric.
+
+% ---------------------------------------------------------------------------
+\section{Analytical framework}
+
+Following the research process from Lecture~5, I sampled the questions that different roles
+would ask of this project, and then checked which of their measures my data can support.
+
+\begin{table}[htbp]
+\small
+\begin{tabularx}{\textwidth}{@{}P{2.5cm}YYP{3.8cm}@{}}
+\toprule
+Role & Key question & Measure & Available to me? \\
+\midrule
+Bettor / trader & Does the model beat the price after the bookmaker's cut? &
+  Return against real odds; break-even hit rate (52.6\% at odds 1.90) &
+  \textbf{No odds data.} The spring backtest assumed 1.90 on every match. \\
+Match analyst & Who is stronger, and what is the game state? &
+  Starting XI's prior-season player stats; halftime score &
+  Yes (API-Football) \\
+Sports statistician & How many goals should each side score? &
+  Dixon-Coles expected goals $\lambda,\mu$; O/U probability &
+  Only World Cup results (256 matches) \\
+ML evaluator & Is the measured skill real, or leaked? &
+  Named vs.\ hidden gap; mirror test; trivial baselines; power &
+  Yes (built for this audit) \\
+\bottomrule
+\end{tabularx}
+\caption{Roles, key questions, measures, and data availability.}
+\label{tab:roles}
+\end{table}
+
+Lecture~7 ranks the data types that decide soccer predictions. Setting my inputs against
+that ranking was sobering (Table~\ref{tab:datatypes}): the model saw only the fifth-ranked
+type and none of the top four.
+
+\begin{table}[htbp]
+\small
+\begin{tabularx}{\textwidth}{@{}rP{5.2cm}Y@{}}
+\toprule
+Rank & Data type (Lecture 7) & In my model's input? \\
+\midrule
+1 & Historical match outcomes & Only World Cup matches, 3--7 per team every four years \\
+2 & Betting-market probabilities & None \\
+3 & Team strength ratings (Elo, etc.) & None \\
+4 & Team performance statistics (xG, form) & None (StatsBomb xG exists for 2018/2022 only; unused) \\
+5 & Player statistics \& availability & \textbf{Yes: the only real input} \\
+8 & Match context (venue, stage) & Yes, which turns out to matter for leakage (Section~4.3) \\
+\bottomrule
+\end{tabularx}
+\caption{The model's inputs against the lecture's ranking of predictive data types.}
+\label{tab:datatypes}
+\end{table}
+
+% ---------------------------------------------------------------------------
+\section{What I built, and what I claimed}
+
+\textbf{Pipeline.} From API-Football I scraped all 256 World Cup matches from 2010 to 2022
+(results, halftime scores, lineups, events) and about 168{,}000 rows of player statistics
+(one per player, season and competition) from 2004 to 2025. For each match, the starting XI's statistics from the three seasons
+\emph{before} the tournament are aggregated into a short text profile per team. Llama~3.1~8B
+Instruct was fine-tuned with QLoRA on the 192 matches of 2010, 2014 and 2018 to answer
+\texttt{Prediction / Score / Reasoning}, and tested on the 64 matches of 2022, each shown
+twice: with team names, and with names hidden.
+
+\textbf{Models compared in this audit} (all on the same 64 matches):
+the LLM with team names; the LLM with names hidden; XGBoost trained on the same features;
+a Dixon-Coles model fitted to 2010--2018 results (new, following Lecture~7); and rules that
+use no model (``always under'', ``double the halftime goals'').
+
+\textbf{What the spring report claimed.} LLM and XGBoost tied on 1X2, but the LLM won on
+goals: 39.1\% vs.\ 6.2\% exact scores and 76.6\% vs.\ 54.7\% on O/U before kickoff. I
+attributed this to ``pretrained scoreline priors'' and called it a magnitude/direction
+decomposition. I also reported that halftime conditioning lifted 1X2 accuracy with $p=0.024$,
+that adding first-half events raised O/U accuracy to 79.7\%, and a simulated return of
++1{,}468\%. Several of those numbers do not survive the audit, and one cannot be regenerated
+at all (Section~4.5).
+
+% ---------------------------------------------------------------------------
+\section{The audit}
+
+Lecture~6 gives a seven-item validation checklist. I worked through it in the order that
+turned out to matter.
+
+\subsection{Out-of-sample test: the test set was not out of sample}
+
+Llama~3.1 was released in July~2024 with pretraining data through December~2023. The 2022
+World Cup, including every score, was on the public web the model was trained on. My split
+was clean for the \emph{fine-tuning} data (2010--2018 in, 2022 out) and for the features
+(only seasons before each tournament), but not for the \emph{base model}. This is exactly the
+failure in Lecture~7's W-5 case: ``training data holds post-event knowledge'', and ``pretend
+not to know'' does not work because the knowledge is in the parameters.
+
+\subsection{Cross-validation with outcomes: hide the names}
+
+\begin{table}[htbp]
+\small
+\begin{tabularx}{\textwidth}{@{}Y rrr r rrr@{}}
+\toprule
+& \multicolumn{3}{c}{Pregame} & & \multicolumn{3}{c}{Halftime} \\
+\cmidrule{2-4}\cmidrule{6-8}
+64 matches, same prompts except names & 1X2 & Exact & O/U 2.5 & & 1X2 & Exact & O/U 2.5 \\
+\midrule
+\swatch{named} LLM, team names  & 50.0 & 43.8 & 78.1 & & 64.1 & 51.6 & 81.2 \\
+\swatch{anon} LLM, names hidden & 53.1 & 10.9 & 56.2 & & 64.1 & 18.8 & 70.3 \\
+\addlinespace
+Paired McNemar $p$ (names vs.\ hidden) & 0.82 & $<$0.001 & 0.007 & & 1.00 & $<$0.001 & 0.12 \\
+\bottomrule
+\end{tabularx}
+\caption{Accuracy (\%) with and without team names. The model is identical; only the names differ.}
+\label{tab:named}
+\end{table}
+
+Knowing the names does not help the model pick the winner at all (50.0\% vs.\ 53.1\%), but it
+quadruples exact scores. In the spring my notebook compared the two versions on 1X2 only,
+saw no gap, and concluded the model ``learned from stats, not names''. \textbf{I had the right
+control and read it on the one metric where memory helps least.} A model that remembers
+``it finished 1--0'' but not who won is exactly what this table looks like.
+
+\subsection{Model interpretation: the mirror test}
+
+If the model half-remembers a result, it should often reproduce the scoreline's digits but
+not always their order. I counted predictions that match the real score exactly \emph{or}
+with home and away swapped, and compared that rate with a null in which each model's own
+predictions are matched to shuffled fixtures. The null keeps both the model's score
+distribution and the tournament's, so it already credits common scores like 1--0.
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_mirror_test.pdf}
+\caption{Exact-or-mirrored scorelines, pregame. Gray: 10{,}000 shuffles of each model's own
+predictions. XGBoost, which has no route to the 2022 results, sits inside its null.}
+\label{fig:mirror}
+\end{figure}
+
+With names, 59.4\% of predictions are the real score or its mirror ($p<0.001$). The ten
+mirrored cases are telling: \emph{Tunisia 1--0 France} was predicted 0--1, \emph{Morocco 1--0
+Portugal} 0--1, \emph{Japan 2--1 Germany} as Germany 2--1, \emph{Qatar 0--2 Ecuador} 2--0. The
+model recalls the scoreline and assigns the win to the stronger team on paper. It also got
+scores no statistics could produce, such as England 6--2 Iran, Portugal 6--1 Switzerland, and
+3--3 for the final, which is the score \emph{after extra time}. This single mechanism explains
+the ``magnitude/direction decomposition'' I reported in the spring: it is the signature of
+memory, not a scoreline prior.
+
+The hidden-name model also beats its null ($p=0.016$) while XGBoost on the same features does
+not ($p=0.34$). The hidden prompts still contain the coach's name, the stadium and the round
+(``Team~A | Coach: G.~Southgate'', ``Group Stage -- 1 | Al Bayt Stadium''), which together
+identify the match. The evidence is weak at $n=64$, but it means even my ``names hidden''
+numbers are an upper bound.
+
+\subsection{Cross-validation with benchmarks}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_ou_accuracy.pdf}
+\caption{O/U~2.5 accuracy on the same 64 matches, with 95\% Wilson intervals. The vertical
+line is the hit rate needed to break even at odds of 1.90.}
+\label{fig:ou}
+\end{figure}
+
+\begin{table}[htbp]
+\small
+\begin{tabularx}{\textwidth}{@{}Y rrr r rr@{}}
+\toprule
+& \multicolumn{3}{c}{Pregame} & & \multicolumn{2}{c}{Halftime} \\
+\cmidrule{2-4}\cmidrule{6-7}
+Model (64 matches) & 1X2 & Exact & O/U & & 1X2 & O/U \\
+\midrule
+LLM, names hidden & 53.1 & 10.9 & 56.2 & & 64.1 & 70.3 \\
+XGBoost, same features & 57.8 & 12.5 & 46.9 & & 62.5 & 67.2 \\
+Dixon-Coles, fitted on WC 2010--2018 & 45.3 & 7.8 & 53.1 & & -- & -- \\
+No model: always home win / always under & 45.3 & -- & 53.1 & & 45.3 & 53.1 \\
+No model: halftime leader wins / halftime goals $\times2$ & -- & -- & -- & & 56.2 & \textbf{75.0} \\
+\bottomrule
+\end{tabularx}
+\caption{Every model on the same matches (\%). With names hidden, nothing clearly beats a constant.}
+\label{tab:benchmarks}
+\end{table}
+
+Pregame, with the names hidden, the LLM's 56.2\% on O/U is within noise of ``always under''
+(53.1\%); XGBoost is worse than that constant. At halftime, simply doubling the first-half
+goals gets 75.0\%, ahead of the hidden-name LLM's 70.3\% (paired $p=0.66$).
+
+The Dixon-Coles model from Lecture~7 taught me something on its own. I chose its shrinkage
+by fitting on 2010--2014 and scoring 2018, never looking at 2022, and the best out-of-sample
+setting was maximum shrinkage: every team average. Team strengths from one World Cup barely
+transfer to the next, because each team plays three to seven matches every four years. With
+this data the textbook benchmark collapses to a constant, which is Lecture~7's own warning
+(``Not yet, the current model is overfitting with the data set!'') and says the real
+bottleneck is data type~1 in Table~\ref{tab:datatypes}.
+
+\subsection{Data validation}
+
+\begin{itemize}
+\item \textbf{A result I cannot reproduce.} The spring report's third regime (halftime plus
+  first-half events: 79.7\% O/U, calibration error 0.182, $p=0.006$) came from a scratch run
+  whose predictions were never saved. I drop those numbers.
+\item \textbf{Labels include extra time.} Bets settle at 90 minutes, but my labels use the
+  final score (Argentina--France is labelled 3--3; it was 2--2 at 90 minutes). This affects
+  2 test and 9 training matches. The Dixon-Coles model trains on 90-minute scores.
+\item \textbf{The hidden prompts are only partly hidden} (coach, stadium, round; above).
+\end{itemize}
+
+\subsection{Stability}
+
+\begin{itemize}
+\item \textbf{Two runs, two answers.} Inference sampled at temperature 0.1. Two runs of the
+  same weights on the same prompts gave 52.3\% and 51.6\% 1X2 accuracy, and my spring README
+  mixed numbers from both.
+\item \textbf{Double counting.} The spring $p=0.024$ for the halftime lift pooled the named and
+  hidden copies ($n=128$), counting every match twice. Tested within each copy ($n=64$), the
+  lift is $p=0.049$ with names and $p=0.21$ without.
+\item \textbf{Width of the evidence.} At $n=64$ a 95\% interval on an accuracy is about
+  $\pm$12 points wide, so most model-to-model differences here are not resolvable.
+\end{itemize}
+
+\subsection{Error analysis}
+
+The outputs have problems that are about decoding, not modelling. Before kickoff the model
+predicted 1 draw in 64 matches with names and 0 without, against 15 real draws. It also produced
+9 (names) and 11 (hidden) scorelines with one side on six or more goals, such as 0--8, 2--8 and
+6--8, against 3 real ones. And in 24 of 64 pregame outputs its written label contradicts its own score. Inference
+used a repetition penalty of 1.1, which discourages repeating a digit and may be why 0--0 and
+1--1 come out as 0--8 and 1--6. I have not verified this, since it needs a GPU rerun.
+
+\subsection{Backtest and forward test}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_flat_odds_backtest.pdf}
+\caption{The spring backtest (O/U~2.5 at odds 1.90 on every match, quarter Kelly, 10\% cap),
+run on three strategies. Log scale; \$1{,}000 start.}
+\label{fig:backtest}
+\end{figure}
+
+The spring simulation assumed odds of 1.90 on both sides of every match. At halftime that
+assumption hands an edge to anyone who can see the score, because a real bookmaker reprices
+the line when it is 2--0 at the break. The proof is Figure~\ref{fig:backtest}: \textbf{a rule
+with no model returns +1{,}125\%}. The hidden-name LLM returns +440\% at halftime and
+$-0.4$\% before kickoff. The simulation was measuring memory and its own odds assumption,
+not skill.
+
+Even with real odds, one tournament cannot establish an edge. With flat stakes at odds
+1.90, detecting a true edge of 5\% per bet (one-sided $\alpha=0.05$, power 0.8) takes about
+2{,}200 bets; 2\% takes about 13{,}900. A World Cup has 64 matches, 104 from 2026.
+
+% ---------------------------------------------------------------------------
+\section{What survives}
+
+\begin{itemize}
+\item \textbf{The halftime score is real information.} With names hidden, halftime
+  conditioning moves O/U from 56.2\% to 70.3\% and 1X2 from 53.1\% to 64.1\%, though neither is
+  significant at $n=64$ ($p=0.09$, $p=0.21$). The model generalises to a prompt field it was
+  never trained on. But a one-line rule captures the same information at least as well.
+\item \textbf{Before kickoff, I find no skill} once the model cannot identify the match.
+\item \textbf{The infrastructure is sound and reusable:} temporal feature windows, the
+  named/hidden control, and now an audit that runs in one second and flags leakage
+  automatically. That is what makes the forward test in Section~7 cheap.
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\keeplines{12}
+\section{What I believe now}
+
+\textbf{Then:} an LLM can predict matches; with more data and a stronger model it would
+produce positive long-run returns.
+
+\textbf{Now:} the evaluation was the bottleneck, not the model. Four things changed my mind
+about how to get there:
+
+\begin{enumerate}
+\item \textbf{A stronger model would make this backtest look better for the wrong reason.}
+  A newer, larger LLM has read more results. On any test set before its training cutoff it
+  will score higher by remembering more. Scaling the model makes the measurement problem
+  worse unless the test is on matches it cannot have seen.
+\item \textbf{Capacity cannot create information that is not in the input.} My prompts held
+  data type~5 and none of types 1--4. A bigger model reads the same player totals.
+\item \textbf{Returns come from beating prices, not from accuracy.} A 56\% hit rate is only
+  valuable against a price that implies less, and I never compared to a real price.
+\item \textbf{World Cups are too small to prove an edge.} The ``long run'' needs thousands of
+  bets, which means club leagues, where markets are most efficient.
+\end{enumerate}
+
+I still think the idea is worth testing, in narrower forms: an LLM as a reader of
+unstructured information the market prices slowly (team news, injuries, confirmed lineups),
+especially in thinner markets; or as a feature extractor feeding a calibrated model such as
+Dixon-Coles, rather than as the predictor itself. \textbf{What would change my mind} is a
+pre-registered forward test on matches after the model's training cutoff, with identities
+properly hidden, that beats closing odds by more than the bookmaker's margin over hundreds of
+bets.
+
+% ---------------------------------------------------------------------------
+\section{Plan for the final project}
+
+\begin{table}[htbp]
+\small
+\begin{tabularx}{\textwidth}{@{}P{5.2cm}Y@{}}
+\toprule
+Gap found in this audit & Fix \\
+\midrule
+Test set inside the base model's training data &
+  Forward test on matches after December 2023: Euro 2024 and Copa Am\'erica 2024 (about 83
+  matches) and the 2026 World Cup (104 matches) \\
+Hidden prompts leak via coach, stadium, round & Strip them; confirm with the mirror test \\
+No market benchmark & Collect closing odds; report return and closing-line value \\
+Sparse history & All international results for Dixon-Coles and Elo benchmarks \\
+Decoding problems & No repetition penalty, deterministic decoding, several samples per match for probabilities \\
+Extra-time labels & Train and score on 90-minute results \\
+Halftime prompts never trained on & Fine-tune on halftime prompts; compare against the halftime rule \\
+\bottomrule
+\end{tabularx}
+\caption{From Assignment~2 to the final project.}
+\end{table}
+
+% ---------------------------------------------------------------------------
+\keeplines{10}
+\section{Reproducing every number}
+
+No GPU is needed; everything runs in seconds from the committed prediction files.
+\begin{verbatim}
+pip install -e ".[dev]"
+python scripts/leakage_audit.py --figures-dir report/figures  # Sec. 4-5
+python -m football_llm.baselines.dixon_coles                  # benchmark
+python scripts/reproduce_paper.py --skip-figures              # spring tables
+\end{verbatim}
+
+% ---------------------------------------------------------------------------
+\section{AI use disclosure}
+
+I used AI assistants throughout, and I am disclosing all of it as the assignment requires.
+
+\begin{itemize}
+\item \textbf{Spring project.} Code for the data pipeline, training, evaluation and serving,
+  and drafting of the spring report and README, were done with heavy AI assistance.
+\item \textbf{This assignment.} Claude (Anthropic) reviewed the repository and flagged the
+  contamination risk (first dialogue below). In a Claude Code session it then wrote the audit
+  and Dixon-Coles code and their tests, ran the analyses, and drafted this report and the
+  updated README from my direction. I chose the project and the question, and the conclusions in Section~6 are mine.
+  Every number in this report is printed by the scripts in Section~8.
+\end{itemize}
+
+Dialogues:
+\begin{itemize}
+\item Claude conversation evaluating the project and identifying the gaps: \addlink{first chat}
+\item Claude Code session that built the audit and this report: \addlink{Claude Code session}
+\end{itemize}
+
+\end{document}

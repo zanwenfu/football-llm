@@ -22,20 +22,20 @@ The training pipeline ingests raw API-Football data, aggregates it into team-lev
 
 **Tournaments covered.** FIFA World Cups 2010, 2014, 2018, 2022 (256 matches = 64 × 4).
 
-**Collection window.** Historical data retrieved via API calls across 2025-Q1. Reruns require a valid API-Football key (see `football-data/README.md`).
+**Collection window.** Historical data retrieved via API calls in January–February 2026. Reruns require a valid API-Football key (see `football-data/README.md`).
 
 **License.** API-Football's [terms of service](https://www.api-football.com/documentation-v3#terms) govern raw data re-distribution. We commit aggregated derivatives (team-level profiles, prompts) — not the raw API responses beyond what's present in `data/raw/`.
 
 ## Temporal split
 
-Strict — no leakage:
+Strict for the features and the fine-tuning data. **Not** clean for the base model: Llama 3.1's pretraining data runs to December 2023, so it has seen the 2022 results (see the [audit report](../report/A2_report.pdf)).
 
 | Set | Tournaments | Matches | JSONL rows |
 |:---|:---|:---:|:---:|
 | Train | 2010 + 2014 + 2018 | 192 | 384 |
 | Eval  | 2022 | 64 | 128 |
 
-All player statistics are filtered to **prior-season-only** before each match, so a 2018 match is conditioned only on pre-2018 league stats. Detection of leakage would manifest as sharp overfitting to named team identities — see §5.6 ("Named vs. Anonymized") for the diagnostic ablation.
+All player statistics are filtered to the three seasons **before** each tournament, so a 2018 match is conditioned only on 2015–2017 stats. Leakage from the base model shows up as a large gap between named and hidden prompts: on 2022, exact-score accuracy is 43.8% with names and 10.9% without (`scripts/leakage_audit.py`).
 
 ## Schema — `match_contexts.json`
 
@@ -123,7 +123,7 @@ HuggingFace chat-format JSONL (one match per line):
 
 **Token budget.** All 512 samples (384 train + 128 eval) fit within **350 tokens** against the 768-token training sequence limit, ensuring the assistant response is never truncated during SFT.
 
-**Anonymization.** Each match generates two variants: one with real team names ("Argentina", "Brazil") and one with `Team A` / `Team B` — including in event strings so identity doesn't leak. This doubles the dataset and enables the named/anonymized ablation in §5.6 of the paper.
+**Anonymization.** Each match generates two variants: one with real team names ("Argentina", "Brazil") and one with `Team A` / `Team B`, including in event strings. This doubles the dataset and enables the named-vs-hidden leakage test. The hidden variant still includes the coach's name, stadium and round, which together can identify a match; stripping them is a planned fix.
 
 ## Schema — prediction JSONs (`results/ft_predictions_*.json`)
 
@@ -135,6 +135,7 @@ See [`results/README.md`](../results/README.md).
 - **Coach/formation NaNs.** ~3% of profiles have missing coach or formation. `build_team_profiles.py` propagates these as NaN; the prompt template renders them as `"?"`.
 - **Pre-match staff cards.** The API occasionally reports cards at `minute < 0` for technical staff pre-match (7 instances in the corpus). Filtered in the event-enrichment prompt.
 - **Halftime score coverage.** Present for all 256 matches.
+- **Labels include extra time.** `home_goals` / `away_goals` are final scores after extra time (11 matches, 2 of them in 2022). Betting markets settle at 90 minutes; the 90-minute score is in `fulltime_home` / `fulltime_away`, which the Dixon-Coles baseline uses.
 - **Fixture IDs are monotonic.** The 2022 fixture IDs increase with match order, so we sort by `fixture_id` for chronological backtests.
 
 ## Reproducibility

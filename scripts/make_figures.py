@@ -38,13 +38,7 @@ def main() -> int:
     # Figure 1 — result accuracy (requires at least pregame + halftime)
     if "pregame" in regime_dfs and "halftime" in regime_dfs:
         df_pre, df_hft = regime_dfs["pregame"], regime_dfs["halftime"]
-        baselines = {
-            "Random": (46, 128),
-            "Always home": (58, 128),
-            "HT-leader": (36, 64),
-            "HT×2": (36, 64),
-            "Empirical prior": (35, 64),
-        }
+        baselines = loader.result_accuracy_baselines(df_hft, args.results)
         fig = figures.figure_result_accuracy(
             baselines,
             llm_pregame=(int(df_pre["correct_result"].sum()), len(df_pre)),

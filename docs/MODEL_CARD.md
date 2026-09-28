@@ -20,48 +20,44 @@ model-index:
     results:
       - task:
           type: text-generation
-          name: World Cup 1X2 Prediction
+          name: World Cup score prediction (team names hidden)
         dataset:
-          name: 2022 FIFA World Cup (held-out)
+          name: 2022 FIFA World Cup (64 matches; inside the base model's pretraining window)
           type: custom
         metrics:
-          - name: 1X2 Result Accuracy (halftime-conditioned)
+          - name: 1X2 accuracy, pregame, names hidden
             type: accuracy
-            value: 0.641
-          - name: O/U 2.5 Directional Accuracy (halftime+events, named)
+            value: 0.531
+          - name: O/U 2.5 accuracy, pregame, names hidden
             type: accuracy
-            value: 0.844
-          - name: ECE on O/U 2.5 (halftime+events)
-            type: expected_calibration_error
-            value: 0.182
+            value: 0.562
+          - name: O/U 2.5 accuracy, halftime, names hidden
+            type: accuracy
+            value: 0.703
 ---
 
 # Football-LLM: QLoRA-fine-tuned Llama 3.1 8B for World Cup Prediction
 
-A LoRA adapter over [`meta-llama/Llama-3.1-8B-Instruct`](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct) for predicting final scorelines of FIFA World Cup matches. Supports three inference regimes: pregame, halftime-conditioned, and halftime + first-half event enrichment.
+A LoRA adapter over [`meta-llama/Llama-3.1-8B-Instruct`](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct) that predicts final scorelines of FIFA World Cup matches from player-level team statistics, before kickoff or at halftime.
 
-The adapter's **magnitude-aware edge** — driven by pretrained scoreline priors — is the intended contribution. See [the paper](https://github.com/zanwenfu/football-llm/blob/main/IDS598_Final_Project_Report.pdf) for the full magnitude/direction decomposition.
+> **Read this before using the numbers.** The adapter was evaluated on the 2022 World Cup, but Llama 3.1's pretraining data runs to December 2023, so the base model has seen those results. With team names in the prompt it reproduces many real 2022 scorelines, sometimes with home and away swapped. With names hidden it performs about as well as simple rules. See the [audit report](https://github.com/zanwenfu/football-llm/blob/main/report/A2_report.pdf).
 
-| Metric (held-out 2022 WC, n=128) | Pregame | Halftime | **Halftime + Events** |
-|:---|:---:|:---:|:---:|
-| 1X2 Result Accuracy | 52.3% | **64.1%** | 61.7% |
-| O/U 2.5 Directional Accuracy | 65.6% | 74.2% | **79.7%** |
-| Goal MAE | 1.32 | 1.21 | **1.12** |
-| ECE (O/U 2.5) | 0.272 | 0.239 | **0.182** |
-
-On the 64 named matches specifically: halftime+events reaches **84.4%** O/U 2.5 accuracy (Wilson CI [0.736, 0.913]).
+| 2022 World Cup, 64 matches | Pregame 1X2 | Pregame O/U 2.5 | Halftime 1X2 | Halftime O/U 2.5 |
+|:---|:---:|:---:|:---:|:---:|
+| Team names in prompt (contaminated) | 50.0% | 78.1% | 64.1% | 81.2% |
+| Team names hidden | 53.1% | 56.2% | 64.1% | 70.3% |
+| No model: always under / halftime goals ×2 | – | 53.1% | – | 75.0% |
 
 ## Intended use
 
-- **Research** on sports-market inefficiencies, calibration, and the magnitude/direction decomposition in LLMs.
+- **Research** on evaluation leakage in LLM forecasting: the named/hidden prompt pairs make a ready-made contamination test.
 - **Educational** examples of QLoRA fine-tuning on free-tier hardware (Colab T4, 43 minutes, 5.7 GB peak VRAM).
-- **Defensive/analytical** use by risk teams at sportsbooks who want a reference implementation of halftime-conditioned O/U pricing.
+- **Forward testing** on matches after December 2023 (Euro 2024, Copa América 2024, World Cup 2026), which is the only setting where its accuracy says anything about skill.
 
 ## Out-of-scope use
 
-- **Deployment for live real-money betting without independent verification.** The published 1,468% ROI is a *simulation* under flat 1.90/1.90 odds and Kelly 25% — realistic deployment projects to 15–40% per tournament cycle after odds drift, vig, and jurisdiction-dependent tax. Do not skip paper-trading.
-- **Non-World-Cup competitions** without retraining or validation. Named/anonymized ablation shows the adapter's magnitude edge is partly driven by team-identity priors; other leagues may behave differently.
-- **Predicting outcomes for matches where the team-stat pipeline is not available.** The adapter expects a specific compact prompt format (see below).
+- **Real-money betting.** No evaluation of this adapter has shown an edge against real odds. The spring backtest's +1,468% used flat 1.90/1.90 odds, and a rule with no model earns +1,125% under the same simulation.
+- **Treating accuracy on pre-2024 matches as evidence of skill.** Those results are in the base model's pretraining data.
 
 ## How to use
 
@@ -131,61 +127,35 @@ Reasoning: Argentina leads 1-0 with stronger attack...
 
 ## Evaluation protocol
 
-- **Wilson score intervals** for all proportions (§4.2 of paper).
-- **Exact McNemar tests** for paired within-match comparisons.
-- **ECE (10 bins)** and **Brier score** for probability calibration.
-- **10,000-trial bootstrap** on per-bet returns for backtest CI.
+- 64 matches of the 2022 World Cup, each prompted twice: with team names and with "Team A" / "Team B".
+- Wilson score intervals for proportions; paired exact McNemar within each prompt variant (pooling both variants counts each match twice).
+- Leakage checks: named-vs-hidden gap, a mirror-score permutation test, and comparison with XGBoost, Dixon-Coles and no-model rules. All in [`scripts/leakage_audit.py`](https://github.com/zanwenfu/football-llm/blob/main/scripts/leakage_audit.py).
 
-The paired pregame → halftime lift on 1X2 accuracy is **statistically significant** (exact McNemar p = 0.024, n = 128). The paired pregame → halftime+events lift on O/U 2.5 directional accuracy is even stronger (p = 0.006, n = 128).
+## Prompt regimes
 
-## Three prompt regimes
+The fine-tuning data contained no halftime scores, so the halftime regime is prompt-template generalisation at inference time.
 
-Critically, the fine-tuning dataset contained **no halftime scores or event sequences** — both halftime regimes are **pure prompt-template generalization** at inference time.
+- **Pregame:** team stats only, ending in `"Predict result, score, and reasoning."`
+- **Halftime:** team stats plus
+  ```
+  Halftime Score: {Home} {HH} - {HA} {Away}
+  Given the halftime state, predict the FINAL result, FINAL score, and brief reasoning.
+  ```
 
-### 1. Pregame
-
-Team stats only, ending in `"Predict result, score, and reasoning."`
-
-### 2. Halftime-conditioned
-
-Team stats + one additional line:
-```
-Halftime Score: {Home} {HH} - {HA} {Away}
-Given the halftime state, predict the FINAL result, FINAL score, and brief reasoning.
-```
-
-### 3. Halftime + first-half events
-
-Team stats + halftime score + chronological event line (goals/cards with timestamps ≤ 45'):
-```
-Halftime Score: {Home} 2 - 2 {Away}
-First-half events: 23' {Home} goal (penalty); 36' {Home} goal; 45+1' {Away} goal
-Given the halftime state and first-half events, predict the FINAL result, FINAL score, and brief reasoning.
-```
+The serving API also accepts an experimental `halftime_events` regime (first-half goals and cards). It has no committed evaluation.
 
 ## Known limitations
 
-- **Single-tournament evaluation (n=64 unique matches).** Claims are underpowered outside the aggregate 128-sample set. Extension to Euro 2024 + Copa 2024 (+83 matches) would push borderline comparisons below p=0.05 if the effect size replicates.
-- **Named vs. anonymized gap.** Team names carry magnitude priors (named halftime+events O/U 2.5: 84.4%, anonymized: 75.0%). Model is strongest when team identities are present; anonymized performance is still positive-EV but reduced.
-- **Poisson over-dispersion.** The O/U conversion assumes Poisson; football scorelines are mildly over-dispersed (Dixon & Coles 1997). A CMP or negative-binomial fit could tighten probability estimates.
-- **Template-generalization risk.** Halftime+events shows a small result-accuracy regression vs. halftime-only (−2.4pp, not significant), possibly indicating mild template drift. Fine-tuning on halftime+events prompts directly is expected to eliminate this.
+- **Contaminated evaluation.** See the note at the top. Only matches after December 2023 can measure skill.
+- **Hidden prompts are only partly hidden.** They still include the coach's name, stadium and round.
+- **Decoding.** Evaluation sampled at temperature 0.1 with `repetition_penalty=1.1`. Before kickoff the adapter almost never predicts a draw and occasionally emits scores such as 0–8.
+- **Labels include extra time**, while betting markets settle at 90 minutes.
+- **Small sample.** 64 matches give 95% intervals of about ±12 points on any accuracy.
 - **Gated base model.** Llama 3.1 access must be granted on Hugging Face before this adapter can be loaded.
 
 ## Ethical considerations
 
-Sports-betting strategies have real-world money consequences. The published backtest is a **simulation** and should not be interpreted as financial advice or a forecast of live returns. Jurisdiction-dependent regulations apply in the US and elsewhere. The research framing of this adapter is the magnitude/direction decomposition — the backtest exists to show the mechanism produces positive-EV signal, not to sell a trading system.
-
-## Citation
-
-```bibtex
-@misc{fu2026footballllm,
-  author = {Fu, Zanwen},
-  title = {Dynamic In-Play Football Betting via a QLoRA-Fine-Tuned LLM:
-           A Halftime-Conditioned Strategy for Over/Under Markets},
-  year = {2026},
-  howpublished = {\url{https://github.com/zanwenfu/football-llm}},
-}
-```
+Sports betting has real financial consequences. Nothing in this model card or the accompanying report is financial advice, and no result here supports betting with this adapter.
 
 ## License
 

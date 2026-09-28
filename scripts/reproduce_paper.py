@@ -3,7 +3,7 @@
 
 Consumes committed prediction dumps under results/ and regenerates:
 
-  Table 1 (Core logic), Table 2 (Three regimes), the paired McNemar tests,
+  Table 1 (LLM vs XGBoost), Table 2 (LLM regimes), the paired McNemar tests,
   Wilson CIs, calibration (ECE/Brier), the Kelly-fraction x cap sensitivity
   grid, the 10,000-trial bootstrap, and all six paper figures.
 
@@ -49,8 +49,8 @@ def _subset(df: pd.DataFrame, *, named_only: bool = False) -> pd.DataFrame:
 
 
 def table_regime_summary(regime_dfs: dict[str, pd.DataFrame]) -> None:
-    """Reproduce Table 2 (three LLM regimes on 128 eval samples)."""
-    _section("Table 2 — Three LLM regimes on 128 eval samples")
+    """Reproduce Table 2 (LLM regimes on 128 eval samples)."""
+    _section("Table 2 — LLM regimes on 128 eval samples (64 matches × named/anonymized)")
     rows = []
     for name, df in regime_dfs.items():
         probs = poisson.p_over_25_vectorized(df["pred_total"].to_numpy())
@@ -250,22 +250,16 @@ def make_figures(
     grid: pd.DataFrame,
     bt_halftime: backtest.BacktestResult,
     output_dir: Path,
+    results_dir: Path,
 ) -> None:
     _section(f"Figures → {output_dir}/")
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # Figure 1: result accuracy with baselines (approximated from paper since
-    # naive baselines aren't in the prediction files).
+    # Figure 1: result accuracy against naive baselines computed from the files.
     if "pregame" in regime_dfs and "halftime" in regime_dfs:
         df_pre = regime_dfs["pregame"]
         df_hft = regime_dfs["halftime"]
-        baselines = {
-            "Random": (46, 128),  # 35.9% approx (from paper §5.1)
-            "Always home": (58, 128),  # 45.3%
-            "HT-leader": (36, 64),  # 56.2%
-            "HT×2": (36, 64),  # 56.2%
-            "Empirical prior": (35, 64),  # 54.7%
-        }
+        baselines = loader.result_accuracy_baselines(df_hft, results_dir)
         fig1 = figures.figure_result_accuracy(
             baselines,
             llm_pregame=(int(df_pre["correct_result"].sum()), len(df_pre)),
@@ -364,7 +358,7 @@ def main() -> int:
         grid = run_sensitivity_grid(regime_dfs["halftime"])
 
     if not args.skip_figures and bt_halftime is not None and grid is not None:
-        make_figures(regime_dfs, grid, bt_halftime, args.output_dir)
+        make_figures(regime_dfs, grid, bt_halftime, args.output_dir, args.results)
 
     _section("Done.")
     return 0

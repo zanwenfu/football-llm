@@ -22,8 +22,8 @@ class TestWilsonCI:
         assert ci.low == pytest.approx(0.555, abs=1e-3)
         assert ci.high == pytest.approx(0.719, abs=1e-3)
 
-    def test_matches_paper_named_halftime_events_ou(self):
-        """Paper §5.5: halftime+events O/U 2.5 on n=64 named → [0.736, 0.913]."""
+    def test_known_value_54_of_64(self):
+        """54/64 → [0.736, 0.913] (reference values from an independent calculator)."""
         ci = metrics.wilson_ci(successes=54, n=64)
         assert ci.point == pytest.approx(0.844, abs=1e-3)
         assert ci.low == pytest.approx(0.736, abs=1e-3)

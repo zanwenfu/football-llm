@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "football-llm"
 version = "0.2.0"
-description = "QLoRA-fine-tuned Llama 3.1 8B for halftime-conditioned Over/Under betting on World Cup matches"
+description = "QLoRA-fine-tuned Llama 3.1 8B for World Cup score prediction, with a pretraining-leakage audit"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
@@ -90,7 +90,7 @@ all = [
 [project.urls]
 Homepage = "https://github.com/zanwenfu/football-llm"
 Model = "https://huggingface.co/zanwenfu/football-llm-qlora"
-Paper = "https://github.com/zanwenfu/football-llm/blob/main/IDS598_Final_Project_Report.pdf"
+Report = "https://github.com/zanwenfu/football-llm/blob/main/report/A2_report.pdf"
 Issues = "https://github.com/zanwenfu/football-llm/issues"
 
 [project.scripts]
